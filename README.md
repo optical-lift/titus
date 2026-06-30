@@ -14,7 +14,7 @@ Current V1 proof:
 
 - Course Catalogue
 - Ecology course page
-- H0776 — אֶרֶץ / erets drawer-based lesson
+- H0776 — אֶרֶץ / erets drawer-based lesson at /lessons/h0776
 - Fixed Lex Stamp
 - Bible-first Canon Reading drawer
 

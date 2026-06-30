@@ -16,8 +16,8 @@ export const courses: TitusCourse[] = [
     description:
       "Land, ground, water, seed, fruit, food, rest, yield, and dwelling traced as a guided canon word-study path.",
     status: "active",
-    firstLessonSlug: "erets",
-    lessons: ["erets"],
+    firstLessonSlug: "h0776",
+    lessons: ["h0776"],
   },
   {
     slug: "romans",

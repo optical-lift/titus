@@ -29,7 +29,7 @@ export type TitusLesson = {
 
 export const lessons: TitusLesson[] = [
   {
-    slug: "erets",
+    slug: "h0776",
     courseSlug: "ecology",
     lessonNumber: 1,
     strongId: "H0776",
@@ -143,7 +143,18 @@ export const lessons: TitusLesson[] = [
 ];
 
 export function getLesson(slug: string) {
-  return lessons.find((lesson) => lesson.slug === slug);
+  const normalizedSlug = slug.toLowerCase();
+
+  return lessons.find((lesson) => {
+    const strongRoute = lesson.strongId.toLowerCase();
+    const transliterationRoute = lesson.transliteration.toLowerCase();
+
+    return (
+      lesson.slug === normalizedSlug ||
+      strongRoute === normalizedSlug ||
+      transliterationRoute === normalizedSlug
+    );
+  });
 }
 
 export function getLessonsForCourse(courseSlug: string) {

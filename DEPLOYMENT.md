@@ -60,3 +60,17 @@ http://localhost:3001
 - Fixed Lex Stamp
 - Bible-first Canon Reading drawer
 - Deployed to titus.elmfarm.co
+
+
+## URL Convention
+
+Canonical lesson route:
+
+/lessons/h0776
+
+Rule:
+
+- Strong's-centered word lessons use the normalized lowercase Strong's ID.
+- Public display still uses original language and transliteration, for example H0776 — אֶרֶץ / erets.
+- Transliteration aliases may continue resolving for convenience, but should not be treated as canonical routes.
+- Later bounded word-field lessons may use field-based routes such as /lessons/field-land-domain.
