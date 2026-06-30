@@ -604,3 +604,43 @@ p {
 .function-lens-callout p {
   color: var(--muted);
 }
+
+.canon-chain-timeline {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.canon-chain-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 18px;
+}
+
+.canon-chain-index {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--accent-dark);
+  color: white;
+  font-family: Arial, sans-serif;
+  font-weight: 900;
+}
+
+.language-focus {
+  color: var(--accent-dark);
+  font-family: Arial, sans-serif;
+  font-weight: 900;
+}
+
+@media (max-width: 640px) {
+  .canon-chain-card {
+    grid-template-columns: 1fr;
+  }
+}

@@ -27,6 +27,7 @@ export type TitusLesson = {
   travelsWith: string[];
   companionPatternSlugs: string[];
   functionLensSlug?: string;
+  canonChainSlug?: string;
   publicNodeMeta: PublicNodeMeta;
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
@@ -60,6 +61,7 @@ export const lessons: TitusLesson[] = [
       "fruitfulness",
     ],
     functionLensSlug: "created-domain-made-readable",
+    canonChainSlug: "erets-domain-witness-chain",
     publicNodeMeta: {
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",

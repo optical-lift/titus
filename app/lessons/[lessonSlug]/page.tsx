@@ -59,6 +59,7 @@ export default async function LessonPage({
           currentLessonHref={`/lessons/${lesson.slug}`}
           drawers={lesson.drawers}
           functionLensSlug={lesson.functionLensSlug}
+          canonChainSlug={lesson.canonChainSlug}
         />
       </section>
 

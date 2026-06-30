@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { getCanonChain } from "@/data/titus/canon-chains";
 import type { CanonPassage, LessonDrawer } from "@/data/titus/lessons";
 import { getFunctionLens } from "@/data/titus/function-lenses";
 import { getPatternDebriefs } from "@/data/titus/pattern-debriefs";
@@ -26,12 +27,14 @@ export default function LessonDrawerStack({
   companionPatternSlugs,
   currentLessonHref,
   functionLensSlug,
+  canonChainSlug,
 }: {
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
   companionPatternSlugs: string[];
   currentLessonHref: string;
   functionLensSlug?: string;
+  canonChainSlug?: string;
 }) {
   const guidedDrawers: GuidedDrawer[] = useMemo(
     () => [
@@ -51,6 +54,7 @@ export default function LessonDrawerStack({
 
   const companionPatterns = getPatternDebriefs(companionPatternSlugs);
   const functionLens = functionLensSlug ? getFunctionLens(functionLensSlug) : undefined;
+  const canonChain = canonChainSlug ? getCanonChain(canonChainSlug) : undefined;
 
   const [openIndex, setOpenIndex] = useState(0);
   const openDrawer = guidedDrawers[openIndex];
@@ -105,6 +109,20 @@ export default function LessonDrawerStack({
                 </p>
               </article>
             ))}
+
+            {canonChain ? (
+              <div className="function-lens-callout">
+                <span className="status">Canon Chain</span>
+                <h3>{canonChain.title}</h3>
+                <p>{canonChain.subtitle}</p>
+                <Link
+                  className="button compact-button"
+                  href={`/chains/${canonChain.slug}?from=${encodeURIComponent(currentLessonHref)}`}
+                >
+                  Open Canon Chain
+                </Link>
+              </div>
+            ) : null}
           </div>
         ) : (
           <div className="drawer-body no-border">

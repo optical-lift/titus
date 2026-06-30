@@ -1,3 +1,4 @@
+import { canonChains } from "@/data/titus/canon-chains";
 import { courses } from "@/data/titus/courses";
 import { lessons } from "@/data/titus/lessons";
 import { functionLenses } from "@/data/titus/function-lenses";
@@ -9,6 +10,7 @@ export type TitusSearchResult = {
     | "Published Word Lesson"
     | "Pattern Debrief"
     | "Function Lens"
+    | "Canon Chain"
     | "Queued Lesson"
     | "Planned Course";
   title: string;
@@ -158,10 +160,36 @@ export function getAllSearchResults(): TitusSearchResult[] {
     ],
   }));
 
+  const chainResults: TitusSearchResult[] = canonChains.map((chain) => ({
+    type: "Canon Chain",
+    title: chain.title,
+    subtitle: chain.subtitle,
+    href: `/chains/${chain.slug}`,
+    status: chain.status,
+    keywords: [
+      chain.slug,
+      chain.title,
+      chain.subtitle,
+      chain.status,
+      ...chain.chainReading,
+      ...chain.unresolvedPressure,
+      ...chain.anchorLessons.map((lesson) => lesson.label),
+      ...chain.passages.flatMap((passage) => [
+        passage.ref,
+        passage.title,
+        passage.originalLanguageFocus,
+        passage.transliteration,
+        passage.publicText,
+        passage.functionNotice,
+      ]),
+    ],
+  }));
+
   return [
     ...lessonResults,
     ...patternResults,
     ...lensResults,
+    ...chainResults,
     ...courseResults,
     ...queuedLessons,
   ];
@@ -185,6 +213,8 @@ function typePriority(type: TitusSearchResult["type"]) {
       return 25;
     case "Function Lens":
       return 22;
+    case "Canon Chain":
+      return 21;
     case "Course":
       return 15;
     case "Queued Lesson":
