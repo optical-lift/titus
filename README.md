@@ -17,3 +17,12 @@ Current V1 proof:
 - H0776 — אֶרֶץ / erets drawer-based lesson
 - Fixed Lex Stamp
 - Bible-first Canon Reading drawer
+
+
+Live URL:
+
+https://titus.elmfarm.co
+
+Deployment notes:
+
+See DEPLOYMENT.md
