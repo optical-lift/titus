@@ -436,3 +436,13 @@ p {
   opacity: 0.72;
   background: var(--soft);
 }
+
+.course-note {
+  max-width: 720px;
+  margin-top: 18px;
+  border-left: 4px solid var(--accent);
+  border-radius: 14px;
+  background: rgba(237, 241, 236, 0.72);
+  padding: 14px 16px;
+  color: var(--muted);
+}

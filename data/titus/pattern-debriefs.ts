@@ -21,7 +21,7 @@ export const patternDebriefs: PatternDebrief[] = [
     appearsIn: ["Ecology", "Land", "Ground", "Justice", "Priesthood"],
     whyThisPatternMatters: [
       "Bloodguilt is active in the land field because the canon repeatedly treats shed blood as something that does not remain private or invisible.",
-      "In Genesis 4, blood cries from the ground. In the law, blood can pollute the land. Titus keeps this pattern active so land is not flattened into scenery or property.",
+      "In Genesis 4, blood cries from the ground. In the law, blood can pollute the land. This debrief keeps the pattern active so land is not flattened into scenery or property.",
     ],
     whatThisPatternPrevents: [
       "reducing land to neutral dirt",
@@ -84,7 +84,7 @@ export const patternDebriefs: PatternDebrief[] = [
     appearsIn: ["Ecology", "Sabbath", "Land", "Inheritance", "Exile / Return"],
     whyThisPatternMatters: [
       "Rest is active here because land language repeatedly touches Sabbath, release, yield, exile, and return.",
-      "Titus keeps this companion pattern active so land is not flattened into scenery, private property, national territory only, metaphor only, or heaven later.",
+      "This debrief keeps the companion pattern active so land is not flattened into scenery, private property, national territory only, metaphor only, or heaven later.",
     ],
     whatThisPatternPrevents: [
       "reducing land to scenery",
