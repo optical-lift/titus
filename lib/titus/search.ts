@@ -3,7 +3,10 @@ import { courses } from "@/data/titus/courses";
 import { functionLenses } from "@/data/titus/function-lenses";
 import { lessons } from "@/data/titus/lessons";
 import { patternDebriefs } from "@/data/titus/pattern-debriefs";
-import { traditionNotes } from "@/data/titus/tradition-notes";
+import {
+  traditionCards,
+  traditionPlacements,
+} from "@/data/titus/tradition-notes";
 
 export type TitusSearchResult = {
   type:
@@ -12,7 +15,7 @@ export type TitusSearchResult = {
     | "Pattern Debrief"
     | "Function Lens"
     | "Canon Chain"
-    | "Tradition Note"
+    | "Tradition Card"
     | "Queued Lesson"
     | "Planned Course";
   title: string;
@@ -213,24 +216,50 @@ export function getAllSearchResults(): TitusSearchResult[] {
     ],
   }));
 
-  const traditionResults: TitusSearchResult[] = traditionNotes.map((note) => ({
-    type: "Tradition Note",
-    title: note.title,
-    subtitle: note.subtitle,
-    href: `/traditions/${note.slug}`,
-    status: note.status,
-    primaryTerms: [note.slug, note.title, note.subtitle, note.traditionFamily],
-    keywords: [
-      note.status,
-      ...note.anchorLessons.map((lesson) => lesson.label),
-      ...note.whatGetsToStay,
-      ...note.whatMustStillBeAccountedFor,
-    ],
-    bodyTerms: [
-      ...note.whatThisTraditionPreserves,
-      ...note.whereItCanFlatten,
-    ],
-  }));
+  const traditionResults: TitusSearchResult[] = traditionCards.map((card) => {
+    const placements = traditionPlacements.filter(
+      (placement) => placement.cardSlug === card.slug
+    );
+
+    return {
+      type: "Tradition Card",
+      title: card.title,
+      subtitle: card.subtitle,
+      href: `/traditions/${card.slug}`,
+      status: card.status,
+      primaryTerms: [
+        card.slug,
+        card.title,
+        card.subtitle,
+        card.cardKind,
+        card.traditionFamily,
+      ],
+      keywords: [
+        card.status,
+        ...card.coreConcerns,
+        ...card.commonReadingHabits,
+        ...card.strengthsToPreserve,
+        ...placements.flatMap((placement) => [
+          placement.lessonSlug,
+          placement.courseSlug,
+          placement.placementTitle,
+          placement.placementSummary,
+        ]),
+      ],
+      bodyTerms: [
+        ...card.summary,
+        ...card.commonFlatteningRisks,
+        ...card.sourceWitnessPlan,
+        ...placements.flatMap((placement) => [
+          ...placement.whyItBelongsHere,
+          ...placement.whatThisKeepsInViewHere,
+          ...placement.whatThisMayFlattenHere,
+          ...placement.whatGetsToStayHere,
+          ...placement.whatMustBeAccountedForHere,
+        ]),
+      ],
+    };
+  });
 
   return [
     ...lessonResults,
@@ -263,7 +292,7 @@ function typePriority(type: TitusSearchResult["type"]) {
       return 50;
     case "Pattern Debrief":
       return 40;
-    case "Tradition Note":
+    case "Tradition Card":
       return 36;
     case "Course":
       return 25;

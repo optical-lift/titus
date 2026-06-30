@@ -60,7 +60,7 @@ export default async function LessonPage({
           drawers={lesson.drawers}
           functionLensSlug={lesson.functionLensSlug}
           canonChainSlug={lesson.canonChainSlug}
-          traditionNoteSlugs={lesson.traditionNoteSlugs}
+          traditionPlacementSlugs={lesson.traditionPlacementSlugs}
         />
       </section>
 

@@ -644,3 +644,14 @@ p {
     grid-template-columns: 1fr;
   }
 }
+
+.placement-card {
+  border-color: rgba(96, 121, 100, 0.55);
+  background: rgba(237, 241, 236, 0.72);
+}
+
+.placement-card h3 {
+  margin-top: 18px;
+  color: var(--accent-dark);
+  font-size: 1.25rem;
+}
