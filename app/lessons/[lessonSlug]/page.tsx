@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import LessonDrawerStack from "@/components/titus/LessonDrawerStack";
 import { getLesson } from "@/data/titus/lessons";
 
@@ -9,10 +9,15 @@ export default async function LessonPage({
   params: Promise<{ lessonSlug: string }>;
 }) {
   const { lessonSlug } = await params;
-  const lesson = getLesson(lessonSlug);
+  const normalizedLessonSlug = lessonSlug.toLowerCase();
+  const lesson = getLesson(normalizedLessonSlug);
 
   if (!lesson) {
     notFound();
+  }
+
+  if (normalizedLessonSlug !== lesson.slug) {
+    redirect(`/lessons/${lesson.slug}`);
   }
 
   return (
