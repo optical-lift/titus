@@ -86,8 +86,8 @@ export default async function FunctionLensPage({
         <Link className="small-link" href={returnHref}>
           ← Return to current lesson
         </Link>
-        <Link className="small-link" href="/courses/ecology">
-          Continue Ecology
+        <Link className="small-link" href="/">
+          Course catalogue
         </Link>
       </nav>
     </main>
