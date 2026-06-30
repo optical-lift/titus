@@ -3,13 +3,17 @@ import type { QueuedLesson } from "@/data/titus/queued-lessons";
 
 export default function QueuedLessonPage({
   lesson,
+  returnHref,
+  returnLabel,
 }: {
   lesson: QueuedLesson;
+  returnHref: string;
+  returnLabel: string;
 }) {
   return (
     <main className="page-shell lesson-shell">
-      <Link className="small-link" href="/courses/ecology">
-        ← Return to Ecology
+      <Link className="small-link" href={returnHref}>
+        {returnLabel}
       </Link>
 
       <section className="lesson-hero" style={{ marginTop: 18 }}>
@@ -58,8 +62,8 @@ export default function QueuedLessonPage({
       </section>
 
       <nav className="footer-nav">
-        <Link className="small-link" href="/courses/ecology">
-          ← Return to Ecology
+        <Link className="small-link" href={returnHref}>
+          {returnLabel}
         </Link>
         <Link className="small-link" href="/registry">
           Node Registry

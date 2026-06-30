@@ -846,6 +846,6 @@ p {
 
 .queued-identity-grid p {
   margin: 8px 0 0;
-  color: var(--text);
+  color: var(--ink);
   overflow-wrap: anywhere;
 }

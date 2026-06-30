@@ -1,20 +1,27 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import LessonDrawerStack from "@/components/titus/LessonDrawerStack";
-import QueuedLessonPage from "@/components/titus/QueuedLessonPage";
 import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
+import QueuedLessonPage from "@/components/titus/QueuedLessonPage";
 import { getCourse } from "@/data/titus/courses";
 import { getLessonAssembly } from "@/data/titus/lesson-assemblies";
 import { getLesson } from "@/data/titus/lessons";
 import { getQueuedLesson } from "@/data/titus/queued-lessons";
+import { getReturnHref, getReturnLabel } from "@/lib/titus/return-links";
 
 export default async function LessonPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ lessonSlug: string }>;
+  searchParams: Promise<{ from?: string }>;
 }) {
   const { lessonSlug } = await params;
+  const { from } = await searchParams;
   const normalizedLessonSlug = lessonSlug.toLowerCase();
+  const returnHref = getReturnHref(from, "/");
+  const returnLabel = getReturnLabel(from);
+
   const lesson = getLesson(normalizedLessonSlug);
 
   if (!lesson) {
@@ -28,7 +35,13 @@ export default async function LessonPage({
       redirect(`/lessons/${queuedLesson.slug}`);
     }
 
-    return <QueuedLessonPage lesson={queuedLesson} />;
+    return (
+      <QueuedLessonPage
+        lesson={queuedLesson}
+        returnHref={returnHref}
+        returnLabel={returnLabel}
+      />
+    );
   }
 
   if (normalizedLessonSlug !== lesson.slug) {
@@ -42,6 +55,8 @@ export default async function LessonPage({
   }
 
   const attachments = getLessonAssembly(lesson.slug);
+  const publishedReturnHref = from ? returnHref : `/courses/${lesson.courseSlug}`;
+  const publishedReturnLabel = from ? returnLabel : `← Return to ${course.title}`;
 
   return (
     <main className="page-shell lesson-shell">
@@ -79,8 +94,8 @@ export default async function LessonPage({
       <PublicNodeMetaCard meta={lesson.publicNodeMeta} />
 
       <nav className="footer-nav">
-        <Link className="small-link" href={`/courses/${lesson.courseSlug}`}>
-          ← Return to {course.title}
+        <Link className="small-link" href={publishedReturnHref}>
+          {publishedReturnLabel}
         </Link>
         <Link className="small-link" href="/">
           Course catalogue
