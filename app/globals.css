@@ -265,3 +265,122 @@ p {
     padding: 18px;
   }
 }
+
+.guided-lesson {
+  margin-top: 18px;
+}
+
+.drawer-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  scrollbar-width: thin;
+}
+
+.drawer-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: fit-content;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--muted);
+  padding: 9px 12px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.drawer-tab span {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--accent-dark);
+}
+
+.drawer-tab.active {
+  border-color: rgba(96, 121, 100, 0.72);
+  background: var(--accent-dark);
+  color: white;
+}
+
+.drawer-tab.active span {
+  background: white;
+  color: var(--accent-dark);
+}
+
+.guided-drawer-card {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 16px 38px rgba(49, 77, 56, 0.08);
+}
+
+.guided-drawer-count {
+  color: var(--accent-dark);
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.no-border {
+  border-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.drawer-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-top: 12px;
+}
+
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 11px 16px;
+  background: white;
+  color: var(--accent-dark);
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-weight: 800;
+}
+
+.secondary-button:disabled,
+.compact-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.compact-button {
+  border: 0;
+  cursor: pointer;
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .guided-drawer-card {
+    border-radius: 20px;
+    padding: 16px;
+  }
+
+  .drawer-tab {
+    font-size: 0.76rem;
+  }
+}
