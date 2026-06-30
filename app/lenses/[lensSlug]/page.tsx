@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
+import { getReturnHref, getReturnLabel } from "@/lib/titus/return-links";
 import { getFunctionLens } from "@/data/titus/function-lenses";
 
 export default async function FunctionLensPage({
@@ -13,7 +14,8 @@ export default async function FunctionLensPage({
   const { lensSlug } = await params;
   const { from } = await searchParams;
   const lens = getFunctionLens(lensSlug);
-  const returnHref = from || "/lessons/h0776";
+  const returnHref = getReturnHref(from, "/lessons/h0776");
+  const returnLabel = getReturnLabel(from);
 
   if (!lens) {
     notFound();
@@ -22,7 +24,7 @@ export default async function FunctionLensPage({
   return (
     <main className="page-shell lesson-shell">
       <Link className="small-link" href={returnHref}>
-        ← Return to current lesson
+        {returnLabel}
       </Link>
 
       <section className="hero" style={{ marginTop: 18 }}>
@@ -84,7 +86,7 @@ export default async function FunctionLensPage({
 
       <nav className="footer-nav">
         <Link className="small-link" href={returnHref}>
-          ← Return to current lesson
+          {returnLabel}
         </Link>
         <Link className="small-link" href="/">
           Course catalogue

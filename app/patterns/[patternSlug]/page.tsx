@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
+import { getReturnHref, getReturnLabel } from "@/lib/titus/return-links";
 import { getPatternDebrief } from "@/data/titus/pattern-debriefs";
 
 export default async function PatternDebriefPage({
@@ -13,7 +14,8 @@ export default async function PatternDebriefPage({
   const { patternSlug } = await params;
   const { from } = await searchParams;
   const pattern = getPatternDebrief(patternSlug);
-  const returnHref = from || "/lessons/h0776";
+  const returnHref = getReturnHref(from, "/lessons/h0776");
+  const returnLabel = getReturnLabel(from);
 
   if (!pattern) {
     notFound();
@@ -22,7 +24,7 @@ export default async function PatternDebriefPage({
   return (
     <main className="page-shell lesson-shell">
       <Link className="small-link" href={returnHref}>
-        ← Return to current lesson
+        {returnLabel}
       </Link>
 
       <section className="hero" style={{ marginTop: 18 }}>
@@ -76,7 +78,7 @@ export default async function PatternDebriefPage({
 
       <nav className="footer-nav">
         <Link className="small-link" href={returnHref}>
-          ← Return to current lesson
+          {returnLabel}
         </Link>
         <Link className="small-link" href="/">
           Course catalogue

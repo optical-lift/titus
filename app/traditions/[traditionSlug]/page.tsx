@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
+import { getReturnHref, getReturnLabel } from "@/lib/titus/return-links";
 import {
   getPlacementsForTradition,
   getTraditionCard,
@@ -17,7 +18,8 @@ export default async function TraditionCardPage({
   const { traditionSlug } = await params;
   const { from, placement: placementSlug } = await searchParams;
   const card = getTraditionCard(traditionSlug);
-  const returnHref = from || "/lessons/h0776";
+  const returnHref = getReturnHref(from, "/lessons/h0776");
+  const returnLabel = getReturnLabel(from);
 
   if (!card) {
     notFound();
@@ -32,7 +34,7 @@ export default async function TraditionCardPage({
   return (
     <main className="page-shell lesson-shell">
       <Link className="small-link" href={returnHref}>
-        ← Return to current lesson
+        {returnLabel}
       </Link>
 
       <section className="hero" style={{ marginTop: 18 }}>
@@ -161,7 +163,7 @@ export default async function TraditionCardPage({
 
       <nav className="footer-nav">
         <Link className="small-link" href={returnHref}>
-          ← Return to current lesson
+          {returnLabel}
         </Link>
         <Link className="small-link" href="/">
           Course catalogue

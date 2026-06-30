@@ -1,6 +1,6 @@
 import type { CourseAssemblyNode } from "@/data/titus/course-assemblies";
 
-export function getCourseAssemblyNodeHref(node: CourseAssemblyNode) {
+export function getCourseAssemblyNodeBaseHref(node: CourseAssemblyNode) {
   switch (node.type) {
     case "published_lesson":
       return `/lessons/${node.nodeSlug}`;
@@ -15,6 +15,17 @@ export function getCourseAssemblyNodeHref(node: CourseAssemblyNode) {
     case "queued_lesson":
       return undefined;
   }
+}
+
+export function getCourseAssemblyNodeHref(node: CourseAssemblyNode) {
+  const baseHref = getCourseAssemblyNodeBaseHref(node);
+
+  if (!baseHref) {
+    return undefined;
+  }
+
+  const separator = baseHref.includes("?") ? "&" : "?";
+  return `${baseHref}${separator}from=/courses/${node.courseSlug}`;
 }
 
 export function getCourseAssemblySectionLabel(section: CourseAssemblyNode["section"]) {
