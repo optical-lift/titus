@@ -431,3 +431,8 @@ p {
 .related-pill {
   display: inline-flex;
 }
+
+.queued-pill {
+  opacity: 0.72;
+  background: var(--soft);
+}

@@ -53,11 +53,21 @@ export default async function PatternDebriefPage({
       <section className="card pattern-section">
         <h2>Related lessons</h2>
         <div className="related-links">
-          {pattern.relatedLessons.map((lesson) => (
-            <Link className="pill related-pill" href={lesson.href} key={lesson.label}>
-              {lesson.label}
-            </Link>
-          ))}
+          {pattern.relatedLessons.map((lesson) =>
+            lesson.href ? (
+              <Link
+                className="pill related-pill"
+                href={lesson.href}
+                key={lesson.label}
+              >
+                {lesson.label}
+              </Link>
+            ) : (
+              <span className="pill related-pill queued-pill" key={lesson.label}>
+                {lesson.label} · queued
+              </span>
+            )
+          )}
         </div>
       </section>
 

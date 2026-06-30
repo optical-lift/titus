@@ -47,6 +47,7 @@ export default async function LessonPage({
       <LessonDrawerStack
         canonReading={lesson.canonReading}
         companionPatternSlugs={lesson.companionPatternSlugs}
+        currentLessonHref={`/lessons/${lesson.slug}`}
         drawers={lesson.drawers}
       />
 

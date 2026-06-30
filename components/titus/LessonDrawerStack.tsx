@@ -23,10 +23,12 @@ export default function LessonDrawerStack({
   canonReading,
   drawers,
   companionPatternSlugs,
+  currentLessonHref,
 }: {
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
   companionPatternSlugs: string[];
+  currentLessonHref: string;
 }) {
   const guidedDrawers: GuidedDrawer[] = useMemo(
     () => [
@@ -110,7 +112,7 @@ export default function LessonDrawerStack({
                 {companionPatterns.map((pattern) => (
                   <Link
                     className="pattern-card"
-                    href={`/patterns/${pattern.slug}?from=/lessons/h0776`}
+                    href={`/patterns/${pattern.slug}?from=${encodeURIComponent(currentLessonHref)}`}
                     key={pattern.slug}
                   >
                     <span className="status">Pattern Debrief</span>

@@ -8,7 +8,8 @@ export type PatternDebrief = {
   whatThisPatternPrevents: string[];
   relatedLessons: {
     label: string;
-    href: string;
+    href?: string;
+    status: "published" | "queued" | "course";
   }[];
 };
 
@@ -32,14 +33,15 @@ export const patternDebriefs: PatternDebrief[] = [
       {
         label: "H0776 — אֶרֶץ / erets",
         href: "/lessons/h0776",
+        status: "published",
       },
       {
         label: "H0127 — אֲדָמָה / adamah",
-        href: "/lessons/h0127",
+        status: "queued",
       },
       {
         label: "H1818 — דָּם / dam",
-        href: "/lessons/h1818",
+        status: "queued",
       },
     ],
   },
@@ -62,14 +64,16 @@ export const patternDebriefs: PatternDebrief[] = [
       {
         label: "H0776 — אֶרֶץ / erets",
         href: "/lessons/h0776",
+        status: "published",
       },
       {
         label: "H5159 — נַחֲלָה / nachalah",
-        href: "/lessons/h5159",
+        status: "queued",
       },
       {
         label: "Kingdom course",
         href: "/courses/kingdom",
+        status: "course",
       },
     ],
   },
@@ -92,14 +96,15 @@ export const patternDebriefs: PatternDebrief[] = [
       {
         label: "H0776 — אֶרֶץ / erets",
         href: "/lessons/h0776",
+        status: "published",
       },
       {
         label: "H0127 — אֲדָמָה / adamah",
-        href: "/lessons/h0127",
+        status: "queued",
       },
       {
         label: "H7676 — שַׁבָּת / shabbath",
-        href: "/lessons/h7676",
+        status: "queued",
       },
     ],
   },
@@ -122,14 +127,15 @@ export const patternDebriefs: PatternDebrief[] = [
       {
         label: "H0776 — אֶרֶץ / erets",
         href: "/lessons/h0776",
+        status: "published",
       },
       {
         label: "H6529 — פְּרִי / peri",
-        href: "/lessons/h6529",
+        status: "queued",
       },
       {
         label: "G2590 — καρπός / karpos",
-        href: "/lessons/g2590",
+        status: "queued",
       },
     ],
   },
