@@ -3,6 +3,7 @@ import { courses } from "@/data/titus/courses";
 import { functionLenses } from "@/data/titus/function-lenses";
 import { lessons } from "@/data/titus/lessons";
 import { patternDebriefs } from "@/data/titus/pattern-debriefs";
+import { traditionNotes } from "@/data/titus/tradition-notes";
 
 export type TitusSearchResult = {
   type:
@@ -11,6 +12,7 @@ export type TitusSearchResult = {
     | "Pattern Debrief"
     | "Function Lens"
     | "Canon Chain"
+    | "Tradition Note"
     | "Queued Lesson"
     | "Planned Course";
   title: string;
@@ -211,11 +213,31 @@ export function getAllSearchResults(): TitusSearchResult[] {
     ],
   }));
 
+  const traditionResults: TitusSearchResult[] = traditionNotes.map((note) => ({
+    type: "Tradition Note",
+    title: note.title,
+    subtitle: note.subtitle,
+    href: `/traditions/${note.slug}`,
+    status: note.status,
+    primaryTerms: [note.slug, note.title, note.subtitle, note.traditionFamily],
+    keywords: [
+      note.status,
+      ...note.anchorLessons.map((lesson) => lesson.label),
+      ...note.whatGetsToStay,
+      ...note.whatMustStillBeAccountedFor,
+    ],
+    bodyTerms: [
+      ...note.whatThisTraditionPreserves,
+      ...note.whereItCanFlatten,
+    ],
+  }));
+
   return [
     ...lessonResults,
     ...patternResults,
     ...lensResults,
     ...chainResults,
+    ...traditionResults,
     ...courseResults,
     ...queuedLessons,
   ];
@@ -241,6 +263,8 @@ function typePriority(type: TitusSearchResult["type"]) {
       return 50;
     case "Pattern Debrief":
       return 40;
+    case "Tradition Note":
+      return 36;
     case "Course":
       return 25;
     case "Queued Lesson":

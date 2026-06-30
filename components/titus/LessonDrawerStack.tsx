@@ -6,6 +6,7 @@ import { getCanonChain } from "@/data/titus/canon-chains";
 import type { CanonPassage, LessonDrawer } from "@/data/titus/lessons";
 import { getFunctionLens } from "@/data/titus/function-lenses";
 import { getPatternDebriefs } from "@/data/titus/pattern-debriefs";
+import { getTraditionNotes } from "@/data/titus/tradition-notes";
 
 type GuidedDrawer =
   | {
@@ -28,6 +29,7 @@ export default function LessonDrawerStack({
   currentLessonHref,
   functionLensSlug,
   canonChainSlug,
+  traditionNoteSlugs,
 }: {
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
@@ -35,6 +37,7 @@ export default function LessonDrawerStack({
   currentLessonHref: string;
   functionLensSlug?: string;
   canonChainSlug?: string;
+  traditionNoteSlugs: string[];
 }) {
   const guidedDrawers: GuidedDrawer[] = useMemo(
     () => [
@@ -55,6 +58,7 @@ export default function LessonDrawerStack({
   const companionPatterns = getPatternDebriefs(companionPatternSlugs);
   const functionLens = functionLensSlug ? getFunctionLens(functionLensSlug) : undefined;
   const canonChain = canonChainSlug ? getCanonChain(canonChainSlug) : undefined;
+  const traditionNotes = getTraditionNotes(traditionNoteSlugs);
 
   const [openIndex, setOpenIndex] = useState(0);
   const openDrawer = guidedDrawers[openIndex];
@@ -142,6 +146,23 @@ export default function LessonDrawerStack({
                     <h3>{pattern.title}</h3>
                     <p>{pattern.whyThisPatternMatters[0]}</p>
                     <span className="small-link">Open debrief →</span>
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+
+            {openDrawer.code === "traditions" ? (
+              <div className="pattern-card-grid" aria-label="Tradition note links">
+                {traditionNotes.map((note) => (
+                  <Link
+                    className="pattern-card"
+                    href={`/traditions/${note.slug}?from=${encodeURIComponent(currentLessonHref)}`}
+                    key={note.slug}
+                  >
+                    <span className="status">Tradition Note</span>
+                    <h3>{note.title}</h3>
+                    <p>{note.subtitle}</p>
+                    <span className="small-link">Open tradition note →</span>
                   </Link>
                 ))}
               </div>

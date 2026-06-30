@@ -28,6 +28,7 @@ export type TitusLesson = {
   companionPatternSlugs: string[];
   functionLensSlug?: string;
   canonChainSlug?: string;
+  traditionNoteSlugs: string[];
   publicNodeMeta: PublicNodeMeta;
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
@@ -62,6 +63,11 @@ export const lessons: TitusLesson[] = [
     ],
     functionLensSlug: "created-domain-made-readable",
     canonChainSlug: "erets-domain-witness-chain",
+    traditionNoteSlugs: [
+      "creation-goodness",
+      "covenantal-inheritance",
+      "new-creation-restoration",
+    ],
     publicNodeMeta: {
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
