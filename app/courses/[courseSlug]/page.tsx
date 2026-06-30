@@ -1,7 +1,49 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import {
+  getCourseAssembly,
+  type CourseAssemblyNode,
+  type CourseAssemblySection,
+} from "@/data/titus/course-assemblies";
 import { getCourse } from "@/data/titus/courses";
-import { getLessonsForCourse } from "@/data/titus/lessons";
+import {
+  getCourseAssemblyNodeHref,
+  getCourseAssemblySectionLabel,
+  getCourseAssemblyTypeLabel,
+} from "@/lib/titus/course-node-links";
+
+const sectionOrder: CourseAssemblySection[] = [
+  "course_path",
+  "supporting_nodes",
+  "traditions_in_conversation",
+  "queued_lessons",
+];
+
+function CourseAssemblyCard({ node }: { node: CourseAssemblyNode }) {
+  const href = getCourseAssemblyNodeHref(node);
+
+  const inner = (
+    <>
+      <span className="status">{getCourseAssemblyTypeLabel(node.type)}</span>
+      <h3>{node.label}</h3>
+      <p>{node.summary}</p>
+      <p className="assembly-meta">
+        Section: {getCourseAssemblySectionLabel(node.section)}
+        <br />
+        Node: {node.nodeSlug}
+      </p>
+      {href ? <span className="small-link">Open node →</span> : null}
+    </>
+  );
+
+  return href ? (
+    <Link className="course-assembly-card" href={href}>
+      {inner}
+    </Link>
+  ) : (
+    <article className="course-assembly-card disabled-node">{inner}</article>
+  );
+}
 
 export default async function CoursePage({
   params,
@@ -15,67 +57,69 @@ export default async function CoursePage({
     notFound();
   }
 
-  const lessons = getLessonsForCourse(course.slug);
-  const isActive = course.status === "active";
+  const assembly = getCourseAssembly(course.slug);
 
   return (
     <main className="page-shell">
-      <Link className="small-link" href="/">← Course catalogue</Link>
+      <Link className="small-link" href="/">
+        ← Course catalogue
+      </Link>
 
       <section className="hero" style={{ marginTop: 18 }}>
-        <div className="kicker">
-          {isActive ? "Active Course" : "Course Planned"}
-        </div>
+        <div className="kicker">Titus Course</div>
         <h1>{course.title}</h1>
         <p className="lede">
-          <strong>{course.subtitle}</strong>
+          {course.subtitle}
           <br />
-          {course.description}
+          Status: {course.status.replaceAll("_", " ")}
         </p>
+      </section>
 
-        {isActive && course.firstLessonSlug ? (
-          <Link className="button" href={`/lessons/${course.firstLessonSlug}`}>
-            Continue {course.title}
-          </Link>
-        ) : (
-          <p className="course-note">
-            This course is part of the Titus library plan, but it is not open yet.
-            Its study nodes may still appear as related patterns while the public
-            course path is being built.
+      <section className="card course-intro-card">
+        <h2>Course Purpose</h2>
+        <p>{course.description}</p>
+      </section>
+
+      {assembly.length === 0 ? (
+        <section className="card course-intro-card">
+          <h2>Course Assembly Pending</h2>
+          <p>
+            This course has a catalogue record, but its reusable node assembly
+            has not been built yet.
           </p>
-        )}
-      </section>
+        </section>
+      ) : (
+        sectionOrder.map((section) => {
+          const nodes = assembly.filter((node) => node.section === section);
 
-      <section style={{ marginTop: 28 }}>
-        <div className="kicker">{isActive ? "Syllabus" : "Planned Path"}</div>
+          if (nodes.length === 0) {
+            return null;
+          }
 
-        {lessons.length > 0 ? (
-          <div className="grid" style={{ marginTop: 14 }}>
-            {lessons.map((lesson) => (
-              <Link
-                className="card active"
-                href={`/lessons/${lesson.slug}`}
-                key={lesson.slug}
-              >
-                <span className="status">Lesson {lesson.lessonNumber}</span>
-                <h2 style={{ marginTop: 12 }}>{lesson.title}</h2>
-                <p>{lesson.subtitle}</p>
-                <p>{lesson.field}</p>
-              </Link>
-            ))}
-          </div>
-        ) : (
-          <article className="card" style={{ marginTop: 14 }}>
-            <span className="status">Queued</span>
-            <h2 style={{ marginTop: 12 }}>No public lessons yet</h2>
-            <p>
-              This course will reuse published word lessons, Pattern Debriefs,
-              Function Lenses, Canon Chains, and Tradition notes once those nodes
-              are ready for public release.
-            </p>
-          </article>
-        )}
-      </section>
+          return (
+            <section className="course-assembly-section" key={section}>
+              <div className="kicker">{getCourseAssemblySectionLabel(section)}</div>
+              <div className="course-assembly-grid">
+                {nodes.map((node) => (
+                  <CourseAssemblyCard
+                    key={`${node.courseSlug}-${node.section}-${node.type}-${node.nodeSlug}`}
+                    node={node}
+                  />
+                ))}
+              </div>
+            </section>
+          );
+        })
+      )}
+
+      <nav className="footer-nav">
+        <Link className="small-link" href="/">
+          ← Course catalogue
+        </Link>
+        <Link className="small-link" href="/registry">
+          Node Registry
+        </Link>
+      </nav>
     </main>
   );
 }

@@ -758,3 +758,49 @@ p {
   border-color: rgba(140, 64, 64, 0.5);
   background: rgba(248, 238, 236, 0.72);
 }
+
+.course-intro-card {
+  margin-top: 18px;
+}
+
+.course-assembly-section {
+  margin-top: 28px;
+}
+
+.course-assembly-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.course-assembly-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-height: 230px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 20px;
+}
+
+.course-assembly-card h3 {
+  font-size: clamp(1.65rem, 3vw, 2.6rem);
+  line-height: 1.04;
+  overflow-wrap: anywhere;
+}
+
+.course-assembly-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.assembly-meta {
+  font-family: Arial, sans-serif;
+  font-size: 0.92rem;
+}
+
+.disabled-node {
+  opacity: 0.72;
+}
