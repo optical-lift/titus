@@ -7,7 +7,7 @@ import { getCourse } from "@/data/titus/courses";
 import { getLessonAssembly } from "@/data/titus/lesson-assemblies";
 import { getLesson } from "@/data/titus/lessons";
 import { getQueuedLesson } from "@/data/titus/queued-lessons";
-import { getReturnHref, getReturnLabel } from "@/lib/titus/return-links";
+import { getReturnHref, getReturnLabel, getSafeReturnPath } from "@/lib/titus/return-links";
 
 export default async function LessonPage({
   params,
@@ -19,9 +19,10 @@ export default async function LessonPage({
   const { lessonSlug } = await params;
   const { from } = await searchParams;
   const normalizedLessonSlug = lessonSlug.toLowerCase();
-  const returnHref = getReturnHref(from, "/");
-  const returnLabel = getReturnLabel(from);
-  const fromQuery = from ? `?from=${encodeURIComponent(from)}` : "";
+  const safeFrom = getSafeReturnPath(from);
+  const returnHref = getReturnHref(safeFrom, "/");
+  const returnLabel = getReturnLabel(safeFrom);
+  const fromQuery = safeFrom ? `?from=${encodeURIComponent(safeFrom)}` : "";
 
   const lesson = getLesson(normalizedLessonSlug);
 
