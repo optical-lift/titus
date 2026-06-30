@@ -13,6 +13,23 @@ export default function Home() {
           identity, companion patterns, traditions in conversation, and careful
           reception.
         </p>
+
+        <form className="search-form compact-home-search" action="/search">
+          <label className="search-label" htmlFor="home-search">
+            Search public Titus nodes
+          </label>
+          <div className="search-row">
+            <input
+              className="search-input"
+              id="home-search"
+              name="q"
+              placeholder="Search H0776, erets, land, bloodguilt..."
+            />
+            <button className="button search-button" type="submit">
+              Search
+            </button>
+          </div>
+        </form>
       </section>
 
       <section style={{ marginTop: 28 }}>
