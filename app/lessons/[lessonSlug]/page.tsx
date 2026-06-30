@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import LessonDrawerStack from "@/components/titus/LessonDrawerStack";
+import QueuedLessonPage from "@/components/titus/QueuedLessonPage";
 import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
 import { getCourse } from "@/data/titus/courses";
 import { getLessonAssembly } from "@/data/titus/lesson-assemblies";
 import { getLesson } from "@/data/titus/lessons";
+import { getQueuedLesson } from "@/data/titus/queued-lessons";
 
 export default async function LessonPage({
   params,
@@ -16,7 +18,17 @@ export default async function LessonPage({
   const lesson = getLesson(normalizedLessonSlug);
 
   if (!lesson) {
-    notFound();
+    const queuedLesson = getQueuedLesson(normalizedLessonSlug);
+
+    if (!queuedLesson) {
+      notFound();
+    }
+
+    if (normalizedLessonSlug !== lessonSlug) {
+      redirect(`/lessons/${queuedLesson.slug}`);
+    }
+
+    return <QueuedLessonPage lesson={queuedLesson} />;
   }
 
   if (normalizedLessonSlug !== lesson.slug) {

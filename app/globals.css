@@ -829,3 +829,23 @@ p {
     font-size: clamp(1.55rem, 8vw, 2.35rem);
   }
 }
+
+.queued-identity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.queued-identity-grid > div {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(237, 241, 236, 0.5);
+  padding: 16px;
+}
+
+.queued-identity-grid p {
+  margin: 8px 0 0;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}

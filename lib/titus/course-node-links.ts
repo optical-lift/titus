@@ -13,7 +13,7 @@ export function getCourseAssemblyNodeBaseHref(node: CourseAssemblyNode) {
     case "tradition_card":
       return `/traditions/${node.nodeSlug}`;
     case "queued_lesson":
-      return undefined;
+      return `/lessons/${node.nodeSlug}`;
   }
 }
 

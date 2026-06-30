@@ -194,6 +194,7 @@ export function getAllSearchResults(): TitusSearchResult[] {
     type: "Queued Lesson",
     title: lesson.title,
     subtitle: lesson.subtitle,
+    href: `/lessons/${lesson.slug}`,
     status: lesson.status,
     primaryTerms: lesson.primaryTerms,
     keywords: lesson.keywords,
