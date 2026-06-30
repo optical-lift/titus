@@ -731,3 +731,30 @@ p {
     font-size: clamp(1.55rem, 8vw, 2.4rem);
   }
 }
+
+.registry-health-card {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.86);
+  margin-top: 14px;
+  padding: 18px;
+}
+
+.registry-health-card h2 {
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+}
+
+.registry-health-card p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.registry-health-card.ok {
+  border-color: rgba(96, 121, 100, 0.45);
+  background: rgba(237, 241, 236, 0.72);
+}
+
+.registry-health-card.problem {
+  border-color: rgba(140, 64, 64, 0.5);
+  background: rgba(248, 238, 236, 0.72);
+}

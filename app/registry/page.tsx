@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { canonChains } from "@/data/titus/canon-chains";
+import { getAssemblyIssues } from "@/lib/titus/assembly-validation";
 import { functionLenses } from "@/data/titus/function-lenses";
 import { lessonAssemblies } from "@/data/titus/lesson-assemblies";
 import { lessons } from "@/data/titus/lessons";
@@ -10,6 +11,8 @@ import {
 } from "@/data/titus/tradition-notes";
 
 export default function RegistryPage() {
+  const assemblyIssues = getAssemblyIssues();
+
   return (
     <main className="page-shell">
       <Link className="small-link" href="/">
@@ -26,6 +29,28 @@ export default function RegistryPage() {
         </p>
       </section>
 
+
+      <section className="registry-section">
+        <div className="kicker">Assembly Integrity</div>
+        <article className={assemblyIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
+          <h2>{assemblyIssues.length === 0 ? "All assemblies resolve" : "Assembly issues found"}</h2>
+          <p>
+            {assemblyIssues.length === 0
+              ? "Every lesson assembly currently points to an existing lesson, course, and reusable node."
+              : "One or more lesson assemblies point to missing or incomplete nodes."}
+          </p>
+
+          {assemblyIssues.length > 0 ? (
+            <ul className="pattern-list">
+              {assemblyIssues.map((issue) => (
+                <li key={`${issue.lessonSlug}-${issue.drawerCode}-${issue.nodeSlug}-${issue.message}`}>
+                  <strong>{issue.severity.toUpperCase()}:</strong> {issue.message}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </article>
+      </section>
 
       <section className="registry-section">
         <div className="kicker">Lesson Assemblies</div>
