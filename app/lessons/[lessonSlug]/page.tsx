@@ -23,34 +23,36 @@ export default async function LessonPage({
 
   return (
     <main className="page-shell lesson-shell">
-      <section className="lex-stamp">
-        <div className="lex-stamp-main">
-          <div className="lex-stamp-code">
-            Ecology · Lesson {lesson.lessonNumber} · {lesson.strongId}
+      <section className="lesson-study-frame">
+        <section className="lex-stamp">
+          <div className="lex-stamp-main">
+            <div className="lex-stamp-code">
+              Ecology · Lesson {lesson.lessonNumber} · {lesson.strongId}
+            </div>
+            <div className="lex-stamp-word">
+              {lesson.originalWord} / {lesson.transliteration}
+            </div>
+            <div className="lex-stamp-meta">
+              {lesson.language} · {lesson.field} · Status: {lesson.status}
+            </div>
           </div>
-          <div className="lex-stamp-word">
-            {lesson.originalWord} / {lesson.transliteration}
-          </div>
-          <div className="lex-stamp-meta">
-            {lesson.language} · {lesson.field} · Status: {lesson.status}
-          </div>
-        </div>
 
-        <div className="travels">
-          {lesson.travelsWith.map((item) => (
-            <span className="pill" key={item}>
-              {item}
-            </span>
-          ))}
-        </div>
+          <div className="travels">
+            {lesson.travelsWith.map((item) => (
+              <span className="pill" key={item}>
+                {item}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        <LessonDrawerStack
+          canonReading={lesson.canonReading}
+          companionPatternSlugs={lesson.companionPatternSlugs}
+          currentLessonHref={`/lessons/${lesson.slug}`}
+          drawers={lesson.drawers}
+        />
       </section>
-
-      <LessonDrawerStack
-        canonReading={lesson.canonReading}
-        companionPatternSlugs={lesson.companionPatternSlugs}
-        currentLessonHref={`/lessons/${lesson.slug}`}
-        drawers={lesson.drawers}
-      />
 
       <PublicNodeMetaCard meta={lesson.publicNodeMeta} />
 

@@ -582,3 +582,8 @@ p {
   margin-bottom: 0;
   line-height: 1.7;
 }
+
+.lesson-study-frame {
+  position: relative;
+  padding-bottom: 24px;
+}
