@@ -25,10 +25,6 @@ export type TitusLesson = {
   subtitle: string;
   status: "published" | "beta" | "queued";
   travelsWith: string[];
-  companionPatternSlugs: string[];
-  functionLensSlug?: string;
-  canonChainSlug?: string;
-  traditionPlacementSlugs: string[];
   publicNodeMeta: PublicNodeMeta;
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
@@ -54,20 +50,6 @@ export const lessons: TitusLesson[] = [
       "rest",
       "fruit",
       "dwelling",
-    ],
-    companionPatternSlugs: [
-      "bloodguilt",
-      "inheritance",
-      "rest-release",
-      "fruitfulness",
-    ],
-    functionLensSlug: "created-domain-made-readable",
-    canonChainSlug: "erets-domain-witness-chain",
-    traditionPlacementSlugs: [
-      "h0776-ecology-creation-theology",
-      "h0776-ecology-covenantal-biblical-theology",
-      "h0776-ecology-dispensationalism",
-      "h0776-ecology-new-creation-restoration",
     ],
     publicNodeMeta: {
       compiler: "Lex Bible Project",

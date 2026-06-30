@@ -1,6 +1,7 @@
 import { canonChains } from "@/data/titus/canon-chains";
 import { courses } from "@/data/titus/courses";
 import { functionLenses } from "@/data/titus/function-lenses";
+import { lessonAssemblies } from "@/data/titus/lesson-assemblies";
 import { lessons } from "@/data/titus/lessons";
 import { patternDebriefs } from "@/data/titus/pattern-debriefs";
 import {
@@ -123,37 +124,48 @@ export function getAllSearchResults(): TitusSearchResult[] {
     bodyTerms: [course.description],
   }));
 
-  const lessonResults: TitusSearchResult[] = lessons.map((lesson) => ({
-    type: "Published Word Lesson",
-    title: lesson.title,
-    subtitle: `${lesson.language} · ${lesson.field}`,
-    href: `/lessons/${lesson.slug}`,
-    status: lesson.status,
-    primaryTerms: [
-      lesson.slug,
-      lesson.strongId,
-      lesson.originalWord,
-      lesson.transliteration,
-      lesson.title,
-      lesson.field,
-      ...lesson.field.split(/[\/,·]/).map((item) => item.trim()),
-      ...lesson.subtitle.split(/[\/,·]/).map((item) => item.trim()),
-    ],
-    keywords: [
-      lesson.language,
-      lesson.subtitle,
-      ...lesson.travelsWith,
-      ...lesson.companionPatternSlugs,
-    ],
-    bodyTerms: [
-      ...lesson.drawers.flatMap((drawer) => drawer.body),
-      ...lesson.canonReading.flatMap((passage) => [
-        passage.ref,
-        passage.text,
-        passage.notice,
-      ]),
-    ],
-  }));
+  const lessonResults: TitusSearchResult[] = lessons.map((lesson) => {
+    const assemblyTerms = lessonAssemblies
+      .filter((attachment) => attachment.lessonSlug === lesson.slug)
+      .flatMap((attachment) => [
+        attachment.drawerCode,
+        attachment.type,
+        attachment.nodeSlug,
+        attachment.label,
+      ]);
+
+    return {
+      type: "Published Word Lesson",
+      title: lesson.title,
+      subtitle: `${lesson.language} · ${lesson.field}`,
+      href: `/lessons/${lesson.slug}`,
+      status: lesson.status,
+      primaryTerms: [
+        lesson.slug,
+        lesson.strongId,
+        lesson.originalWord,
+        lesson.transliteration,
+        lesson.title,
+        lesson.field,
+        ...lesson.field.split(/[\/,·]/).map((item) => item.trim()),
+        ...lesson.subtitle.split(/[\/,·]/).map((item) => item.trim()),
+      ],
+      keywords: [
+        lesson.language,
+        lesson.subtitle,
+        ...lesson.travelsWith,
+        ...assemblyTerms,
+      ],
+      bodyTerms: [
+        ...lesson.drawers.flatMap((drawer) => drawer.body),
+        ...lesson.canonReading.flatMap((passage) => [
+          passage.ref,
+          passage.text,
+          passage.notice,
+        ]),
+      ],
+    };
+  });
 
   const patternResults: TitusSearchResult[] = patternDebriefs.map((pattern) => ({
     type: "Pattern Debrief",
