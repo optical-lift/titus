@@ -21,6 +21,7 @@ export default async function LessonPage({
   const normalizedLessonSlug = lessonSlug.toLowerCase();
   const returnHref = getReturnHref(from, "/");
   const returnLabel = getReturnLabel(from);
+  const fromQuery = from ? `?from=${encodeURIComponent(from)}` : "";
 
   const lesson = getLesson(normalizedLessonSlug);
 
@@ -32,7 +33,7 @@ export default async function LessonPage({
     }
 
     if (normalizedLessonSlug !== lessonSlug) {
-      redirect(`/lessons/${queuedLesson.slug}`);
+      redirect(`/lessons/${queuedLesson.slug}${fromQuery}`);
     }
 
     return (
@@ -45,7 +46,7 @@ export default async function LessonPage({
   }
 
   if (normalizedLessonSlug !== lesson.slug) {
-    redirect(`/lessons/${lesson.slug}`);
+    redirect(`/lessons/${lesson.slug}${fromQuery}`);
   }
 
   const course = getCourse(lesson.courseSlug);
