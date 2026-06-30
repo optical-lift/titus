@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { CanonPassage, LessonDrawer } from "@/data/titus/lessons";
+import { getFunctionLens } from "@/data/titus/function-lenses";
 import { getPatternDebriefs } from "@/data/titus/pattern-debriefs";
 
 type GuidedDrawer =
@@ -24,11 +25,13 @@ export default function LessonDrawerStack({
   drawers,
   companionPatternSlugs,
   currentLessonHref,
+  functionLensSlug,
 }: {
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
   companionPatternSlugs: string[];
   currentLessonHref: string;
+  functionLensSlug?: string;
 }) {
   const guidedDrawers: GuidedDrawer[] = useMemo(
     () => [
@@ -47,6 +50,8 @@ export default function LessonDrawerStack({
   );
 
   const companionPatterns = getPatternDebriefs(companionPatternSlugs);
+  const functionLens = functionLensSlug ? getFunctionLens(functionLensSlug) : undefined;
+
   const [openIndex, setOpenIndex] = useState(0);
   const openDrawer = guidedDrawers[openIndex];
 
@@ -121,6 +126,20 @@ export default function LessonDrawerStack({
                     <span className="small-link">Open debrief →</span>
                   </Link>
                 ))}
+              </div>
+            ) : null}
+
+            {openDrawer.code === "function" && functionLens ? (
+              <div className="function-lens-callout">
+                <span className="status">Function Lens</span>
+                <h3>{functionLens.title}</h3>
+                <p>{functionLens.subtitle}</p>
+                <Link
+                  className="button compact-button"
+                  href={`/lenses/${functionLens.slug}?from=${encodeURIComponent(currentLessonHref)}`}
+                >
+                  Open Function Lens
+                </Link>
               </div>
             ) : null}
           </div>

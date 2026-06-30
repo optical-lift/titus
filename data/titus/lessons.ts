@@ -26,6 +26,7 @@ export type TitusLesson = {
   status: "published" | "beta" | "queued";
   travelsWith: string[];
   companionPatternSlugs: string[];
+  functionLensSlug?: string;
   publicNodeMeta: PublicNodeMeta;
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
@@ -58,6 +59,7 @@ export const lessons: TitusLesson[] = [
       "rest-release",
       "fruitfulness",
     ],
+    functionLensSlug: "created-domain-made-readable",
     publicNodeMeta: {
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",

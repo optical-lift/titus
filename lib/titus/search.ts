@@ -1,5 +1,6 @@
 import { courses } from "@/data/titus/courses";
 import { lessons } from "@/data/titus/lessons";
+import { functionLenses } from "@/data/titus/function-lenses";
 import { patternDebriefs } from "@/data/titus/pattern-debriefs";
 
 export type TitusSearchResult = {
@@ -7,6 +8,7 @@ export type TitusSearchResult = {
     | "Course"
     | "Published Word Lesson"
     | "Pattern Debrief"
+    | "Function Lens"
     | "Queued Lesson"
     | "Planned Course";
   title: string;
@@ -137,7 +139,32 @@ export function getAllSearchResults(): TitusSearchResult[] {
     ],
   }));
 
-  return [...lessonResults, ...patternResults, ...courseResults, ...queuedLessons];
+  const lensResults: TitusSearchResult[] = functionLenses.map((lens) => ({
+    type: "Function Lens",
+    title: lens.title,
+    subtitle: lens.subtitle,
+    href: `/lenses/${lens.slug}`,
+    status: lens.status,
+    keywords: [
+      lens.slug,
+      lens.title,
+      lens.subtitle,
+      lens.status,
+      ...lens.functionReading,
+      ...lens.whatThisLensAllows,
+      ...lens.whatThisLensDoesNotAllow,
+      ...lens.stillMustAccountFor,
+      ...lens.anchorLessons.map((lesson) => lesson.label),
+    ],
+  }));
+
+  return [
+    ...lessonResults,
+    ...patternResults,
+    ...lensResults,
+    ...courseResults,
+    ...queuedLessons,
+  ];
 }
 
 function normalize(value: string) {
@@ -156,6 +183,8 @@ function typePriority(type: TitusSearchResult["type"]) {
       return 40;
     case "Pattern Debrief":
       return 25;
+    case "Function Lens":
+      return 22;
     case "Course":
       return 15;
     case "Queued Lesson":

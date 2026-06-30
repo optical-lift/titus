@@ -58,6 +58,7 @@ export default async function LessonPage({
           companionPatternSlugs={lesson.companionPatternSlugs}
           currentLessonHref={`/lessons/${lesson.slug}`}
           drawers={lesson.drawers}
+          functionLensSlug={lesson.functionLensSlug}
         />
       </section>
 

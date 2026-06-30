@@ -587,3 +587,20 @@ p {
   position: relative;
   padding-bottom: 24px;
 }
+
+.function-lens-callout {
+  border: 1px solid rgba(96, 121, 100, 0.5);
+  border-radius: 18px;
+  background: rgba(237, 241, 236, 0.72);
+  margin-top: 18px;
+  padding: 16px;
+}
+
+.function-lens-callout h3 {
+  margin-top: 10px;
+  font-size: 1.45rem;
+}
+
+.function-lens-callout p {
+  color: var(--muted);
+}
