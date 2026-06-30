@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import LessonDrawerStack from "@/components/titus/LessonDrawerStack";
 import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
+import { getCourse } from "@/data/titus/courses";
 import { getLesson } from "@/data/titus/lessons";
 
 export default async function LessonPage({
@@ -21,13 +22,19 @@ export default async function LessonPage({
     redirect(`/lessons/${lesson.slug}`);
   }
 
+  const course = getCourse(lesson.courseSlug);
+
+  if (!course) {
+    notFound();
+  }
+
   return (
     <main className="page-shell lesson-shell">
       <section className="lesson-study-frame">
         <section className="lex-stamp">
           <div className="lex-stamp-main">
             <div className="lex-stamp-code">
-              Ecology · Lesson {lesson.lessonNumber} · {lesson.strongId}
+              {course.title} · Lesson {lesson.lessonNumber} · {lesson.strongId}
             </div>
             <div className="lex-stamp-word">
               {lesson.originalWord} / {lesson.transliteration}
@@ -58,7 +65,7 @@ export default async function LessonPage({
 
       <nav className="footer-nav">
         <Link className="small-link" href={`/courses/${lesson.courseSlug}`}>
-          ← Return to Ecology
+          ← Return to {course.title}
         </Link>
         <Link className="small-link" href="/">
           Course catalogue
