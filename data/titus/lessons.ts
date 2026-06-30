@@ -1,3 +1,5 @@
+import type { PublicNodeMeta } from "@/data/titus/public-node-meta";
+
 export type LessonDrawer = {
   code: string;
   heading: string;
@@ -24,6 +26,7 @@ export type TitusLesson = {
   status: "published" | "beta" | "queued";
   travelsWith: string[];
   companionPatternSlugs: string[];
+  publicNodeMeta: PublicNodeMeta;
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
 };
@@ -55,6 +58,28 @@ export const lessons: TitusLesson[] = [
       "rest-release",
       "fruitfulness",
     ],
+    publicNodeMeta: {
+      compiler: "Lex Bible Project",
+      reviewer: "Pending theological and lexical review",
+      sourcePacket: "Titus Canon Word-Study Course Library Build Plan · Appendix A",
+      status: "published",
+      version: "1.0",
+      lastUpdated: "2026-06-30",
+      confidence: "medium",
+      knownLimits: [
+        "This first public lesson is a structured framework proof, not the final full Lex/Noel occurrence packet.",
+        "The Canon Reading packet is intentionally short and must be expanded before paid-course use.",
+        "Original-language occurrence counts, morphology, LXX pressure, and full tradition witnesses are not yet surfaced.",
+        "This reading must continue accounting for real geography, Israel's inheritance history, exile and return, and Revelation's new heaven and new earth."
+      ],
+      sourceList: [
+        "Genesis 1:1–10",
+        "Genesis 4:10–12",
+        "Leviticus 25:2–5",
+        "Titus public build plan",
+        "Lex Project governing method documents"
+      ],
+    },
     canonReading: [
       {
         ref: "Genesis 1:1–10",

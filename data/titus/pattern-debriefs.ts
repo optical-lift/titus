@@ -1,3 +1,5 @@
+import type { PublicNodeMeta } from "@/data/titus/public-node-meta";
+
 export type PatternDebrief = {
   slug: string;
   title: string;
@@ -11,6 +13,7 @@ export type PatternDebrief = {
     href?: string;
     status: "published" | "queued" | "course";
   }[];
+  publicNodeMeta: PublicNodeMeta;
 };
 
 export const patternDebriefs: PatternDebrief[] = [
@@ -44,6 +47,25 @@ export const patternDebriefs: PatternDebrief[] = [
         status: "queued",
       },
     ],
+    publicNodeMeta: {
+      compiler: "Lex Bible Project",
+      reviewer: "Pending theological and lexical review",
+      sourcePacket: "Titus Pattern Debrief seed set · Ecology / H0776 companion patterns",
+      status: "debrief_only",
+      version: "1.0",
+      lastUpdated: "2026-06-30",
+      confidence: "medium",
+      knownLimits: [
+        "This is a debrief-only node, not a full word lesson.",
+        "The companion pattern is public-safe but still needs a full canon chain before being treated as a published lesson.",
+        "Related queued lessons are named for orientation and should not be treated as completed Titus content."
+      ],
+      sourceList: [
+        "Titus H0776 / erets lesson",
+        "Ecology course companion pattern list",
+        "Lex Project governing method documents"
+      ],
+    },
   },
   {
     slug: "inheritance",
@@ -76,6 +98,25 @@ export const patternDebriefs: PatternDebrief[] = [
         status: "course",
       },
     ],
+    publicNodeMeta: {
+      compiler: "Lex Bible Project",
+      reviewer: "Pending theological and lexical review",
+      sourcePacket: "Titus Pattern Debrief seed set · Ecology / H0776 companion patterns",
+      status: "debrief_only",
+      version: "1.0",
+      lastUpdated: "2026-06-30",
+      confidence: "medium",
+      knownLimits: [
+        "This is a debrief-only node, not a full word lesson.",
+        "The companion pattern is public-safe but still needs a full canon chain before being treated as a published lesson.",
+        "Related queued lessons are named for orientation and should not be treated as completed Titus content."
+      ],
+      sourceList: [
+        "Titus H0776 / erets lesson",
+        "Ecology course companion pattern list",
+        "Lex Project governing method documents"
+      ],
+    },
   },
   {
     slug: "rest-release",
@@ -107,6 +148,25 @@ export const patternDebriefs: PatternDebrief[] = [
         status: "queued",
       },
     ],
+    publicNodeMeta: {
+      compiler: "Lex Bible Project",
+      reviewer: "Pending theological and lexical review",
+      sourcePacket: "Titus Pattern Debrief seed set · Ecology / H0776 companion patterns",
+      status: "debrief_only",
+      version: "1.0",
+      lastUpdated: "2026-06-30",
+      confidence: "medium",
+      knownLimits: [
+        "This is a debrief-only node, not a full word lesson.",
+        "The companion pattern is public-safe but still needs a full canon chain before being treated as a published lesson.",
+        "Related queued lessons are named for orientation and should not be treated as completed Titus content."
+      ],
+      sourceList: [
+        "Titus H0776 / erets lesson",
+        "Ecology course companion pattern list",
+        "Lex Project governing method documents"
+      ],
+    },
   },
   {
     slug: "fruitfulness",
@@ -138,6 +198,25 @@ export const patternDebriefs: PatternDebrief[] = [
         status: "queued",
       },
     ],
+    publicNodeMeta: {
+      compiler: "Lex Bible Project",
+      reviewer: "Pending theological and lexical review",
+      sourcePacket: "Titus Pattern Debrief seed set · Ecology / H0776 companion patterns",
+      status: "debrief_only",
+      version: "1.0",
+      lastUpdated: "2026-06-30",
+      confidence: "medium",
+      knownLimits: [
+        "This is a debrief-only node, not a full word lesson.",
+        "The companion pattern is public-safe but still needs a full canon chain before being treated as a published lesson.",
+        "Related queued lessons are named for orientation and should not be treated as completed Titus content."
+      ],
+      sourceList: [
+        "Titus H0776 / erets lesson",
+        "Ecology course companion pattern list",
+        "Lex Project governing method documents"
+      ],
+    },
   },
 ];
 

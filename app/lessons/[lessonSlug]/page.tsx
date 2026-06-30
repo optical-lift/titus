@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import LessonDrawerStack from "@/components/titus/LessonDrawerStack";
+import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
 import { getLesson } from "@/data/titus/lessons";
 
 export default async function LessonPage({
@@ -50,6 +51,8 @@ export default async function LessonPage({
         currentLessonHref={`/lessons/${lesson.slug}`}
         drawers={lesson.drawers}
       />
+
+      <PublicNodeMetaCard meta={lesson.publicNodeMeta} />
 
       <nav className="footer-nav">
         <Link className="small-link" href={`/courses/${lesson.courseSlug}`}>

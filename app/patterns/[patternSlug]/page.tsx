@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
 import { getPatternDebrief } from "@/data/titus/pattern-debriefs";
 
 export default async function PatternDebriefPage({
@@ -70,6 +71,8 @@ export default async function PatternDebriefPage({
           )}
         </div>
       </section>
+
+      <PublicNodeMetaCard meta={pattern.publicNodeMeta} />
 
       <nav className="footer-nav">
         <Link className="small-link" href={returnHref}>
