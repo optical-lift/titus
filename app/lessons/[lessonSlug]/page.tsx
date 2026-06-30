@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import LessonDrawerStack from "@/components/titus/LessonDrawerStack";
 import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
 import { getCourse } from "@/data/titus/courses";
+import { getLessonAssembly } from "@/data/titus/lesson-assemblies";
 import { getLesson } from "@/data/titus/lessons";
 
 export default async function LessonPage({
@@ -27,6 +28,8 @@ export default async function LessonPage({
   if (!course) {
     notFound();
   }
+
+  const attachments = getLessonAssembly(lesson.slug);
 
   return (
     <main className="page-shell lesson-shell">
@@ -55,12 +58,9 @@ export default async function LessonPage({
 
         <LessonDrawerStack
           canonReading={lesson.canonReading}
-          companionPatternSlugs={lesson.companionPatternSlugs}
+          attachments={attachments}
           currentLessonHref={`/lessons/${lesson.slug}`}
           drawers={lesson.drawers}
-          functionLensSlug={lesson.functionLensSlug}
-          canonChainSlug={lesson.canonChainSlug}
-          traditionPlacementSlugs={lesson.traditionPlacementSlugs}
         />
       </section>
 

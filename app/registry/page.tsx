@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { canonChains } from "@/data/titus/canon-chains";
 import { functionLenses } from "@/data/titus/function-lenses";
+import { lessonAssemblies } from "@/data/titus/lesson-assemblies";
 import { lessons } from "@/data/titus/lessons";
 import { patternDebriefs } from "@/data/titus/pattern-debriefs";
 import {
@@ -23,6 +24,33 @@ export default function RegistryPage() {
           lessons and courses: word lessons, Pattern Debriefs, Function Lenses,
           Canon Chains, Tradition Cards, and Tradition Placements.
         </p>
+      </section>
+
+
+      <section className="registry-section">
+        <div className="kicker">Lesson Assemblies</div>
+        <div className="registry-grid">
+          {lessonAssemblies.map((attachment) => (
+            <article
+              className="registry-card placement-registry-card"
+              key={`${attachment.lessonSlug}-${attachment.type}-${attachment.nodeSlug}`}
+            >
+              <span className="status">Lesson Assembly</span>
+              <h2>{attachment.label}</h2>
+              <p>
+                Lesson: {attachment.lessonSlug}
+                <br />
+                Course: {attachment.courseSlug}
+                <br />
+                Drawer: {attachment.drawerCode}
+                <br />
+                Type: {attachment.type}
+                <br />
+                Node: {attachment.nodeSlug}
+              </p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="registry-section">

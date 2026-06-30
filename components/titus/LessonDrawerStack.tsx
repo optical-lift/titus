@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { getCanonChain } from "@/data/titus/canon-chains";
+import type { LessonAssemblyAttachment } from "@/data/titus/lesson-assemblies";
 import type { CanonPassage, LessonDrawer } from "@/data/titus/lessons";
 import { getFunctionLens } from "@/data/titus/function-lenses";
 import { getPatternDebriefs } from "@/data/titus/pattern-debriefs";
@@ -28,19 +29,13 @@ type GuidedDrawer =
 export default function LessonDrawerStack({
   canonReading,
   drawers,
-  companionPatternSlugs,
+  attachments,
   currentLessonHref,
-  functionLensSlug,
-  canonChainSlug,
-  traditionPlacementSlugs,
 }: {
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
-  companionPatternSlugs: string[];
+  attachments: LessonAssemblyAttachment[];
   currentLessonHref: string;
-  functionLensSlug?: string;
-  canonChainSlug?: string;
-  traditionPlacementSlugs: string[];
 }) {
   const guidedDrawers: GuidedDrawer[] = useMemo(
     () => [
@@ -58,9 +53,39 @@ export default function LessonDrawerStack({
     [canonReading, drawers]
   );
 
+  const canonChainAttachment = attachments.find(
+    (attachment) =>
+      attachment.drawerCode === "canon" && attachment.type === "canon_chain"
+  );
+
+  const functionLensAttachment = attachments.find(
+    (attachment) =>
+      attachment.drawerCode === "function" && attachment.type === "function_lens"
+  );
+
+  const companionPatternSlugs = attachments
+    .filter(
+      (attachment) =>
+        attachment.drawerCode === "companions" &&
+        attachment.type === "pattern_debrief"
+    )
+    .map((attachment) => attachment.nodeSlug);
+
+  const traditionPlacementSlugs = attachments
+    .filter(
+      (attachment) =>
+        attachment.drawerCode === "traditions" &&
+        attachment.type === "tradition_placement"
+    )
+    .map((attachment) => attachment.nodeSlug);
+
   const companionPatterns = getPatternDebriefs(companionPatternSlugs);
-  const functionLens = functionLensSlug ? getFunctionLens(functionLensSlug) : undefined;
-  const canonChain = canonChainSlug ? getCanonChain(canonChainSlug) : undefined;
+  const functionLens = functionLensAttachment
+    ? getFunctionLens(functionLensAttachment.nodeSlug)
+    : undefined;
+  const canonChain = canonChainAttachment
+    ? getCanonChain(canonChainAttachment.nodeSlug)
+    : undefined;
   const traditionPlacements = getTraditionPlacements(traditionPlacementSlugs);
 
   const [openIndex, setOpenIndex] = useState(0);
