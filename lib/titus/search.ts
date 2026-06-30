@@ -113,6 +113,8 @@ export function getAllSearchResults(): TitusSearchResult[] {
       lesson.field,
       lesson.title,
       lesson.subtitle,
+      ...lesson.field.split(/[\/,·]/).map((item) => item.trim()),
+      ...lesson.subtitle.split(/[\/,·]/).map((item) => item.trim()),
       ...lesson.travelsWith,
       ...lesson.companionPatternSlugs,
     ],
@@ -148,23 +150,60 @@ function normalize(value: string) {
     .trim();
 }
 
+function typePriority(type: TitusSearchResult["type"]) {
+  switch (type) {
+    case "Published Word Lesson":
+      return 40;
+    case "Pattern Debrief":
+      return 25;
+    case "Course":
+      return 15;
+    case "Queued Lesson":
+      return 8;
+    case "Planned Course":
+      return 4;
+  }
+}
+
+function normalizedTerms(result: TitusSearchResult) {
+  const pieces = [
+    result.title,
+    result.subtitle,
+    result.type,
+    result.status,
+    ...result.keywords,
+  ];
+
+  return new Set(
+    pieces
+      .flatMap((piece) => normalize(piece).split(" "))
+      .map((piece) => piece.trim())
+      .filter(Boolean)
+  );
+}
+
 function scoreResult(result: TitusSearchResult, normalizedQuery: string) {
   const searchable = normalize(
     [result.title, result.subtitle, result.type, result.status, ...result.keywords].join(" ")
   );
 
   const title = normalize(result.title);
+  const keywordList = result.keywords.map((keyword) => normalize(keyword));
+  const termSet = normalizedTerms(result);
+  const priority = typePriority(result.type);
 
-  if (title === normalizedQuery) return 100;
-  if (title.includes(normalizedQuery)) return 80;
-  if (searchable.includes(normalizedQuery)) return 60;
+  if (title === normalizedQuery) return 1000 + priority;
+  if (keywordList.includes(normalizedQuery)) return 900 + priority;
+  if (termSet.has(normalizedQuery)) return 800 + priority;
+  if (title.includes(normalizedQuery)) return 600 + priority;
+  if (searchable.includes(normalizedQuery)) return 300 + priority;
 
   const queryWords = normalizedQuery.split(" ").filter(Boolean);
   const matchedWords = queryWords.filter((word) => searchable.includes(word));
 
   if (matchedWords.length === 0) return 0;
 
-  return 20 + matchedWords.length * 10;
+  return 100 + matchedWords.length * 20 + priority;
 }
 
 export function searchTitus(query: string) {
