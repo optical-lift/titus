@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { canonChains } from "@/data/titus/canon-chains";
 import { getAssemblyIssues } from "@/lib/titus/assembly-validation";
+import { getAttachmentHref, getAttachmentTypeLabel } from "@/lib/titus/node-links";
 import { functionLenses } from "@/data/titus/function-lenses";
 import { lessonAssemblies } from "@/data/titus/lesson-assemblies";
 import { lessons } from "@/data/titus/lessons";
@@ -55,26 +56,54 @@ export default function RegistryPage() {
       <section className="registry-section">
         <div className="kicker">Lesson Assemblies</div>
         <div className="registry-grid">
-          {lessonAssemblies.map((attachment) => (
-            <article
-              className="registry-card placement-registry-card"
-              key={`${attachment.lessonSlug}-${attachment.type}-${attachment.nodeSlug}`}
-            >
-              <span className="status">Lesson Assembly</span>
-              <h2>{attachment.label}</h2>
-              <p>
-                Lesson: {attachment.lessonSlug}
-                <br />
-                Course: {attachment.courseSlug}
-                <br />
-                Drawer: {attachment.drawerCode}
-                <br />
-                Type: {attachment.type}
-                <br />
-                Node: {attachment.nodeSlug}
-              </p>
-            </article>
-          ))}
+          {lessonAssemblies.map((attachment) => {
+            const href = getAttachmentHref(attachment);
+
+            if (!href) {
+              return (
+                <article
+                  className="registry-card placement-registry-card"
+                  key={`${attachment.lessonSlug}-${attachment.type}-${attachment.nodeSlug}`}
+                >
+                  <span className="status">Broken Assembly</span>
+                  <h2>{attachment.label}</h2>
+                  <p>
+                    Lesson: {attachment.lessonSlug}
+                    <br />
+                    Course: {attachment.courseSlug}
+                    <br />
+                    Drawer: {attachment.drawerCode}
+                    <br />
+                    Type: {getAttachmentTypeLabel(attachment)}
+                    <br />
+                    Node: {attachment.nodeSlug}
+                  </p>
+                </article>
+              );
+            }
+
+            return (
+              <Link
+                className="registry-card placement-registry-card"
+                href={href}
+                key={`${attachment.lessonSlug}-${attachment.type}-${attachment.nodeSlug}`}
+              >
+                <span className="status">Lesson Assembly</span>
+                <h2>{attachment.label}</h2>
+                <p>
+                  Lesson: {attachment.lessonSlug}
+                  <br />
+                  Course: {attachment.courseSlug}
+                  <br />
+                  Drawer: {attachment.drawerCode}
+                  <br />
+                  Type: {getAttachmentTypeLabel(attachment)}
+                  <br />
+                  Node: {attachment.nodeSlug}
+                </p>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
