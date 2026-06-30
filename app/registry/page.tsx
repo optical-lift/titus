@@ -1,0 +1,149 @@
+import Link from "next/link";
+import { canonChains } from "@/data/titus/canon-chains";
+import { functionLenses } from "@/data/titus/function-lenses";
+import { lessons } from "@/data/titus/lessons";
+import { patternDebriefs } from "@/data/titus/pattern-debriefs";
+import {
+  traditionCards,
+  traditionPlacements,
+} from "@/data/titus/tradition-notes";
+
+export default function RegistryPage() {
+  return (
+    <main className="page-shell">
+      <Link className="small-link" href="/">
+        ← Course catalogue
+      </Link>
+
+      <section className="hero" style={{ marginTop: 18 }}>
+        <div className="kicker">Titus Node Registry</div>
+        <h1>Reusable public study nodes.</h1>
+        <p className="lede">
+          This page shows the reusable Titus objects that can be attached to
+          lessons and courses: word lessons, Pattern Debriefs, Function Lenses,
+          Canon Chains, Tradition Cards, and Tradition Placements.
+        </p>
+      </section>
+
+      <section className="registry-section">
+        <div className="kicker">Published Word Lessons</div>
+        <div className="registry-grid">
+          {lessons.map((lesson) => (
+            <Link
+              className="registry-card"
+              href={`/lessons/${lesson.slug}`}
+              key={lesson.slug}
+            >
+              <span className="status">Word Lesson</span>
+              <h2>{lesson.title}</h2>
+              <p>{lesson.field}</p>
+              <p>Status: {lesson.status}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="registry-section">
+        <div className="kicker">Pattern Debriefs</div>
+        <div className="registry-grid">
+          {patternDebriefs.map((pattern) => (
+            <Link
+              className="registry-card"
+              href={`/patterns/${pattern.slug}`}
+              key={pattern.slug}
+            >
+              <span className="status">Pattern Debrief</span>
+              <h2>{pattern.title}</h2>
+              <p>{pattern.appearsIn.join(", ")}</p>
+              <p>Status: {pattern.status.replaceAll("_", " ")}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="registry-section">
+        <div className="kicker">Function Lenses</div>
+        <div className="registry-grid">
+          {functionLenses.map((lens) => (
+            <Link
+              className="registry-card"
+              href={`/lenses/${lens.slug}`}
+              key={lens.slug}
+            >
+              <span className="status">Function Lens</span>
+              <h2>{lens.title}</h2>
+              <p>{lens.subtitle}</p>
+              <p>Status: {lens.status}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="registry-section">
+        <div className="kicker">Canon Chains</div>
+        <div className="registry-grid">
+          {canonChains.map((chain) => (
+            <Link
+              className="registry-card"
+              href={`/chains/${chain.slug}`}
+              key={chain.slug}
+            >
+              <span className="status">Canon Chain</span>
+              <h2>{chain.title}</h2>
+              <p>{chain.subtitle}</p>
+              <p>Status: {chain.status}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="registry-section">
+        <div className="kicker">Tradition Cards</div>
+        <div className="registry-grid">
+          {traditionCards.map((card) => (
+            <Link
+              className="registry-card"
+              href={`/traditions/${card.slug}`}
+              key={card.slug}
+            >
+              <span className="status">Tradition Card</span>
+              <h2>{card.title}</h2>
+              <p>{card.subtitle}</p>
+              <p>
+                {card.cardKind.replaceAll("_", " ")} · Status: {card.status}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="registry-section">
+        <div className="kicker">Tradition Placements</div>
+        <div className="registry-grid">
+          {traditionPlacements.map((placement) => {
+            const card = traditionCards.find(
+              (traditionCard) => traditionCard.slug === placement.cardSlug
+            );
+
+            return (
+              <Link
+                className="registry-card placement-registry-card"
+                href={`/traditions/${placement.cardSlug}?placement=${placement.slug}&from=/lessons/${placement.lessonSlug}`}
+                key={placement.slug}
+              >
+                <span className="status">Tradition Placement</span>
+                <h2>{placement.placementTitle}</h2>
+                <p>{placement.placementSummary}</p>
+                <p>
+                  Card: {card?.title || placement.cardSlug}
+                  <br />
+                  Attached to: {placement.courseSlug} / {placement.lessonSlug}
+                </p>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+    </main>
+  );
+}

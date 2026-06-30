@@ -14,6 +14,15 @@ export default function Home() {
           reception.
         </p>
 
+        <div className="home-utility-links">
+          <Link className="pill related-pill" href="/registry">
+            Node Registry
+          </Link>
+          <Link className="pill related-pill" href="/search">
+            Curated Search
+          </Link>
+        </div>
+
         <form className="search-form compact-home-search" action="/search">
           <label className="search-label" htmlFor="home-search">
             Search public Titus nodes

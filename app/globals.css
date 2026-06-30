@@ -655,3 +655,44 @@ p {
   color: var(--accent-dark);
   font-size: 1.25rem;
 }
+
+.home-utility-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.registry-section {
+  margin-top: 28px;
+}
+
+.registry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.registry-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.86);
+  padding: 18px;
+}
+
+.registry-card h2 {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+}
+
+.registry-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.placement-registry-card {
+  background: rgba(237, 241, 236, 0.72);
+}
