@@ -117,3 +117,15 @@ export function getAssemblyIssues(): AssemblyIssue[] {
 
   return issues;
 }
+
+export function assertNoAssemblyErrors() {
+  const errors = getAssemblyIssues().filter((issue) => issue.severity === "error");
+
+  if (errors.length > 0) {
+    throw new Error(
+      `Titus lesson assembly validation failed:\n${errors
+        .map((issue) => `- ${issue.message}`)
+        .join("\n")}`
+    );
+  }
+}

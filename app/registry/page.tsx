@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { canonChains } from "@/data/titus/canon-chains";
 import { courseAssemblies } from "@/data/titus/course-assemblies";
-import { getAssemblyIssues } from "@/lib/titus/assembly-validation";
-import { getCourseAssemblyIssues } from "@/lib/titus/course-assembly-validation";
+import { assertNoAssemblyErrors, getAssemblyIssues } from "@/lib/titus/assembly-validation";
+import { assertNoCourseAssemblyErrors, getCourseAssemblyIssues } from "@/lib/titus/course-assembly-validation";
 import { getAttachmentHref, getAttachmentTypeLabel } from "@/lib/titus/node-links";
 import {
   getCourseAssemblyNodeHref,
@@ -19,6 +19,9 @@ import {
 } from "@/data/titus/tradition-notes";
 
 export default function RegistryPage() {
+  assertNoAssemblyErrors();
+  assertNoCourseAssemblyErrors();
+
   const assemblyIssues = getAssemblyIssues();
   const courseAssemblyIssues = getCourseAssemblyIssues();
 

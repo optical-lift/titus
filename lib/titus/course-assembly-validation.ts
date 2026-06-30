@@ -112,3 +112,17 @@ export function getCourseAssemblyIssues(): CourseAssemblyIssue[] {
 
   return issues;
 }
+
+export function assertNoCourseAssemblyErrors() {
+  const errors = getCourseAssemblyIssues().filter(
+    (issue) => issue.severity === "error"
+  );
+
+  if (errors.length > 0) {
+    throw new Error(
+      `Titus course assembly validation failed:\n${errors
+        .map((issue) => `- ${issue.message}`)
+        .join("\n")}`
+    );
+  }
+}
