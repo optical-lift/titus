@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { getCanonChain } from "@/data/titus/canon-chains";
 import type { LessonAssemblyAttachment } from "@/data/titus/lesson-assemblies";
+import { getAttachmentHref } from "@/lib/titus/node-links";
 import type { CanonPassage, LessonDrawer } from "@/data/titus/lessons";
 import { getFunctionLens } from "@/data/titus/function-lenses";
 import { getPatternDebriefs } from "@/data/titus/pattern-debriefs";
@@ -63,30 +64,33 @@ export default function LessonDrawerStack({
       attachment.drawerCode === "function" && attachment.type === "function_lens"
   );
 
-  const companionPatternSlugs = attachments
-    .filter(
-      (attachment) =>
-        attachment.drawerCode === "companions" &&
-        attachment.type === "pattern_debrief"
-    )
-    .map((attachment) => attachment.nodeSlug);
+  const companionPatternAttachments = attachments.filter(
+    (attachment) =>
+      attachment.drawerCode === "companions" &&
+      attachment.type === "pattern_debrief"
+  );
 
-  const traditionPlacementSlugs = attachments
-    .filter(
-      (attachment) =>
-        attachment.drawerCode === "traditions" &&
-        attachment.type === "tradition_placement"
-    )
-    .map((attachment) => attachment.nodeSlug);
+  const traditionPlacementAttachments = attachments.filter(
+    (attachment) =>
+      attachment.drawerCode === "traditions" &&
+      attachment.type === "tradition_placement"
+  );
 
-  const companionPatterns = getPatternDebriefs(companionPatternSlugs);
+  const companionPatterns = getPatternDebriefs(
+    companionPatternAttachments.map((attachment) => attachment.nodeSlug)
+  );
+
   const functionLens = functionLensAttachment
     ? getFunctionLens(functionLensAttachment.nodeSlug)
     : undefined;
+
   const canonChain = canonChainAttachment
     ? getCanonChain(canonChainAttachment.nodeSlug)
     : undefined;
-  const traditionPlacements = getTraditionPlacements(traditionPlacementSlugs);
+
+  const traditionPlacements = getTraditionPlacements(
+    traditionPlacementAttachments.map((attachment) => attachment.nodeSlug)
+  );
 
   const [openIndex, setOpenIndex] = useState(0);
   const openDrawer = guidedDrawers[openIndex];
@@ -147,12 +151,14 @@ export default function LessonDrawerStack({
                 <span className="status">Canon Chain</span>
                 <h3>{canonChain.title}</h3>
                 <p>{canonChain.subtitle}</p>
-                <Link
-                  className="button compact-button"
-                  href={`/chains/${canonChain.slug}?from=${encodeURIComponent(currentLessonHref)}`}
-                >
-                  Open Canon Chain
-                </Link>
+                {canonChainAttachment ? (
+                  <Link
+                    className="button compact-button"
+                    href={getAttachmentHref(canonChainAttachment) || currentLessonHref}
+                  >
+                    Open Canon Chain
+                  </Link>
+                ) : null}
               </div>
             ) : null}
           </div>
@@ -164,18 +170,24 @@ export default function LessonDrawerStack({
 
             {openDrawer.code === "companions" ? (
               <div className="pattern-card-grid" aria-label="Pattern debrief links">
-                {companionPatterns.map((pattern) => (
-                  <Link
-                    className="pattern-card"
-                    href={`/patterns/${pattern.slug}?from=${encodeURIComponent(currentLessonHref)}`}
-                    key={pattern.slug}
-                  >
-                    <span className="status">Pattern Debrief</span>
-                    <h3>{pattern.title}</h3>
-                    <p>{pattern.whyThisPatternMatters[0]}</p>
-                    <span className="small-link">Open debrief →</span>
-                  </Link>
-                ))}
+                {companionPatterns.map((pattern) => {
+                  const attachment = companionPatternAttachments.find(
+                    (candidate) => candidate.nodeSlug === pattern.slug
+                  );
+
+                  return (
+                    <Link
+                      className="pattern-card"
+                      href={attachment ? getAttachmentHref(attachment) || currentLessonHref : currentLessonHref}
+                      key={pattern.slug}
+                    >
+                      <span className="status">Pattern Debrief</span>
+                      <h3>{pattern.title}</h3>
+                      <p>{pattern.whyThisPatternMatters[0]}</p>
+                      <span className="small-link">Open debrief →</span>
+                    </Link>
+                  );
+                })}
               </div>
             ) : null}
 
@@ -183,15 +195,18 @@ export default function LessonDrawerStack({
               <div className="pattern-card-grid" aria-label="Tradition placement links">
                 {traditionPlacements.map((placement) => {
                   const card = getTraditionCard(placement.cardSlug);
+                  const attachment = traditionPlacementAttachments.find(
+                    (candidate) => candidate.nodeSlug === placement.slug
+                  );
 
-                  if (!card) {
+                  if (!card || !attachment) {
                     return null;
                   }
 
                   return (
                     <Link
                       className="pattern-card"
-                      href={`/traditions/${card.slug}?placement=${placement.slug}&from=${encodeURIComponent(currentLessonHref)}`}
+                      href={getAttachmentHref(attachment) || currentLessonHref}
                       key={placement.slug}
                     >
                       <span className="status">Tradition Placement</span>
@@ -209,12 +224,14 @@ export default function LessonDrawerStack({
                 <span className="status">Function Lens</span>
                 <h3>{functionLens.title}</h3>
                 <p>{functionLens.subtitle}</p>
-                <Link
-                  className="button compact-button"
-                  href={`/lenses/${functionLens.slug}?from=${encodeURIComponent(currentLessonHref)}`}
-                >
-                  Open Function Lens
-                </Link>
+                {functionLensAttachment ? (
+                  <Link
+                    className="button compact-button"
+                    href={getAttachmentHref(functionLensAttachment) || currentLessonHref}
+                  >
+                    Open Function Lens
+                  </Link>
+                ) : null}
               </div>
             ) : null}
           </div>
