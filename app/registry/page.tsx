@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { canonChains } from "@/data/titus/canon-chains";
+import { courseAssemblies } from "@/data/titus/course-assemblies";
 import { getAssemblyIssues } from "@/lib/titus/assembly-validation";
 import { getAttachmentHref, getAttachmentTypeLabel } from "@/lib/titus/node-links";
+import {
+  getCourseAssemblyNodeHref,
+  getCourseAssemblySectionLabel,
+  getCourseAssemblyTypeLabel,
+} from "@/lib/titus/course-node-links";
 import { functionLenses } from "@/data/titus/function-lenses";
 import { lessonAssemblies } from "@/data/titus/lesson-assemblies";
 import { lessons } from "@/data/titus/lessons";
@@ -51,6 +57,50 @@ export default function RegistryPage() {
             </ul>
           ) : null}
         </article>
+      </section>
+
+
+      <section className="registry-section">
+        <div className="kicker">Course Assemblies</div>
+        <div className="registry-grid">
+          {courseAssemblies.map((node) => {
+            const href = getCourseAssemblyNodeHref(node);
+
+            const inner = (
+              <>
+                <span className="status">Course Assembly</span>
+                <h2>{node.label}</h2>
+                <p>{node.summary}</p>
+                <p>
+                  Course: {node.courseSlug}
+                  <br />
+                  Section: {getCourseAssemblySectionLabel(node.section)}
+                  <br />
+                  Type: {getCourseAssemblyTypeLabel(node.type)}
+                  <br />
+                  Node: {node.nodeSlug}
+                </p>
+              </>
+            );
+
+            return href ? (
+              <Link
+                className="registry-card placement-registry-card"
+                href={href}
+                key={`${node.courseSlug}-${node.section}-${node.type}-${node.nodeSlug}`}
+              >
+                {inner}
+              </Link>
+            ) : (
+              <article
+                className="registry-card placement-registry-card"
+                key={`${node.courseSlug}-${node.section}-${node.type}-${node.nodeSlug}`}
+              >
+                {inner}
+              </article>
+            );
+          })}
+        </div>
       </section>
 
       <section className="registry-section">
