@@ -23,3 +23,7 @@ pnpm-debug.log*
 
 # macOS
 .DS_Store
+
+# TypeScript cache
+tsconfig.tsbuildinfo
+*.tsbuildinfo
