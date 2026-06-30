@@ -2,6 +2,7 @@ import Link from "next/link";
 import { canonChains } from "@/data/titus/canon-chains";
 import { courseAssemblies } from "@/data/titus/course-assemblies";
 import { getAssemblyIssues } from "@/lib/titus/assembly-validation";
+import { getCourseAssemblyIssues } from "@/lib/titus/course-assembly-validation";
 import { getAttachmentHref, getAttachmentTypeLabel } from "@/lib/titus/node-links";
 import {
   getCourseAssemblyNodeHref,
@@ -19,6 +20,7 @@ import {
 
 export default function RegistryPage() {
   const assemblyIssues = getAssemblyIssues();
+  const courseAssemblyIssues = getCourseAssemblyIssues();
 
   return (
     <main className="page-shell">
@@ -59,6 +61,28 @@ export default function RegistryPage() {
         </article>
       </section>
 
+
+      <section className="registry-section">
+        <div className="kicker">Course Assembly Integrity</div>
+        <article className={courseAssemblyIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
+          <h2>{courseAssemblyIssues.length === 0 ? "All course assemblies resolve" : "Course assembly issues found"}</h2>
+          <p>
+            {courseAssemblyIssues.length === 0
+              ? "Every course assembly currently points to an existing course and reusable or queued node."
+              : "One or more course assemblies point to missing or incomplete nodes."}
+          </p>
+
+          {courseAssemblyIssues.length > 0 ? (
+            <ul className="pattern-list">
+              {courseAssemblyIssues.map((issue) => (
+                <li key={`${issue.courseSlug}-${issue.section}-${issue.nodeSlug}-${issue.message}`}>
+                  <strong>{issue.severity.toUpperCase()}:</strong> {issue.message}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </article>
+      </section>
 
       <section className="registry-section">
         <div className="kicker">Course Assemblies</div>

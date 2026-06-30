@@ -4,6 +4,7 @@ import { functionLenses } from "@/data/titus/function-lenses";
 import { lessonAssemblies } from "@/data/titus/lesson-assemblies";
 import { lessons } from "@/data/titus/lessons";
 import { patternDebriefs } from "@/data/titus/pattern-debriefs";
+import { queuedLessons } from "@/data/titus/queued-lessons";
 import {
   traditionCards,
   traditionPlacements,
@@ -27,90 +28,6 @@ export type TitusSearchResult = {
   keywords: string[];
   bodyTerms: string[];
 };
-
-const queuedLessons: TitusSearchResult[] = [
-  {
-    type: "Queued Lesson",
-    title: "H0127 — אֲדָמָה / adamah",
-    subtitle: "ground, soil; queued Ecology word lesson",
-    status: "queued",
-    primaryTerms: ["h0127", "adamah", "אדמה", "ground", "soil"],
-    keywords: ["earth", "ecology"],
-    bodyTerms: [],
-  },
-  {
-    type: "Queued Lesson",
-    title: "H4325 — מַיִם / mayim",
-    subtitle: "water; queued Ecology word lesson",
-    status: "queued",
-    primaryTerms: ["h4325", "mayim", "מים", "water", "waters"],
-    keywords: ["ecology"],
-    bodyTerms: [],
-  },
-  {
-    type: "Queued Lesson",
-    title: "H5869 — עַיִן / ayin",
-    subtitle: "eye, spring, fountain; queued Ecology word lesson",
-    status: "queued",
-    primaryTerms: ["h5869", "ayin", "עין", "eye", "spring", "fountain"],
-    keywords: ["ecology"],
-    bodyTerms: [],
-  },
-  {
-    type: "Queued Lesson",
-    title: "H7704 — שָׂדֶה / sadeh",
-    subtitle: "field; queued Ecology word lesson",
-    status: "queued",
-    primaryTerms: ["h7704", "sadeh", "שדה", "field"],
-    keywords: ["ecology"],
-    bodyTerms: [],
-  },
-  {
-    type: "Queued Lesson",
-    title: "H3754 — כֶּרֶם / kerem",
-    subtitle: "vineyard; queued Ecology word lesson",
-    status: "queued",
-    primaryTerms: ["h3754", "kerem", "כרם", "vineyard"],
-    keywords: ["ecology"],
-    bodyTerms: [],
-  },
-  {
-    type: "Queued Lesson",
-    title: "H6529 — פְּרִי / peri",
-    subtitle: "fruit, yield; queued Ecology word lesson",
-    status: "queued",
-    primaryTerms: ["h6529", "peri", "פרי", "fruit", "yield"],
-    keywords: ["ecology"],
-    bodyTerms: [],
-  },
-  {
-    type: "Queued Lesson",
-    title: "G2590 — καρπός / karpos",
-    subtitle: "fruit, outcome; queued Greek companion lesson",
-    status: "queued",
-    primaryTerms: ["g2590", "karpos", "καρπός", "fruit", "outcome"],
-    keywords: ["ecology"],
-    bodyTerms: [],
-  },
-  {
-    type: "Queued Lesson",
-    title: "H7676 — שַׁבָּת / shabbath",
-    subtitle: "Sabbath, rest; queued Ecology word lesson",
-    status: "queued",
-    primaryTerms: ["h7676", "shabbath", "שבת", "sabbath", "rest"],
-    keywords: ["release", "ecology"],
-    bodyTerms: [],
-  },
-  {
-    type: "Queued Lesson",
-    title: "H1818 — דָּם / dam",
-    subtitle: "blood; queued companion word lesson",
-    status: "queued",
-    primaryTerms: ["h1818", "dam", "דם", "blood"],
-    keywords: ["bloodguilt", "land", "ground"],
-    bodyTerms: [],
-  },
-];
 
 export function getAllSearchResults(): TitusSearchResult[] {
   const courseResults: TitusSearchResult[] = courses.map((course) => ({
@@ -273,6 +190,16 @@ export function getAllSearchResults(): TitusSearchResult[] {
     };
   });
 
+  const queuedLessonResults: TitusSearchResult[] = queuedLessons.map((lesson) => ({
+    type: "Queued Lesson",
+    title: lesson.title,
+    subtitle: lesson.subtitle,
+    status: lesson.status,
+    primaryTerms: lesson.primaryTerms,
+    keywords: lesson.keywords,
+    bodyTerms: [],
+  }));
+
   return [
     ...lessonResults,
     ...patternResults,
@@ -280,7 +207,7 @@ export function getAllSearchResults(): TitusSearchResult[] {
     ...chainResults,
     ...traditionResults,
     ...courseResults,
-    ...queuedLessons,
+    ...queuedLessonResults,
   ];
 }
 
