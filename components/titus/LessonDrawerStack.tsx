@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { CanonPassage, LessonDrawer } from "@/data/titus/lessons";
+import { getPatternDebriefs } from "@/data/titus/pattern-debriefs";
 
 type GuidedDrawer =
   | {
@@ -20,9 +22,11 @@ type GuidedDrawer =
 export default function LessonDrawerStack({
   canonReading,
   drawers,
+  companionPatternSlugs,
 }: {
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
+  companionPatternSlugs: string[];
 }) {
   const guidedDrawers: GuidedDrawer[] = useMemo(
     () => [
@@ -40,6 +44,7 @@ export default function LessonDrawerStack({
     [canonReading, drawers]
   );
 
+  const companionPatterns = getPatternDebriefs(companionPatternSlugs);
   const [openIndex, setOpenIndex] = useState(0);
   const openDrawer = guidedDrawers[openIndex];
 
@@ -99,6 +104,23 @@ export default function LessonDrawerStack({
             {openDrawer.body.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
+
+            {openDrawer.code === "companions" ? (
+              <div className="pattern-card-grid" aria-label="Pattern debrief links">
+                {companionPatterns.map((pattern) => (
+                  <Link
+                    className="pattern-card"
+                    href={`/patterns/${pattern.slug}?from=/lessons/h0776`}
+                    key={pattern.slug}
+                  >
+                    <span className="status">Pattern Debrief</span>
+                    <h3>{pattern.title}</h3>
+                    <p>{pattern.whyThisPatternMatters[0]}</p>
+                    <span className="small-link">Open debrief →</span>
+                  </Link>
+                ))}
+              </div>
+            ) : null}
           </div>
         )}
 

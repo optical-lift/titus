@@ -23,6 +23,7 @@ export type TitusLesson = {
   subtitle: string;
   status: "published" | "beta" | "queued";
   travelsWith: string[];
+  companionPatternSlugs: string[];
   canonReading: CanonPassage[];
   drawers: LessonDrawer[];
 };
@@ -47,6 +48,12 @@ export const lessons: TitusLesson[] = [
       "rest",
       "fruit",
       "dwelling",
+    ],
+    companionPatternSlugs: [
+      "bloodguilt",
+      "inheritance",
+      "rest-release",
+      "fruitfulness",
     ],
     canonReading: [
       {

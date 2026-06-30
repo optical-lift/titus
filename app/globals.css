@@ -384,3 +384,50 @@ p {
     font-size: 0.76rem;
   }
 }
+
+.pattern-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.pattern-card {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(247, 248, 244, 0.78);
+  padding: 16px;
+}
+
+.pattern-card h3 {
+  font-size: 1.24rem;
+}
+
+.pattern-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
+.pattern-section {
+  margin-top: 18px;
+}
+
+.pattern-list {
+  margin: 14px 0 0;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+
+.related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.related-pill {
+  display: inline-flex;
+}

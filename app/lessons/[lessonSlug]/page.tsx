@@ -46,6 +46,7 @@ export default async function LessonPage({
 
       <LessonDrawerStack
         canonReading={lesson.canonReading}
+        companionPatternSlugs={lesson.companionPatternSlugs}
         drawers={lesson.drawers}
       />
 
