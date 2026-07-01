@@ -15,32 +15,32 @@ export function TitusLexStamp({ stamp }: TitusLexStampProps) {
 
   return (
     <article className="titus-lex-stamp" aria-label={`${stamp.strongId} Lex Stamp`}>
-      <div className="titus-lex-stamp__row titus-lex-stamp__row--top">
-        <button className="titus-lex-stamp__cell titus-lex-stamp__cell--left" type="button">
-          <span className="titus-lex-stamp__object">
+      <div className="titus-lex-stamp__pair-row">
+        <button className="titus-lex-stamp__pair-cell" type="button">
+          <span className="titus-lex-stamp__idline">
             <strong>{stamp.currentObject.strongId}</strong>
             <span>·</span>
             <em>({stamp.currentObject.transliteration})</em>
           </span>
-          <span className="titus-lex-stamp__english">{englishIdentity}</span>
+          <span className="titus-lex-stamp__gloss">{englishIdentity}</span>
         </button>
 
         <button
           className={
             stamp.lxxMoment.resolved
-              ? "titus-lex-stamp__cell titus-lex-stamp__cell--right"
-              : "titus-lex-stamp__cell titus-lex-stamp__cell--right is-empty"
+              ? "titus-lex-stamp__pair-cell"
+              : "titus-lex-stamp__pair-cell is-empty"
           }
           type="button"
         >
           {stamp.lxxMoment.resolved ? (
             <>
-              <span className="titus-lex-stamp__object">
+              <span className="titus-lex-stamp__idline">
                 <strong>{stamp.lxxMoment.greekStrongId}</strong>
                 <span>·</span>
                 <em>({stamp.lxxMoment.transliteration})</em>
               </span>
-              <span className="titus-lex-stamp__english">
+              <span className="titus-lex-stamp__gloss">
                 {stamp.lxxMoment.english}
               </span>
             </>
@@ -50,14 +50,16 @@ export function TitusLexStamp({ stamp }: TitusLexStampProps) {
         </button>
       </div>
 
-      <div className="titus-lex-stamp__row titus-lex-stamp__row--middle">
-        <div className="titus-lex-stamp__kjv">{stamp.inheritedKjvLexical}</div>
+      <div className="titus-lex-stamp__witness-row">
+        <div className="titus-lex-stamp__kjv">
+          {stamp.inheritedKjvLexical}
+        </div>
         <button className="titus-lex-stamp__anchor" type="button">
           {anchorRef}
         </button>
       </div>
 
-      <div className="titus-lex-stamp__row titus-lex-stamp__row--bottom">
+      <div className="titus-lex-stamp__lineage-row">
         <span className="titus-lex-stamp__arrow">←</span>
         <div className="titus-lex-stamp__lineage">
           {stamp.lineage.length > 0 ? (

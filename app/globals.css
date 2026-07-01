@@ -3236,3 +3236,180 @@ body {
     font-size: 0.95rem;
   }
 }
+
+
+/* Compact Lex Stamp vocabulary snapshot */
+
+.course-word-packet__lex-hero {
+  padding: clamp(13px, 3.5vw, 18px);
+}
+
+.course-word-packet__lex-hero > .course-word-packet__eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.13em;
+}
+
+.titus-lex-stamp {
+  display: grid;
+  gap: 0;
+  margin-top: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: rgba(251, 250, 246, 0.88);
+  font-family: var(--ui-font);
+}
+
+.titus-lex-stamp__pair-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line);
+}
+
+.titus-lex-stamp__pair-cell {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 9px 10px;
+  text-align: left;
+}
+
+.titus-lex-stamp__pair-cell + .titus-lex-stamp__pair-cell {
+  border-left: 1px solid var(--line);
+}
+
+.titus-lex-stamp__idline {
+  display: inline-flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 5px;
+  color: var(--accent-dark);
+  font-size: 0.74rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.titus-lex-stamp__idline em {
+  font-family: var(--text-font);
+  font-size: 0.78rem;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.titus-lex-stamp__gloss {
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: 0.92rem;
+  line-height: 1.12;
+}
+
+.titus-lex-stamp__witness-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border-bottom: 1px solid var(--line);
+}
+
+.titus-lex-stamp__kjv {
+  min-width: 0;
+  padding: 8px 10px;
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: 0.94rem;
+  line-height: 1.08;
+}
+
+.titus-lex-stamp__anchor {
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: transparent;
+  color: var(--accent-dark);
+  cursor: pointer;
+  padding: 8px 10px;
+  font-family: var(--ui-font);
+  font-size: 0.7rem;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.titus-lex-stamp__lineage-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+}
+
+.titus-lex-stamp__lineage {
+  min-width: 0;
+  text-align: center;
+  color: var(--muted);
+  font-family: var(--text-font);
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.08;
+}
+
+.titus-lex-stamp__lineage button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-style: italic;
+}
+
+.titus-lex-stamp__arrow,
+.titus-lex-stamp__sep,
+.titus-lex-stamp__dash {
+  color: var(--muted);
+}
+
+.course-word-packet__stamp-context {
+  margin-top: 8px;
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+
+@media (max-width: 720px) {
+  .course-word-packet__lex-hero {
+    padding: 13px;
+  }
+
+  .titus-lex-stamp__pair-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .titus-lex-stamp__pair-cell {
+    padding: 8px 9px;
+  }
+
+  .titus-lex-stamp__idline {
+    gap: 4px;
+    font-size: 0.68rem;
+  }
+
+  .titus-lex-stamp__idline em {
+    font-size: 0.72rem;
+  }
+
+  .titus-lex-stamp__gloss {
+    font-size: 0.86rem;
+  }
+
+  .titus-lex-stamp__kjv {
+    font-size: 0.88rem;
+  }
+
+  .titus-lex-stamp__anchor {
+    font-size: 0.66rem;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}

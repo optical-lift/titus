@@ -116,7 +116,7 @@ function goPrevious() {
       </Link>
       <section className="course-word-packet__lex-hero" aria-labelledby="lesson-title">
         <p className="course-word-packet__eyebrow">
-          Lex Stamp · Word Study Snapshot
+          Lesson {shell.lessonNumber} Vocabulary
         </p>
 
         <h1 id="lesson-title" className="sr-only">
