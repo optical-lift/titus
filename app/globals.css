@@ -1512,3 +1512,16 @@ ol {
     margin-bottom: 10px;
   }
 }
+
+
+/* Homepage heading removal spacing */
+
+.compact-search--courses {
+  margin-top: 18px;
+}
+
+@media (max-width: 720px) {
+  .compact-search--courses {
+    margin-top: 16px;
+  }
+}

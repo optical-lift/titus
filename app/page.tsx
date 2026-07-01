@@ -32,12 +32,7 @@ export default function Home() {
         </div>
       </section>
 
-<section className="compact-active" id="courses" aria-labelledby="active-course-title">
-        <div className="compact-section-heading compact-section-heading--centered">
-          <h2 id="active-course-title" className="compact-section-label">
-            Canon Patterns
-          </h2>
-        </div>
+<section className="compact-active" id="courses" aria-label="Titus courses">
 
         <form className="compact-search compact-search--courses" action="/search" role="search">
           <label className="sr-only" htmlFor="home-search">
