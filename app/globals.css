@@ -3814,3 +3814,28 @@ body {
 }
 
 /* End Titus sticky lesson navigation and drawer progress */
+
+/* Titus active drawer progress refinement */
+
+.course-word-packet__top-progress > span > span {
+  width: 20%;
+  transition: width 220ms ease;
+}
+
+.course-word-packet__top-progress[data-drawer-current="2"] > span > span {
+  width: 40%;
+}
+
+.course-word-packet__top-progress[data-drawer-current="3"] > span > span {
+  width: 60%;
+}
+
+.course-word-packet__top-progress[data-drawer-current="4"] > span > span {
+  width: 80%;
+}
+
+.course-word-packet__top-progress[data-drawer-current="5"] > span > span {
+  width: 100%;
+}
+
+/* End Titus active drawer progress refinement */
