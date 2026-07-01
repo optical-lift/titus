@@ -5,40 +5,48 @@ const availableCourses = courses.filter((course) => course.status === "active");
 
 export default function Home() {
   return (
-    <main className="titus-home">
-      <section className="titus-home__masthead" aria-labelledby="titus-title">
-        <p className="titus-kicker">Titus</p>
+    <main className="edu-home">
+      <header className="edu-topbar" aria-label="Titus site header">
+        <Link className="edu-brand" href="/">
+          Titus
+        </Link>
+        <nav className="edu-nav" aria-label="Primary navigation">
+          <Link href="/courses/ecology">Courses</Link>
+        </nav>
+      </header>
+
+      <section className="edu-hero" aria-labelledby="titus-title">
         <h1 id="titus-title">Titus</h1>
-        <p className="titus-subtitle">
+        <p>
           Greek &amp; Hebrew word study through whole-canon function pattern discovery
         </p>
       </section>
 
-      <section className="titus-section" aria-labelledby="available-courses">
-        <div className="titus-section__header">
-          <p className="titus-kicker">Available Courses</p>
-          <h2 id="available-courses">Courses</h2>
+      <section className="edu-course-section" aria-labelledby="available-courses">
+        <div className="edu-section-heading">
+          <p>Available courses</p>
+          <h2 id="available-courses">Start a guided study</h2>
         </div>
 
         {availableCourses.length > 0 ? (
-          <div className="titus-course-list">
+          <div className="edu-course-grid">
             {availableCourses.map((course) => (
-              <article className="titus-course-card" key={course.slug}>
-                <div>
-                  <p className="titus-course-card__eyebrow">Course</p>
+              <article className="edu-course-card" key={course.slug}>
+                <div className="edu-course-card__content">
+                  <p className="edu-course-card__label">Course</p>
                   <h3>{course.title}</h3>
-                  <p className="titus-course-card__subtitle">{course.subtitle}</p>
-                  <p className="titus-course-card__description">{course.description}</p>
+                  <p className="edu-course-card__subtitle">{course.subtitle}</p>
+                  <p className="edu-course-card__description">{course.description}</p>
                 </div>
 
-                <Link className="titus-button" href={`/courses/${course.slug}`}>
-                  Open Course
+                <Link className="edu-course-card__link" href={`/courses/${course.slug}`}>
+                  Open course
                 </Link>
               </article>
             ))}
           </div>
         ) : (
-          <div className="titus-empty-card">
+          <div className="edu-empty-card">
             <p>No public courses are marked active yet.</p>
           </div>
         )}
