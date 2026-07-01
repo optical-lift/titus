@@ -8,24 +8,6 @@ const studySteps = [
   "Guardrails",
 ];
 
-const methodSteps = [
-  {
-    label: "Read",
-    text: "Start where the word appears.",
-    icon: "▤",
-  },
-  {
-    label: "Trace",
-    text: "Follow what the canon repeats.",
-    icon: "⌁",
-  },
-  {
-    label: "Walk",
-    text: "Study the pattern in order.",
-    icon: "→",
-  },
-];
-
 export default function Home() {
   const activePath = getHomeStudyPaths("active_path")[0];
   const packetQueue = getHomeStudyPaths("packet_queue");
@@ -53,29 +35,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="method-ribbon" aria-label="Titus study method">
-        {methodSteps.map((step, index) => (
-          <div className="method-ribbon__piece" key={step.label}>
-            <article className="method-ribbon__step">
-              <span className="method-ribbon__icon" aria-hidden="true">
-                {step.icon}
-              </span>
-              <div>
-                <h2>{step.label}</h2>
-                <p>{step.text}</p>
-              </div>
-            </article>
-
-            {index < methodSteps.length - 1 ? (
-              <span className="method-ribbon__arrow" aria-hidden="true">
-                →
-              </span>
-            ) : null}
-          </div>
-        ))}
-      </section>
-
-      <section className="compact-active" id="courses" aria-labelledby="active-course-title">
+<section className="compact-active" id="courses" aria-labelledby="active-course-title">
         <div className="compact-section-heading compact-section-heading--centered">
           <h2 id="active-course-title" className="compact-section-label">
             Canon Patterns
@@ -146,6 +106,23 @@ export default function Home() {
             : null}
         </div>
       </section>
+      <section className="compact-method-note" aria-labelledby="method-note-title">
+        <h2 id="method-note-title">How Titus studies a word</h2>
+        <p>
+          Titus begins by reading the text where a word appears, traces the
+          repetition through Scripture, and walks the pattern in order as a
+          guided study.
+        </p>
+      </section>
+
+      <footer className="compact-footer">
+        <p>
+          Titus uses prepared study material from patterns found through the Lex
+          Canon Pattern Engine Project, a function-first methodology that uses
+          original-language tokens to map the Bible as one complete unit,
+          regardless of genre or historical setting.
+        </p>
+      </footer>
     </main>
   );
 }
