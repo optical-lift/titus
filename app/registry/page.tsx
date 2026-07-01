@@ -5,6 +5,7 @@ import { sourcePackets } from "@/data/titus/source-packets";
 import { assertNoAssemblyErrors, getAssemblyIssues } from "@/lib/titus/assembly-validation";
 import { assertNoCourseAssemblyErrors, getCourseAssemblyIssues } from "@/lib/titus/course-assembly-validation";
 import { assertNoSourcePacketErrors, getSourcePacketIssues } from "@/lib/titus/source-packet-validation";
+import { assertNoPublicNodeErrors, getPublicNodeIssues } from "@/lib/titus/public-node-validation";
 import { getAttachmentHref, getAttachmentTypeLabel } from "@/lib/titus/node-links";
 import {
   getCourseAssemblyNodeHref,
@@ -15,6 +16,7 @@ import { functionLenses } from "@/data/titus/function-lenses";
 import { lessonAssemblies } from "@/data/titus/lesson-assemblies";
 import { lessons } from "@/data/titus/lessons";
 import { patternDebriefs } from "@/data/titus/pattern-debriefs";
+import { queuedLessons } from "@/data/titus/queued-lessons";
 import {
   traditionCards,
   traditionPlacements,
@@ -24,10 +26,12 @@ export default function RegistryPage() {
   assertNoAssemblyErrors();
   assertNoCourseAssemblyErrors();
   assertNoSourcePacketErrors();
+  assertNoPublicNodeErrors();
 
   const assemblyIssues = getAssemblyIssues();
   const courseAssemblyIssues = getCourseAssemblyIssues();
   const sourcePacketIssues = getSourcePacketIssues();
+  const publicNodeIssues = getPublicNodeIssues();
 
   return (
     <main className="page-shell">
@@ -68,6 +72,28 @@ export default function RegistryPage() {
         </article>
       </section>
 
+
+      <section className="registry-section">
+        <div className="kicker">Public Node Integrity</div>
+        <article className={publicNodeIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
+          <h2>{publicNodeIssues.length === 0 ? "All public node metadata resolves" : "Public node metadata issues found"}</h2>
+          <p>
+            {publicNodeIssues.length === 0
+              ? "Every public-facing node currently has required metadata, matching status, known limits, and source-list structure."
+              : "One or more public-facing nodes have incomplete or mismatched metadata."}
+          </p>
+
+          {publicNodeIssues.length > 0 ? (
+            <ul className="pattern-list">
+              {publicNodeIssues.map((issue) => (
+                <li key={`${issue.nodeType}-${issue.nodeSlug}-${issue.message}`}>
+                  <strong>{issue.severity.toUpperCase()}:</strong> {issue.message}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </article>
+      </section>
 
       <section className="registry-section">
         <div className="kicker">Source Packet Integrity</div>
@@ -231,6 +257,30 @@ export default function RegistryPage() {
               </Link>
             );
           })}
+        </div>
+      </section>
+
+      <section className="registry-section">
+        <div className="kicker">Queued Lesson Nodes</div>
+        <div className="registry-grid">
+          {queuedLessons.map((lesson) => (
+            <Link
+              className="registry-card placement-registry-card"
+              href={`/lessons/${lesson.slug}?from=/registry`}
+              key={lesson.slug}
+            >
+              <span className="status">Queued Lesson · {lesson.status}</span>
+              <h2>{lesson.title}</h2>
+              <p>{lesson.subtitle}</p>
+              <p>
+                Original: {lesson.originalWord}
+                <br />
+                Transliteration: {lesson.transliteration}
+                <br />
+                Source packet: {lesson.publicNodeMeta.sourcePacket}
+              </p>
+            </Link>
+          ))}
         </div>
       </section>
 
