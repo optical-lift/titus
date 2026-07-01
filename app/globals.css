@@ -1468,4 +1468,13 @@ ol {
   .compact-footer--lex p {
     font-size: 0.78rem;
   }
+}\n\n
+.compact-footer__meta {
+  margin-top: 14px !important;
+  color: var(--accent-dark) !important;
+  font-family: var(--ui-font) !important;
+  font-size: 0.68rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
 }

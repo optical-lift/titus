@@ -115,6 +115,9 @@ export default function Home() {
           word-study paths: read the text, trace the repetition, and walk the
           pattern in order.
         </p>
+        <p className="compact-footer__meta">
+          © 2026 Lex Project. Titus is part of the Lex Canon Pattern Engine Project.
+        </p>
       </footer>
 </main>
   );
