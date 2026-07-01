@@ -32,7 +32,8 @@ export const courses: TitusCourse[] = [
     description:
       "Law, hearing, commandment, heart, mouth, path, justice, house, king, life, and gate-right traced through the canon.",
     status: "active",
-    lessons: [],
+    firstLessonSlug: "h8451",
+    lessons: ["h8451"],
     homePlacement: "active_path",
     homeOrder: 10,
     homeBadge: "Active Path",

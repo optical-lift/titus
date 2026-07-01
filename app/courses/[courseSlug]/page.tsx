@@ -69,6 +69,16 @@ return (
         <h1 id="course-title">{course.title}</h1>
         <p className="course-landing__subtitle">{course.subtitle}</p>
         <p className="course-landing__description">{course.description}</p>
+        {course.firstLessonSlug ?? course.lessons[0] ? (
+          <Link
+            className="course-landing__button"
+            href={`/lessons/${
+              course.firstLessonSlug ?? course.lessons[0]
+            }?from=/courses/${course.slug}`}
+          >
+            Start Lesson 1
+          </Link>
+        ) : null}
 </section>
 
       {packetPreview ? (

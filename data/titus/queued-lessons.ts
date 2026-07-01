@@ -33,6 +33,19 @@ const queuedLessonMeta: PublicNodeMeta = {
 
 export const queuedLessons: QueuedLesson[] = [
   {
+    slug: "h8451",
+    title: "H8451 — תּוֹרָה / torah",
+    originalWord: "תּוֹרָה",
+    transliteration: "torah",
+    subtitle: "law, instruction; queued Proverbs word lesson",
+    status: "queued",
+    primaryTerms: ["h8451", "torah", "תורה", "law", "instruction"],
+    keywords: ["proverbs", "law", "instruction", "word field"],
+    publicNodeMeta: queuedLessonMeta,
+  },
+
+
+  {
     slug: "h0127",
     title: "H0127 — אֲדָמָה / adamah",
     originalWord: "אֲדָמָה",

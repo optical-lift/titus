@@ -2188,3 +2188,16 @@ ol {
     min-width: 76px;
   }
 }
+
+
+/* Course landing start button refinement */
+
+.course-landing__button {
+  margin-top: 16px;
+}
+
+@media (max-width: 720px) {
+  .course-landing__button {
+    width: min(100%, 260px);
+  }
+}
