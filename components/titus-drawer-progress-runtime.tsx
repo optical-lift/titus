@@ -2,121 +2,88 @@
 
 import { useEffect } from "react";
 
-function readDrawerPosition(drawer: HTMLElement) {
-  const text = drawer.textContent ?? "";
+const TOTAL_DRAWERS = 5;
+
+function clampDrawer(value: number) {
+  if (!Number.isFinite(value)) return 1;
+  return Math.min(TOTAL_DRAWERS, Math.max(1, value));
+}
+
+function readDrawerNumberFromPage() {
+  const drawer = document.querySelector<HTMLElement>(".course-word-packet__drawer");
+  const text = drawer?.textContent ?? "";
   const match = text.match(/DRAWER\s+(\d+)\s+OF\s+(\d+)/i);
 
-  if (!match) return null;
+  if (!match) return 1;
 
-  const current = Number(match[1]);
-  const total = Number(match[2]);
-
-  if (!Number.isFinite(current) || !Number.isFinite(total) || total <= 0) {
-    return null;
-  }
-
-  return { current, total };
+  return clampDrawer(Number(match[1]));
 }
 
-function isVisibleDrawer(drawer: HTMLElement) {
-  const style = window.getComputedStyle(drawer);
-  const rect = drawer.getBoundingClientRect();
+function setProgress(drawerNumber: number) {
+  const current = clampDrawer(drawerNumber);
+  const percent = Math.round((current / TOTAL_DRAWERS) * 100);
 
-  return (
-    style.display !== "none" &&
-    style.visibility !== "hidden" &&
-    rect.width > 0 &&
-    rect.height > 0
-  );
-}
+  document.documentElement.style.setProperty("--titus-drawer-progress", `${percent}%`);
 
-function getActiveDrawer() {
-  const drawers = Array.from(
-    document.querySelectorAll<HTMLElement>(".course-word-packet__drawer"),
-  );
+  const progress = document.querySelector<HTMLElement>(".course-word-packet__top-progress");
 
-  const visibleDrawers = drawers.filter(isVisibleDrawer);
-
-  if (visibleDrawers.length === 0) {
-    return drawers[drawers.length - 1] ?? null;
-  }
-
-  // Prefer the visible drawer currently nearest the top of the lesson viewport.
-  return visibleDrawers
-    .map((drawer) => ({
-      drawer,
-      distance: Math.abs(drawer.getBoundingClientRect().top),
-    }))
-    .sort((a, b) => a.distance - b.distance)[0]?.drawer ?? visibleDrawers[0];
-}
-
-function updateTitusDrawerProgress() {
-  const progressFill = document.querySelector<HTMLElement>(
-    ".course-word-packet__top-progress > span > span",
-  );
-  const progressWrap = document.querySelector<HTMLElement>(
-    ".course-word-packet__top-progress",
-  );
-
-  if (!progressFill) return;
-
-  const activeDrawer = getActiveDrawer();
-  if (!activeDrawer) return;
-
-  const position = readDrawerPosition(activeDrawer);
-  if (!position) return;
-
-  const percent = Math.min(
-    100,
-    Math.max(0, Math.round((position.current / position.total) * 100)),
-  );
-
-  progressFill.style.width = `${percent}%`;
-
-  if (progressWrap) {
-    progressWrap.setAttribute(
+  if (progress) {
+    progress.dataset.drawerCurrent = String(current);
+    progress.dataset.drawerTotal = String(TOTAL_DRAWERS);
+    progress.setAttribute(
       "aria-label",
-      `Lesson progress: drawer ${position.current} of ${position.total}`,
+      `Lesson progress: drawer ${current} of ${TOTAL_DRAWERS}`,
     );
-    progressWrap.dataset.drawerCurrent = String(position.current);
-    progressWrap.dataset.drawerTotal = String(position.total);
   }
 }
 
 export function TitusDrawerProgressRuntime() {
   useEffect(() => {
-    const run = () => {
-      requestAnimationFrame(() => {
-        updateTitusDrawerProgress();
-      });
+    let currentDrawer = readDrawerNumberFromPage();
+    setProgress(currentDrawer);
+
+    const syncFromRenderedDrawer = () => {
+      currentDrawer = readDrawerNumberFromPage();
+      setProgress(currentDrawer);
     };
 
-    run();
+    const handleClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      const button = target?.closest("button");
 
-    const root = document.querySelector(".course-word-packet");
-    if (!root) return;
+      if (!button) return;
 
-    const observer = new MutationObserver(run);
+      const actions = button.closest(".course-word-packet__drawer-actions");
+      if (!actions) return;
 
-    observer.observe(root, {
-      attributes: true,
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributeFilter: ["class", "style", "hidden", "aria-hidden"],
-    });
+      const label = (button.textContent ?? "").trim().toLowerCase();
 
-    document.addEventListener("click", run, true);
-    document.addEventListener("keyup", run, true);
-    window.addEventListener("scroll", run, { passive: true });
-    window.addEventListener("resize", run);
+      if (label.includes("continue") || label.includes("next")) {
+        currentDrawer = clampDrawer(currentDrawer + 1);
+        setProgress(currentDrawer);
+        window.setTimeout(syncFromRenderedDrawer, 40);
+        window.setTimeout(syncFromRenderedDrawer, 140);
+        return;
+      }
+
+      if (label.includes("previous") || label.includes("back")) {
+        currentDrawer = clampDrawer(currentDrawer - 1);
+        setProgress(currentDrawer);
+        window.setTimeout(syncFromRenderedDrawer, 40);
+        window.setTimeout(syncFromRenderedDrawer, 140);
+      }
+    };
+
+    const handlePopState = () => {
+      window.setTimeout(syncFromRenderedDrawer, 40);
+    };
+
+    document.addEventListener("click", handleClick, true);
+    window.addEventListener("popstate", handlePopState);
 
     return () => {
-      observer.disconnect();
-      document.removeEventListener("click", run, true);
-      document.removeEventListener("keyup", run, true);
-      window.removeEventListener("scroll", run);
-      window.removeEventListener("resize", run);
+      document.removeEventListener("click", handleClick, true);
+      window.removeEventListener("popstate", handlePopState);
     };
   }, []);
 

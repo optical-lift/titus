@@ -3839,3 +3839,24 @@ body {
 }
 
 /* End Titus active drawer progress refinement */
+
+/* Titus drawer-click progress source of truth */
+
+:root {
+  --titus-drawer-progress: 20%;
+}
+
+.course-word-packet__top-progress > span > span {
+  width: var(--titus-drawer-progress, 20%) !important;
+  transition: width 220ms ease;
+}
+
+/* Remove older CSS-only guesses so the runtime is the only progress source. */
+.course-word-packet__top-progress[data-drawer-current="2"] > span > span,
+.course-word-packet__top-progress[data-drawer-current="3"] > span > span,
+.course-word-packet__top-progress[data-drawer-current="4"] > span > span,
+.course-word-packet__top-progress[data-drawer-current="5"] > span > span {
+  width: var(--titus-drawer-progress, 20%) !important;
+}
+
+/* End Titus drawer-click progress source of truth */
