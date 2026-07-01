@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { canonChains } from "@/data/titus/canon-chains";
 import { courseAssemblies } from "@/data/titus/course-assemblies";
+import { sourcePackets } from "@/data/titus/source-packets";
 import { assertNoAssemblyErrors, getAssemblyIssues } from "@/lib/titus/assembly-validation";
 import { assertNoCourseAssemblyErrors, getCourseAssemblyIssues } from "@/lib/titus/course-assembly-validation";
+import { assertNoSourcePacketErrors, getSourcePacketIssues } from "@/lib/titus/source-packet-validation";
 import { getAttachmentHref, getAttachmentTypeLabel } from "@/lib/titus/node-links";
 import {
   getCourseAssemblyNodeHref,
@@ -21,9 +23,11 @@ import {
 export default function RegistryPage() {
   assertNoAssemblyErrors();
   assertNoCourseAssemblyErrors();
+  assertNoSourcePacketErrors();
 
   const assemblyIssues = getAssemblyIssues();
   const courseAssemblyIssues = getCourseAssemblyIssues();
+  const sourcePacketIssues = getSourcePacketIssues();
 
   return (
     <main className="page-shell">
@@ -66,6 +70,28 @@ export default function RegistryPage() {
 
 
       <section className="registry-section">
+        <div className="kicker">Source Packet Integrity</div>
+        <article className={sourcePacketIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
+          <h2>{sourcePacketIssues.length === 0 ? "All source packets resolve" : "Source packet issues found"}</h2>
+          <p>
+            {sourcePacketIssues.length === 0
+              ? "Every public node currently points to a registered source packet."
+              : "One or more public nodes point to missing or duplicate source packets."}
+          </p>
+
+          {sourcePacketIssues.length > 0 ? (
+            <ul className="pattern-list">
+              {sourcePacketIssues.map((issue) => (
+                <li key={`${issue.nodeType}-${issue.nodeSlug}-${issue.sourcePacket}-${issue.message}`}>
+                  <strong>{issue.severity.toUpperCase()}:</strong> {issue.message}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </article>
+      </section>
+
+      <section className="registry-section">
         <div className="kicker">Course Assembly Integrity</div>
         <article className={courseAssemblyIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
           <h2>{courseAssemblyIssues.length === 0 ? "All course assemblies resolve" : "Course assembly issues found"}</h2>
@@ -85,6 +111,26 @@ export default function RegistryPage() {
             </ul>
           ) : null}
         </article>
+      </section>
+
+      <section className="registry-section">
+        <div className="kicker">Source Packet Records</div>
+        <div className="registry-grid">
+          {sourcePackets.map((packet) => (
+            <article className="registry-card placement-registry-card" key={packet.slug}>
+              <span className="status">Source Packet · {packet.status}</span>
+              <h2>{packet.title}</h2>
+              <p>{packet.summary}</p>
+              <p>
+                Kind: {packet.packetKind.replaceAll("_", " ")}
+                <br />
+                Owner: {packet.owner}
+                <br />
+                Last updated: {packet.lastUpdated}
+              </p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="registry-section">
