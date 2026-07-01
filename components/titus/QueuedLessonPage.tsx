@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
 import type { QueuedLesson } from "@/data/titus/queued-lessons";
 
 export default function QueuedLessonPage({
@@ -60,6 +61,8 @@ export default function QueuedLessonPage({
           </div>
         </div>
       </section>
+
+      <PublicNodeMetaCard meta={lesson.publicNodeMeta} />
 
       <nav className="footer-nav">
         <Link className="small-link" href={returnHref}>

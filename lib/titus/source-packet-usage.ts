@@ -2,6 +2,7 @@ import { canonChains } from "@/data/titus/canon-chains";
 import { functionLenses } from "@/data/titus/function-lenses";
 import { lessons } from "@/data/titus/lessons";
 import { patternDebriefs } from "@/data/titus/pattern-debriefs";
+import { queuedLessons } from "@/data/titus/queued-lessons";
 import type { SourcePacket } from "@/data/titus/source-packets";
 import { traditionCards } from "@/data/titus/tradition-notes";
 
@@ -19,6 +20,15 @@ export function getSourcePacketUsage(packet: SourcePacket): SourcePacketUsage[] 
       .filter((node) => node.publicNodeMeta.sourcePacketSlug === packet.slug)
       .map((node) => ({
         nodeType: "Published Lesson",
+        slug: node.slug,
+        title: node.title,
+        href: `/lessons/${node.slug}`,
+        status: node.status,
+      })),
+    ...queuedLessons
+      .filter((node) => node.publicNodeMeta.sourcePacketSlug === packet.slug)
+      .map((node) => ({
+        nodeType: "Queued Lesson",
         slug: node.slug,
         title: node.title,
         href: `/lessons/${node.slug}`,

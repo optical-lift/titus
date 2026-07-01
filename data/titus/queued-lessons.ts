@@ -1,3 +1,5 @@
+import type { PublicNodeMeta } from "@/data/titus/public-node-meta";
+
 export type QueuedLesson = {
   slug: string;
   title: string;
@@ -7,6 +9,26 @@ export type QueuedLesson = {
   status: "queued";
   primaryTerms: string[];
   keywords: string[];
+  publicNodeMeta: PublicNodeMeta;
+};
+
+const queuedLessonMeta: PublicNodeMeta = {
+  compiler: "Lex Bible Project",
+  reviewer: "Pending theological/source review",
+  sourcePacket: "Titus Canon Word-Study Course Library Build Plan · Appendix A",
+  sourcePacketSlug: "titus-canon-word-study-course-library-build-plan-appendix-a",
+  status: "queued",
+  version: "0.1.0",
+  lastUpdated: "2026-06-30",
+  confidence: "medium",
+  knownLimits: [
+    "Queued lesson records preserve public route, search identity, and course placement before full canon mapping is complete.",
+    "These records should not be treated as finished word-study conclusions.",
+  ],
+  sourceList: [
+    "Titus Canon Word-Study Course Library Build Plan",
+    "Lex Bible Project public-node routing and course assembly rules",
+  ],
 };
 
 export const queuedLessons: QueuedLesson[] = [
@@ -19,6 +41,7 @@ export const queuedLessons: QueuedLesson[] = [
     status: "queued",
     primaryTerms: ["h0127", "adamah", "אדמה", "ground", "soil"],
     keywords: ["earth", "ecology"],
+    publicNodeMeta: queuedLessonMeta,
   },
   {
     slug: "h4325",
@@ -29,6 +52,7 @@ export const queuedLessons: QueuedLesson[] = [
     status: "queued",
     primaryTerms: ["h4325", "mayim", "מים", "water", "waters"],
     keywords: ["ecology"],
+    publicNodeMeta: queuedLessonMeta,
   },
   {
     slug: "h5869",
@@ -39,6 +63,7 @@ export const queuedLessons: QueuedLesson[] = [
     status: "queued",
     primaryTerms: ["h5869", "ayin", "עין", "eye", "spring", "fountain"],
     keywords: ["ecology"],
+    publicNodeMeta: queuedLessonMeta,
   },
   {
     slug: "h7704",
@@ -49,6 +74,7 @@ export const queuedLessons: QueuedLesson[] = [
     status: "queued",
     primaryTerms: ["h7704", "sadeh", "שדה", "field"],
     keywords: ["ecology"],
+    publicNodeMeta: queuedLessonMeta,
   },
   {
     slug: "h3754",
@@ -59,6 +85,7 @@ export const queuedLessons: QueuedLesson[] = [
     status: "queued",
     primaryTerms: ["h3754", "kerem", "כרם", "vineyard"],
     keywords: ["ecology"],
+    publicNodeMeta: queuedLessonMeta,
   },
   {
     slug: "h6529",
@@ -69,6 +96,7 @@ export const queuedLessons: QueuedLesson[] = [
     status: "queued",
     primaryTerms: ["h6529", "peri", "פרי", "fruit", "yield"],
     keywords: ["ecology"],
+    publicNodeMeta: queuedLessonMeta,
   },
   {
     slug: "g2590",
@@ -79,6 +107,7 @@ export const queuedLessons: QueuedLesson[] = [
     status: "queued",
     primaryTerms: ["g2590", "karpos", "καρπός", "fruit", "outcome"],
     keywords: ["ecology"],
+    publicNodeMeta: queuedLessonMeta,
   },
   {
     slug: "h7676",
@@ -89,6 +118,7 @@ export const queuedLessons: QueuedLesson[] = [
     status: "queued",
     primaryTerms: ["h7676", "shabbath", "שבת", "sabbath", "rest"],
     keywords: ["release", "ecology"],
+    publicNodeMeta: queuedLessonMeta,
   },
   {
     slug: "h1818",
@@ -99,6 +129,7 @@ export const queuedLessons: QueuedLesson[] = [
     status: "queued",
     primaryTerms: ["h1818", "dam", "דם", "blood"],
     keywords: ["bloodguilt", "land", "ground"],
+    publicNodeMeta: queuedLessonMeta,
   },
 ];
 

@@ -2,6 +2,7 @@ import { canonChains } from "@/data/titus/canon-chains";
 import { functionLenses } from "@/data/titus/function-lenses";
 import { lessons } from "@/data/titus/lessons";
 import { patternDebriefs } from "@/data/titus/pattern-debriefs";
+import { queuedLessons } from "@/data/titus/queued-lessons";
 import { sourcePackets } from "@/data/titus/source-packets";
 import { traditionCards } from "@/data/titus/tradition-notes";
 
@@ -24,6 +25,12 @@ function getPublicNodesWithSourcePackets(): PublicNodeWithMeta[] {
   return [
     ...lessons.map((node) => ({
       nodeType: "Published Lesson",
+      slug: node.slug,
+      sourcePacket: node.publicNodeMeta.sourcePacket,
+      sourcePacketSlug: node.publicNodeMeta.sourcePacketSlug,
+    })),
+    ...queuedLessons.map((node) => ({
+      nodeType: "Queued Lesson",
       slug: node.slug,
       sourcePacket: node.publicNodeMeta.sourcePacket,
       sourcePacketSlug: node.publicNodeMeta.sourcePacketSlug,
