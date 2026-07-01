@@ -3537,3 +3537,94 @@ body {
 }
 
 /* End Titus mobile lesson reading economy */
+
+/* Titus real course progress */
+
+.course-word-packet__drawer-tabs {
+  display: none !important;
+}
+
+.course-word-packet__course-progress {
+  display: grid;
+  gap: 7px;
+  margin: 8px 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.66);
+  box-shadow: 0 10px 24px rgba(47, 77, 55, 0.045);
+  padding: 10px 12px;
+}
+
+.course-word-packet__course-progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--ui-font);
+}
+
+.course-word-packet__course-progress-top span {
+  color: var(--accent-dark);
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.course-word-packet__course-progress-top strong {
+  color: var(--accent-dark);
+  font-size: 0.76rem;
+  font-weight: 950;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.course-word-packet__course-progress-track {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(101, 125, 98, 0.16);
+}
+
+.course-word-packet__course-progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-dark);
+}
+
+.course-word-packet__course-progress p {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--ui-font);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+@media (max-width: 720px) {
+  .course-word-packet__course-progress {
+    margin: 7px 0 9px;
+    border-radius: 16px;
+    padding: 8px 10px;
+  }
+
+  .course-word-packet__course-progress-top span {
+    font-size: 0.58rem;
+  }
+
+  .course-word-packet__course-progress-top strong {
+    font-size: 0.72rem;
+  }
+
+  .course-word-packet__course-progress-track {
+    height: 6px;
+  }
+
+  .course-word-packet__course-progress p {
+    font-size: 0.66rem;
+  }
+}
+
+/* End Titus real course progress */

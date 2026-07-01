@@ -130,20 +130,76 @@ function goPrevious() {
         </p>
       </section>
 
-<nav className="course-word-packet__drawer-tabs" aria-label="Lesson drawer navigation">
-        {drawerTabs.map((drawer, index) => (
-          <button
-            aria-label={`${index + 1}. ${drawer.title}`}
-            className={index === activeDrawerIndex ? "active" : undefined}
-            key={drawer.title}
-            onClick={() => setActiveDrawerIndex(index)}
-            title={drawer.title}
-            type="button"
-          >
-            <span>{index + 1}</span>
-          </button>
-        ))}
-      </nav>
+{(() => {
+  const courseProgressPacket = (shell as Record<string, unknown>);
+  const proverbsOrder: Record<string, number> = {
+    h8451: 1,
+    h8085: 2,
+    h4687: 3,
+    h3820: 4,
+    h6310: 5,
+    h1870: 6,
+    h4941: 7,
+    h6666: 8,
+    h2416: 9,
+    h2421: 10,
+    g3551: 11,
+  };
+
+  const identityKey = String(
+    courseProgressPacket["lessonSlug"] ??
+      courseProgressPacket["strongId"] ??
+      "",
+  ).toLowerCase();
+
+  const lessonNumberRaw = Number(
+    courseProgressPacket["lessonNumber"] ??
+      proverbsOrder[identityKey] ??
+      1,
+  );
+
+  const courseProgressCurrent =
+    Number.isFinite(lessonNumberRaw) && lessonNumberRaw > 0
+      ? lessonNumberRaw
+      : 1;
+
+  const totalRaw = Number(
+    courseProgressPacket["courseLessonTotal"] ??
+      courseProgressPacket["lessonTotal"] ??
+      11,
+  );
+
+  const courseProgressTotal =
+    Number.isFinite(totalRaw) && totalRaw >= courseProgressCurrent
+      ? totalRaw
+      : 11;
+
+  const courseProgressPercent = Math.min(
+    100,
+    Math.max(0, Math.round((courseProgressCurrent / courseProgressTotal) * 100)),
+  );
+
+  const courseProgressCourseTitle = String(
+    courseProgressPacket["courseTitle"] ??
+      courseProgressPacket["courseLabel"] ??
+      "Proverbs as Law Vocabulary",
+  );
+
+  return (
+    <section className="course-word-packet__course-progress" aria-label="Course progress">
+      <div className="course-word-packet__course-progress-top">
+        <span>Course progress</span>
+        <strong>
+          Lesson {courseProgressCurrent} of {courseProgressTotal}
+        </strong>
+      </div>
+      <div className="course-word-packet__course-progress-track" aria-hidden="true">
+        <span style={{ width: `${courseProgressPercent}%` }} />
+      </div>
+      <p>{courseProgressCourseTitle}</p>
+    </section>
+  );
+})()}
 
       <section className="course-word-packet__drawer" aria-live="polite">
         <p className="course-word-packet__eyebrow">
