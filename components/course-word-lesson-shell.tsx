@@ -114,24 +114,9 @@ function goPrevious() {
       <Link className="course-word-packet__back" href={`/courses/${shell.course.slug}`}>
         ← Return to current course
       </Link>
-      <section className="course-word-packet__lex-hero" aria-labelledby="lesson-title">
-        <p className="course-word-packet__eyebrow">
-          Lesson {shell.lessonNumber} Vocabulary
-        </p>
-
-        <h1 id="lesson-title" className="sr-only">
-          {shell.term.strongId} — {shell.term.transliteration}
-        </h1>
-
-        <TitusLexStamp stamp={shell.lexStamp} />
-
-        <p className="course-word-packet__stamp-context">
-          Lesson {shell.lessonNumber} · {shell.lessonKind} · {shell.course.title}
-        </p>
-      </section>
 
 {(() => {
-  const courseProgressPacket = (shell as Record<string, unknown>);
+  const courseTopPacket = (shell as Record<string, unknown>);
   const proverbsOrder: Record<string, number> = {
     h8451: 1,
     h8085: 2,
@@ -147,59 +132,72 @@ function goPrevious() {
   };
 
   const identityKey = String(
-    courseProgressPacket["lessonSlug"] ??
-      courseProgressPacket["strongId"] ??
+    courseTopPacket["lessonSlug"] ??
+      courseTopPacket["strongId"] ??
       "",
   ).toLowerCase();
 
   const lessonNumberRaw = Number(
-    courseProgressPacket["lessonNumber"] ??
+    courseTopPacket["lessonNumber"] ??
       proverbsOrder[identityKey] ??
       1,
   );
 
-  const courseProgressCurrent =
+  const currentLesson =
     Number.isFinite(lessonNumberRaw) && lessonNumberRaw > 0
       ? lessonNumberRaw
       : 1;
 
-  const totalRaw = Number(
-    courseProgressPacket["courseLessonTotal"] ??
-      courseProgressPacket["lessonTotal"] ??
+  const totalLessonRaw = Number(
+    courseTopPacket["courseLessonTotal"] ??
+      courseTopPacket["lessonTotal"] ??
       11,
   );
 
-  const courseProgressTotal =
-    Number.isFinite(totalRaw) && totalRaw >= courseProgressCurrent
-      ? totalRaw
+  const totalLessons =
+    Number.isFinite(totalLessonRaw) && totalLessonRaw >= currentLesson
+      ? totalLessonRaw
       : 11;
 
-  const courseProgressPercent = Math.min(
+  const progressPercent = Math.min(
     100,
-    Math.max(0, Math.round((courseProgressCurrent / courseProgressTotal) * 100)),
+    Math.max(0, Math.round((currentLesson / totalLessons) * 100)),
   );
 
-  const courseProgressCourseTitle = String(
-    courseProgressPacket["courseTitle"] ??
-      courseProgressPacket["courseLabel"] ??
+  const strongId = String(courseTopPacket["strongId"] ?? courseTopPacket["lessonSlug"] ?? "H8451").toUpperCase();
+
+  const studyTitle =
+    strongId === "H8451"
+      ? "Torah / Law-Instruction"
+      : String(
+          courseTopPacket["positionNote"] ??
+            courseTopPacket["lessonTitle"] ??
+            courseTopPacket["methodLabel"] ??
+            "Word Study",
+        );
+
+  const courseTitle = String(
+    courseTopPacket["courseTitle"] ??
+      courseTopPacket["courseLabel"] ??
       "Proverbs as Law Vocabulary",
   );
 
   return (
-    <section className="course-word-packet__course-progress" aria-label="Course progress">
-      <div className="course-word-packet__course-progress-top">
-        <span>Course progress</span>
-        <strong>
-          Lesson {courseProgressCurrent} of {courseProgressTotal}
-        </strong>
+    <section className="course-word-packet__top-study" aria-label="Current word study">
+      <p className="course-word-packet__top-study-kicker">Greek & Hebrew Word Study</p>
+      <h1>{studyTitle}</h1>
+      <p className="course-word-packet__top-study-subtitle">
+        {courseTitle} · Lesson {currentLesson} of {totalLessons}
+      </p>
+      <div className="course-word-packet__top-progress" aria-label={`Course progress: lesson ${currentLesson} of ${totalLessons}`}>
+        <span>
+          <span style={{ width: `${progressPercent}%` }} />
+        </span>
       </div>
-      <div className="course-word-packet__course-progress-track" aria-hidden="true">
-        <span style={{ width: `${courseProgressPercent}%` }} />
-      </div>
-      <p>{courseProgressCourseTitle}</p>
     </section>
   );
 })()}
+
 
       <section className="course-word-packet__drawer" aria-live="polite">
         <p className="course-word-packet__eyebrow">
@@ -213,6 +211,10 @@ function goPrevious() {
         <p className="course-word-packet__drawer-description">
           {activeDrawer.description}
         </p>
+
+      <div className="course-word-packet__drawer-stamp" aria-label="Lesson vocabulary stamp">
+        <TitusLexStamp stamp={shell.lexStamp} />
+      </div>
 
         <div className="course-word-packet__drawer-body">{activeDrawer.body}</div>
 

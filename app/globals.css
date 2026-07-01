@@ -3628,3 +3628,117 @@ body {
 }
 
 /* End Titus real course progress */
+
+/* Titus top title and drawer stamp relocation */
+
+.course-word-packet__course-progress {
+  display: none !important;
+}
+
+.course-word-packet__top-study {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  margin: 2px auto 12px;
+  padding: 6px 8px 2px;
+  text-align: center;
+}
+
+.course-word-packet__top-study-kicker {
+  margin: 0;
+  color: var(--accent-dark);
+  font-family: var(--ui-font);
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.13em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.course-word-packet__top-study h1 {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: clamp(1.35rem, 5.4vw, 2rem);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.course-word-packet__top-study-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--ui-font);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.course-word-packet__top-progress {
+  width: min(100%, 380px);
+  margin-top: 2px;
+}
+
+.course-word-packet__top-progress > span {
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(101, 125, 98, 0.14);
+}
+
+.course-word-packet__top-progress > span > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(47, 77, 55, 0.82);
+}
+
+.course-word-packet__drawer-stamp {
+  margin-top: 16px;
+}
+
+.course-word-packet__drawer-stamp .titus-lex-stamp {
+  margin-top: 0;
+}
+
+.course-word-packet__drawer:has(.course-word-packet__drawer-stamp) .course-word-packet__drawer-body {
+  display: none;
+}
+
+.course-word-packet__drawer:has(.course-word-packet__drawer-stamp) .course-word-packet__drawer-description {
+  margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+  .course-word-packet__top-study {
+    margin: 0 auto 10px;
+    padding-top: 4px;
+  }
+
+  .course-word-packet__top-study-kicker {
+    font-size: 0.66rem;
+  }
+
+  .course-word-packet__top-study h1 {
+    font-size: clamp(1.28rem, 6.2vw, 1.7rem);
+  }
+
+  .course-word-packet__top-study-subtitle {
+    font-size: 0.66rem;
+  }
+
+  .course-word-packet__top-progress {
+    width: min(100%, 320px);
+  }
+
+  .course-word-packet__top-progress > span {
+    height: 3px;
+  }
+
+  .course-word-packet__drawer-stamp {
+    margin-top: 14px;
+  }
+}
+
+/* End Titus top title and drawer stamp relocation */
