@@ -221,7 +221,7 @@ function goPrevious() {
           (activeDrawer as Record<string, unknown>)["id"] ??
           NaN,
       ) === 1 ||
-      Number(activeDrawerIndex) === 0 || Number(activeDrawerIndex) === 1;
+      Number(activeDrawerIndex) === 0;
 
     return shouldShowDrawerStamp ? (
       <div className="course-word-packet__drawer-stamp course-word-packet__drawer-stamp-only-first" aria-label="Lesson vocabulary stamp">
