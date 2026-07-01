@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { CourseWordLessonShell } from "@/data/titus/course-word-lessons";
+import { TitusLexStamp } from "@/components/titus-lex-stamp";
 
 type CourseWordLessonShellViewProps = {
   shell: CourseWordLessonShell;
@@ -98,16 +99,7 @@ export function CourseWordLessonShellView({
   );
 
   const activeDrawer = drawerTabs[activeDrawerIndex];
-
-  const chips = [
-    shell.methodLabel,
-    shell.lessonKind,
-    shell.languageLabel,
-    "packet terms",
-    "receive carefully",
-  ];
-
-  function goPrevious() {
+function goPrevious() {
     setActiveDrawerIndex((current) => Math.max(current - 1, 0));
   }
 
@@ -122,29 +114,23 @@ export function CourseWordLessonShellView({
       <Link className="course-word-packet__back" href={`/courses/${shell.course.slug}`}>
         ← Return to current course
       </Link>
-
-      <section className="course-word-packet__hero" aria-labelledby="lesson-title">
+      <section className="course-word-packet__lex-hero" aria-labelledby="lesson-title">
         <p className="course-word-packet__eyebrow">
-          Titus Course Lesson · Public seed — course drawers
+          Lex Stamp · Word Study Snapshot
         </p>
 
-        <h1 id="lesson-title">
-          {shell.term.strongId} — {shell.term.surface} /{" "}
-          {shell.term.transliteration}
+        <h1 id="lesson-title" className="sr-only">
+          {shell.term.strongId} — {shell.term.transliteration}
         </h1>
 
-        <p className="course-word-packet__meta">
-          {shell.lessonKind} · {shell.languageLabel} · {shell.course.title}
-        </p>
+        <TitusLexStamp stamp={shell.lexStamp} />
 
-        <div className="course-word-packet__chips" aria-label="Lesson controls">
-          {chips.map((chip) => (
-            <span key={chip}>{chip}</span>
-          ))}
-        </div>
+        <p className="course-word-packet__stamp-context">
+          Lesson {shell.lessonNumber} · {shell.lessonKind} · {shell.course.title}
+        </p>
       </section>
 
-      <nav className="course-word-packet__drawer-tabs" aria-label="Lesson drawer navigation">
+<nav className="course-word-packet__drawer-tabs" aria-label="Lesson drawer navigation">
         {drawerTabs.map((drawer, index) => (
           <button
             aria-label={`${index + 1}. ${drawer.title}`}

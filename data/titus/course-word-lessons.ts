@@ -3,6 +3,7 @@ import {
   type CoursePacketPreviewTerm,
   getCoursePacketPreview,
 } from "@/data/titus/course-packet-previews";
+import { getLexStamp, type LexStamp } from "@/data/titus/lex-stamps";
 
 export type CoursePacketField = "hebrewField" | "greekWitness";
 
@@ -31,6 +32,7 @@ export type CourseWordLessonShell = {
   term: CoursePacketPreviewTerm;
   termsInView: CoursePacketPreviewTerm[];
   positionNote: string;
+  lexStamp: LexStamp;
 };
 
 export const courseWordLessonShells: CourseWordLessonShellConfig[] = [
@@ -60,8 +62,9 @@ export function getCourseWordLessonShell(
 
   const course = getCourse(config.courseSlug);
   const packetPreview = getCoursePacketPreview(config.courseSlug);
+  const lexStamp = getLexStamp(config.strongId);
 
-  if (!course || !packetPreview) {
+  if (!course || !packetPreview || !lexStamp) {
     return undefined;
   }
 
@@ -90,5 +93,6 @@ export function getCourseWordLessonShell(
     term,
     termsInView,
     positionNote: config.positionNote,
+    lexStamp,
   };
 }
