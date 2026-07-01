@@ -7,6 +7,7 @@ import { getCourse } from "@/data/titus/courses";
 import { getLessonAssembly } from "@/data/titus/lesson-assemblies";
 import { getLesson } from "@/data/titus/lessons";
 import { getQueuedLesson } from "@/data/titus/queued-lessons";
+import { hydrateCanonReadingFromNoel } from "@/lib/noel/titus-canon-reading";
 import { getReturnHref, getReturnLabel, getSafeReturnPath } from "@/lib/titus/return-links";
 
 export default async function LessonPage({
@@ -57,6 +58,7 @@ export default async function LessonPage({
   }
 
   const attachments = getLessonAssembly(lesson.slug);
+  const hydratedCanonReading = await hydrateCanonReadingFromNoel(lesson.canonReading);
   const publishedReturnHref = from ? returnHref : `/courses/${lesson.courseSlug}`;
   const publishedReturnLabel = from ? returnLabel : `← Return to ${course.title}`;
 
@@ -86,7 +88,7 @@ export default async function LessonPage({
         </section>
 
         <LessonDrawerStack
-          canonReading={lesson.canonReading}
+          canonReading={hydratedCanonReading}
           attachments={attachments}
           currentLessonHref={`/lessons/${lesson.slug}`}
           drawers={lesson.drawers}
