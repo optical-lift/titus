@@ -17,6 +17,7 @@ export type NoelWordOccurrence = {
   verse: number;
   first_position: number | null;
   token_count: number;
+  canon_order: number | null;
 };
 
 export type NoelVerseText = {
@@ -53,7 +54,7 @@ export async function getTitusNoelWordPacket(
     .from("titus_word_occurrences_v1")
     .select("*")
     .eq("strong_id", normalizedStrongId)
-    .order("book", { ascending: true })
+    .order("canon_order", { ascending: true, nullsFirst: false })
     .order("chapter", { ascending: true })
     .order("verse", { ascending: true })
     .limit(25);
