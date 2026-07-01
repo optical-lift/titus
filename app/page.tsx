@@ -14,15 +14,7 @@ export default function Home() {
 
   return (
     <main className="compact-course-app">
-      <header className="compact-header" aria-label="Titus site header">
-        <Link className="compact-brand" href="/">
-          Titus
-        </Link>
-
-        <div className="compact-back-slot" aria-hidden="true" />
-      </header>
-
-      <section className="compact-intro" aria-labelledby="home-title">
+<section className="compact-intro" aria-labelledby="home-title">
         <div>
           <h1 id="home-title" className="sr-only">
             Titus Greek and Hebrew word study
@@ -100,19 +92,6 @@ export default function Home() {
             : null}
         </div>
       </section>
-
-      <footer className="compact-footer compact-footer--lex">
-        <p>
-          The Lex Canon Pattern Engine Project traces original-language tokens
-          through the whole canon to identify repeated function patterns. Titus
-          uses those prepared findings to turn discovery packets into guided
-          word-study paths: read the text, trace the repetition, and walk the
-          pattern in order.
-        </p>
-        <p className="compact-footer__meta">
-          © 2026 Lex Project. Titus is part of the Lex Canon Pattern Engine Project.
-        </p>
-      </footer>
 </main>
   );
 }

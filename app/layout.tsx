@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { TitusSiteFooter, TitusSiteHeader } from "@/components/titus-site-chrome";
 
 export const metadata: Metadata = {
   title: "Titus",
@@ -13,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <TitusSiteHeader />
+        {children}
+        <TitusSiteFooter />
+      </body>
     </html>
   );
 }
