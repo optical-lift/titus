@@ -65,7 +65,7 @@ export default function NoelSongLessonDrawerStack({
       },
       {
         code: "receive",
-        heading: "9 · Word Study Complete",
+        heading: "9 · Receive Carefully",
       },
     ],
     []
