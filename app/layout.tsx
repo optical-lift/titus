@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Titus",
-  description: "A guided canon word-study course library.",
+  description: "Greek & Hebrew word study through whole-canon function pattern discovery.",
 };
 
 export default function RootLayout({

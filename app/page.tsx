@@ -1,68 +1,47 @@
 import Link from "next/link";
 import { courses } from "@/data/titus/courses";
 
+const availableCourses = courses.filter((course) => course.status === "active");
+
 export default function Home() {
   return (
-    <main className="page-shell">
-      <section className="hero">
-        <div className="kicker">Titus · Canon Word-Study Course Library</div>
-        <h1>Read Scripture first. Trace one word. Receive the Function Reading carefully.</h1>
-        <p className="lede">
-          Titus is a guided Hebrew and Greek word-study path where each course
-          opens one stable lesson at a time: canon reading, original-language
-          identity, companion patterns, traditions in conversation, and careful
-          reception.
+    <main className="titus-home">
+      <section className="titus-home__masthead" aria-labelledby="titus-title">
+        <p className="titus-kicker">Titus</p>
+        <h1 id="titus-title">Titus</h1>
+        <p className="titus-subtitle">
+          Greek &amp; Hebrew word study through whole-canon function pattern discovery
         </p>
-
-        <div className="home-utility-links">
-          <Link className="pill related-pill" href="/registry">
-            Node Registry
-          </Link>
-          <Link className="pill related-pill" href="/search">
-            Curated Search
-          </Link>
-        </div>
-
-        <form className="search-form compact-home-search" action="/search">
-          <label className="search-label" htmlFor="home-search">
-            Search public Titus nodes
-          </label>
-          <div className="search-row">
-            <input
-              className="search-input"
-              id="home-search"
-              name="q"
-              placeholder="Search H0776, erets, land, bloodguilt..."
-            />
-            <button className="button search-button" type="submit">
-              Search
-            </button>
-          </div>
-        </form>
       </section>
 
-      <section style={{ marginTop: 28 }}>
-        <div className="kicker">Course Catalogue</div>
-        <div className="course-grid grid">
-          {courses.map((course) => (
-            <article
-              className={course.status === "active" ? "card active" : "card"}
-              key={course.slug}
-            >
-              <span className="status">
-                {course.status === "active" ? "Active first course" : "Coming later"}
-              </span>
-              <h2 style={{ marginTop: 14 }}>{course.title}</h2>
-              <p><strong>{course.subtitle}</strong></p>
-              <p>{course.description}</p>
-              {course.status === "active" ? (
-                <Link className="button" href={`/courses/${course.slug}`}>
-                  Open course
-                </Link>
-              ) : null}
-            </article>
-          ))}
+      <section className="titus-section" aria-labelledby="available-courses">
+        <div className="titus-section__header">
+          <p className="titus-kicker">Available Courses</p>
+          <h2 id="available-courses">Courses</h2>
         </div>
+
+        {availableCourses.length > 0 ? (
+          <div className="titus-course-list">
+            {availableCourses.map((course) => (
+              <article className="titus-course-card" key={course.slug}>
+                <div>
+                  <p className="titus-course-card__eyebrow">Course</p>
+                  <h3>{course.title}</h3>
+                  <p className="titus-course-card__subtitle">{course.subtitle}</p>
+                  <p className="titus-course-card__description">{course.description}</p>
+                </div>
+
+                <Link className="titus-button" href={`/courses/${course.slug}`}>
+                  Open Course
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="titus-empty-card">
+            <p>No public courses are marked active yet.</p>
+          </div>
+        )}
       </section>
     </main>
   );
