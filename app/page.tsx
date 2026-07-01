@@ -28,7 +28,7 @@ export default function Home() {
             Titus Greek and Hebrew word study
           </h1>
           <p className="compact-eyebrow">Greek &amp; Hebrew word study</p>
-          <p>Whole-canon function pattern discovery.</p>
+          <p>Whole-canon function pattern discovery</p>
         </div>
       </section>
 

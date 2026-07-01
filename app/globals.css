@@ -1525,3 +1525,32 @@ ol {
     margin-top: 16px;
   }
 }
+
+
+/* Homepage subtitle and softer search field */
+
+.compact-intro p:not(.compact-eyebrow) {
+  font-size: clamp(1rem, 3.4vw, 1.18rem);
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.compact-search--courses {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.36);
+  box-shadow: none;
+}
+
+.compact-search--courses input {
+  background: transparent;
+}
+
+.compact-search--courses input::placeholder {
+  color: rgba(28, 39, 32, 0.52);
+}
+
+@media (max-width: 720px) {
+  .compact-intro p:not(.compact-eyebrow) {
+    font-size: 1.05rem;
+  }
+}
