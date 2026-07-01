@@ -178,34 +178,6 @@ function goPrevious() {
         </div>
       </section>
 
-      <section className="course-word-packet__metadata" aria-labelledby="lesson-metadata">
-        <p className="course-word-packet__eyebrow" id="lesson-metadata">
-          Source · Review · Version
-        </p>
-
-        <h2>Course Lesson Metadata</h2>
-
-        <div className="course-word-packet__metadata-grid">
-          <div>
-            <span>Course</span>
-            <p>{shell.course.title}</p>
-          </div>
-          <div>
-            <span>Lesson</span>
-            <p>
-              {shell.lessonNumber} · {shell.lessonKind}
-            </p>
-          </div>
-          <div>
-            <span>Packet field</span>
-            <p>{shell.languageLabel}</p>
-          </div>
-          <div>
-            <span>Status</span>
-            <p>public seed · course shell</p>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
