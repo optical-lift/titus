@@ -6,6 +6,7 @@ import { assertNoAssemblyErrors, getAssemblyIssues } from "@/lib/titus/assembly-
 import { assertNoCourseAssemblyErrors, getCourseAssemblyIssues } from "@/lib/titus/course-assembly-validation";
 import { assertNoSourcePacketErrors, getSourcePacketIssues } from "@/lib/titus/source-packet-validation";
 import { assertNoPublicNodeErrors, getPublicNodeIssues } from "@/lib/titus/public-node-validation";
+import { assertNoLessonRouteErrors, getLessonRouteIssues } from "@/lib/titus/lesson-route-validation";
 import { getAttachmentHref, getAttachmentTypeLabel } from "@/lib/titus/node-links";
 import {
   getCourseAssemblyNodeHref,
@@ -27,11 +28,13 @@ export default function RegistryPage() {
   assertNoCourseAssemblyErrors();
   assertNoSourcePacketErrors();
   assertNoPublicNodeErrors();
+  assertNoLessonRouteErrors();
 
   const assemblyIssues = getAssemblyIssues();
   const courseAssemblyIssues = getCourseAssemblyIssues();
   const sourcePacketIssues = getSourcePacketIssues();
   const publicNodeIssues = getPublicNodeIssues();
+  const lessonRouteIssues = getLessonRouteIssues();
 
   return (
     <main className="page-shell">
@@ -72,6 +75,28 @@ export default function RegistryPage() {
         </article>
       </section>
 
+
+      <section className="registry-section">
+        <div className="kicker">Lesson Route Integrity</div>
+        <article className={lessonRouteIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
+          <h2>{lessonRouteIssues.length === 0 ? "All lesson routes resolve" : "Lesson route issues found"}</h2>
+          <p>
+            {lessonRouteIssues.length === 0
+              ? "Every published lesson, queued lesson, and lesson alias currently has a non-conflicting /lessons route."
+              : "One or more lesson routes, queued routes, or aliases conflict."}
+          </p>
+
+          {lessonRouteIssues.length > 0 ? (
+            <ul className="pattern-list">
+              {lessonRouteIssues.map((issue) => (
+                <li key={`${issue.route}-${issue.message}`}>
+                  <strong>{issue.severity.toUpperCase()}:</strong> {issue.message}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </article>
+      </section>
 
       <section className="registry-section">
         <div className="kicker">Public Node Integrity</div>
