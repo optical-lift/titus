@@ -212,9 +212,23 @@ function goPrevious() {
           {activeDrawer.description}
         </p>
 
-      <div className="course-word-packet__drawer-stamp" aria-label="Lesson vocabulary stamp">
-        <TitusLexStamp stamp={shell.lexStamp} />
+      {(() => {
+    const shouldShowDrawerStamp =
+      Number(
+        (activeDrawer as Record<string, unknown>)["drawerNumber"] ??
+          (activeDrawer as Record<string, unknown>)["number"] ??
+          (activeDrawer as Record<string, unknown>)["step"] ??
+          (activeDrawer as Record<string, unknown>)["id"] ??
+          NaN,
+      ) === 1 ||
+      Number(activeDrawerIndex) === 0 || Number(activeDrawerIndex) === 1;
+
+    return shouldShowDrawerStamp ? (
+      <div className="course-word-packet__drawer-stamp course-word-packet__drawer-stamp-only-first" aria-label="Lesson vocabulary stamp">
+                <TitusLexStamp stamp={shell.lexStamp} />
       </div>
+    ) : null;
+  })()}
 
         <div className="course-word-packet__drawer-body">{activeDrawer.body}</div>
 
