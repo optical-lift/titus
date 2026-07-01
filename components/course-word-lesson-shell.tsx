@@ -109,7 +109,15 @@ function goPrevious() {
     );
   }
 
-  return (
+  
+  const drawerProgressCurrent = Number(activeDrawerIndex) + 1;
+  const drawerProgressTotal = 5;
+  const drawerProgressPercent = Math.min(
+    100,
+    Math.max(0, Math.round((drawerProgressCurrent / drawerProgressTotal) * 100)),
+  );
+
+return (
     <main className="course-word-packet">
       <Link className="course-word-packet__back" href={`/courses/${shell.course.slug}`}>
         ← Return to current course
@@ -189,9 +197,9 @@ function goPrevious() {
       <p className="course-word-packet__top-study-subtitle">
         {courseTitle} · Lesson {currentLesson} of {totalLessons}
       </p>
-      <div className="course-word-packet__top-progress" aria-label={`Course progress: lesson ${currentLesson} of ${totalLessons}`}>
+      <div className="course-word-packet__top-progress" aria-label={`Lesson progress: drawer ${drawerProgressCurrent} of ${drawerProgressTotal}`}>
         <span>
-          <span style={{ width: `${progressPercent}%` }} />
+          <span style={{ width: `${drawerProgressPercent}%` }} />
         </span>
       </div>
     </section>
