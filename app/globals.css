@@ -3413,3 +3413,127 @@ body {
     padding-right: 8px;
   }
 }
+
+/* Titus mobile lesson reading economy */
+
+@media (max-width: 720px) {
+  .course-word-packet {
+    width: min(100% - 20px, 980px);
+    padding-top: 8px;
+    padding-bottom: 42px;
+  }
+
+  .course-word-packet__back {
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+  }
+
+  .course-word-packet__lex-hero {
+    border-radius: 20px;
+    padding: 10px;
+  }
+
+  .course-word-packet__lex-hero > .course-word-packet__eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+
+  .titus-lex-stamp {
+    margin-top: 8px;
+    border-radius: 16px;
+  }
+
+  .titus-lex-stamp__pair-cell {
+    gap: 2px;
+    padding: 7px 8px;
+  }
+
+  .titus-lex-stamp__idline {
+    gap: 3px;
+    font-size: 0.66rem;
+    line-height: 1.02;
+  }
+
+  .titus-lex-stamp__idline em {
+    font-size: 0.68rem;
+  }
+
+  .titus-lex-stamp__gloss {
+    font-size: 0.82rem;
+    line-height: 1.08;
+  }
+
+  .titus-lex-stamp__kjv {
+    padding: 7px 8px;
+    font-size: 0.84rem;
+    line-height: 1.06;
+  }
+
+  .titus-lex-stamp__anchor {
+    padding: 7px 8px;
+    font-size: 0.64rem;
+  }
+
+  .titus-lex-stamp__lineage-row {
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
+  .titus-lex-stamp__lineage {
+    font-size: 0.78rem;
+    line-height: 1.05;
+  }
+
+  .course-word-packet__stamp-context {
+    margin-top: 6px;
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+
+  .course-word-packet__drawer-tabs {
+    top: 54px !important;
+    gap: 4px;
+    margin: 8px 0 8px !important;
+    padding: 3px !important;
+  }
+
+  .course-word-packet__drawer-tabs button {
+    height: 32px;
+  }
+
+  .course-word-packet__drawer-tabs span {
+    width: 24px;
+    height: 24px;
+    font-size: 0.72rem;
+  }
+
+  .course-word-packet__drawer {
+    margin-top: 0;
+    border-radius: 20px;
+    padding: 15px;
+  }
+
+  .course-word-packet__drawer h2 {
+    margin-top: 8px;
+    font-size: clamp(1.75rem, 8.4vw, 2.45rem);
+    line-height: 0.96;
+  }
+
+  .course-word-packet__drawer-description {
+    margin-top: 10px;
+    font-size: 0.96rem;
+    line-height: 1.42;
+  }
+
+  .course-word-packet__drawer-body {
+    margin-top: 14px;
+  }
+
+  .course-word-packet__drawer-actions {
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+}
+
+/* End Titus mobile lesson reading economy */
