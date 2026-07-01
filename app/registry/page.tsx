@@ -1,432 +1,70 @@
 import Link from "next/link";
-import { canonChains } from "@/data/titus/canon-chains";
-import { courseAssemblies } from "@/data/titus/course-assemblies";
-import { sourcePackets } from "@/data/titus/source-packets";
-import { assertNoAssemblyErrors, getAssemblyIssues } from "@/lib/titus/assembly-validation";
-import { assertNoCourseAssemblyErrors, getCourseAssemblyIssues } from "@/lib/titus/course-assembly-validation";
-import { assertNoSourcePacketErrors, getSourcePacketIssues } from "@/lib/titus/source-packet-validation";
-import { assertNoPublicNodeErrors, getPublicNodeIssues } from "@/lib/titus/public-node-validation";
-import { assertNoLessonRouteErrors, getLessonRouteIssues } from "@/lib/titus/lesson-route-validation";
-import { getAttachmentHref, getAttachmentTypeLabel } from "@/lib/titus/node-links";
-import {
-  getCourseAssemblyNodeHref,
-  getCourseAssemblySectionLabel,
-  getCourseAssemblyTypeLabel,
-} from "@/lib/titus/course-node-links";
-import { functionLenses } from "@/data/titus/function-lenses";
-import { lessonAssemblies } from "@/data/titus/lesson-assemblies";
-import { lessons } from "@/data/titus/lessons";
-import { patternDebriefs } from "@/data/titus/pattern-debriefs";
-import { queuedLessons } from "@/data/titus/queued-lessons";
-import {
-  traditionCards,
-  traditionPlacements,
-} from "@/data/titus/tradition-notes";
+import { getTitusPublicCatalog } from "@/lib/titus/public-lessons";
 
-export default function RegistryPage() {
-  assertNoAssemblyErrors();
-  assertNoCourseAssemblyErrors();
-  assertNoSourcePacketErrors();
-  assertNoPublicNodeErrors();
-  assertNoLessonRouteErrors();
+export const dynamic = "force-dynamic";
 
-  const assemblyIssues = getAssemblyIssues();
-  const courseAssemblyIssues = getCourseAssemblyIssues();
-  const sourcePacketIssues = getSourcePacketIssues();
-  const publicNodeIssues = getPublicNodeIssues();
-  const lessonRouteIssues = getLessonRouteIssues();
+export default async function RegistryPage() {
+  const lessons = await getTitusPublicCatalog();
 
   return (
-    <main className="page-shell">
-      <Link className="small-link" href="/">
-        ← Course catalogue
-      </Link>
-
-      <section className="hero" style={{ marginTop: 18 }}>
-        <div className="kicker">Titus Node Registry</div>
-        <h1>Reusable public study nodes.</h1>
-        <p className="lede">
-          This page shows the reusable Titus objects that can be attached to
-          lessons and courses: word lessons, Pattern Debriefs, Function Lenses,
-          Canon Chains, Tradition Cards, and Tradition Placements.
+    <main className="mx-auto max-w-6xl px-6 py-10">
+      <section className="mb-10">
+        <p className="mb-2 text-sm uppercase tracking-wide text-neutral-500">
+          Titus Registry
+        </p>
+        <h1 className="text-3xl font-semibold tracking-tight">
+          Public Word-Study Lessons
+        </h1>
+        <p className="mt-3 max-w-3xl text-neutral-700">
+          Release-gated public-seed lessons from the Lex pattern engine. Candidate
+          material, expandable stages, guardrails, and under-review drawers remain
+          visibly marked.
         </p>
       </section>
 
+      <section className="grid gap-4 md:grid-cols-3">
+        {lessons.map((lesson) => (
+          <Link
+            key={lesson.song_object_id}
+            href={`/lessons/${lesson.lesson_slug}`}
+            className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+          >
+            <div className="mb-3 inline-flex rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700">
+              {lesson.public_badge}
+            </div>
 
-      <section className="registry-section">
-        <div className="kicker">Assembly Integrity</div>
-        <article className={assemblyIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
-          <h2>{assemblyIssues.length === 0 ? "All assemblies resolve" : "Assembly issues found"}</h2>
-          <p>
-            {assemblyIssues.length === 0
-              ? "Every lesson assembly currently points to an existing lesson, course, and reusable node."
-              : "One or more lesson assemblies point to missing or incomplete nodes."}
-          </p>
+            <h2 className="text-xl font-semibold">{lesson.title}</h2>
 
-          {assemblyIssues.length > 0 ? (
-            <ul className="pattern-list">
-              {assemblyIssues.map((issue) => (
-                <li key={`${issue.lessonSlug}-${issue.drawerCode}-${issue.nodeSlug}-${issue.message}`}>
-                  <strong>{issue.severity.toUpperCase()}:</strong> {issue.message}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </article>
-      </section>
-
-
-      <section className="registry-section">
-        <div className="kicker">Lesson Route Integrity</div>
-        <article className={lessonRouteIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
-          <h2>{lessonRouteIssues.length === 0 ? "All lesson routes resolve" : "Lesson route issues found"}</h2>
-          <p>
-            {lessonRouteIssues.length === 0
-              ? "Every published lesson, queued lesson, and lesson alias currently has a non-conflicting /lessons route."
-              : "One or more lesson routes, queued routes, or aliases conflict."}
-          </p>
-
-          {lessonRouteIssues.length > 0 ? (
-            <ul className="pattern-list">
-              {lessonRouteIssues.map((issue) => (
-                <li key={`${issue.route}-${issue.message}`}>
-                  <strong>{issue.severity.toUpperCase()}:</strong> {issue.message}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </article>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Public Node Integrity</div>
-        <article className={publicNodeIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
-          <h2>{publicNodeIssues.length === 0 ? "All public node metadata resolves" : "Public node metadata issues found"}</h2>
-          <p>
-            {publicNodeIssues.length === 0
-              ? "Every public-facing node currently has required metadata, matching status, known limits, and source-list structure."
-              : "One or more public-facing nodes have incomplete or mismatched metadata."}
-          </p>
-
-          {publicNodeIssues.length > 0 ? (
-            <ul className="pattern-list">
-              {publicNodeIssues.map((issue) => (
-                <li key={`${issue.nodeType}-${issue.nodeSlug}-${issue.message}`}>
-                  <strong>{issue.severity.toUpperCase()}:</strong> {issue.message}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </article>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Source Packet Integrity</div>
-        <article className={sourcePacketIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
-          <h2>{sourcePacketIssues.length === 0 ? "All source packets resolve" : "Source packet issues found"}</h2>
-          <p>
-            {sourcePacketIssues.length === 0
-              ? "Every public node currently points to a registered source packet."
-              : "One or more public nodes point to missing or duplicate source packets."}
-          </p>
-
-          {sourcePacketIssues.length > 0 ? (
-            <ul className="pattern-list">
-              {sourcePacketIssues.map((issue) => (
-                <li key={`${issue.nodeType}-${issue.nodeSlug}-${issue.sourcePacket}-${issue.message}`}>
-                  <strong>{issue.severity.toUpperCase()}:</strong> {issue.message}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </article>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Course Assembly Integrity</div>
-        <article className={courseAssemblyIssues.length === 0 ? "registry-health-card ok" : "registry-health-card problem"}>
-          <h2>{courseAssemblyIssues.length === 0 ? "All course assemblies resolve" : "Course assembly issues found"}</h2>
-          <p>
-            {courseAssemblyIssues.length === 0
-              ? "Every course assembly currently points to an existing course and reusable or queued node."
-              : "One or more course assemblies point to missing or incomplete nodes."}
-          </p>
-
-          {courseAssemblyIssues.length > 0 ? (
-            <ul className="pattern-list">
-              {courseAssemblyIssues.map((issue) => (
-                <li key={`${issue.courseSlug}-${issue.section}-${issue.nodeSlug}-${issue.message}`}>
-                  <strong>{issue.severity.toUpperCase()}:</strong> {issue.message}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </article>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Source Packet Records</div>
-        <div className="registry-grid">
-          {sourcePackets.map((packet) => (
-            <Link
-              className="registry-card placement-registry-card"
-              href={`/sources/${packet.slug}`}
-              key={packet.slug}
-            >
-              <span className="status">Source Packet · {packet.status}</span>
-              <h2>{packet.title}</h2>
-              <p>{packet.summary}</p>
-              <p>
-                Kind: {packet.packetKind.replaceAll("_", " ")}
-                <br />
-                Owner: {packet.owner}
-                <br />
-                Last updated: {packet.lastUpdated}
+            {lesson.public_caveat ? (
+              <p className="mt-2 text-sm text-neutral-600">
+                {lesson.public_caveat}
               </p>
-            </Link>
-          ))}
-        </div>
-      </section>
+            ) : null}
 
-      <section className="registry-section">
-        <div className="kicker">Course Assemblies</div>
-        <div className="registry-grid">
-          {courseAssemblies.map((node) => {
-            const href = getCourseAssemblyNodeHref(node);
-
-            const inner = (
-              <>
-                <span className="status">Course Assembly</span>
-                <h2>{node.label}</h2>
-                <p>{node.summary}</p>
-                <p>
-                  Course: {node.courseSlug}
-                  <br />
-                  Section: {getCourseAssemblySectionLabel(node.section)}
-                  <br />
-                  Type: {getCourseAssemblyTypeLabel(node.type)}
-                  <br />
-                  Node: {node.nodeSlug}
-                </p>
-              </>
-            );
-
-            return href ? (
-              <Link
-                className="registry-card placement-registry-card"
-                href={href}
-                key={`${node.courseSlug}-${node.section}-${node.type}-${node.nodeSlug}`}
-              >
-                {inner}
-              </Link>
-            ) : (
-              <article
-                className="registry-card placement-registry-card"
-                key={`${node.courseSlug}-${node.section}-${node.type}-${node.nodeSlug}`}
-              >
-                {inner}
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Lesson Assemblies</div>
-        <div className="registry-grid">
-          {lessonAssemblies.map((attachment) => {
-            const href = getAttachmentHref(attachment);
-
-            if (!href) {
-              return (
-                <article
-                  className="registry-card placement-registry-card"
-                  key={`${attachment.lessonSlug}-${attachment.type}-${attachment.nodeSlug}`}
-                >
-                  <span className="status">Broken Assembly</span>
-                  <h2>{attachment.label}</h2>
-                  <p>
-                    Lesson: {attachment.lessonSlug}
-                    <br />
-                    Course: {attachment.courseSlug}
-                    <br />
-                    Drawer: {attachment.drawerCode}
-                    <br />
-                    Type: {getAttachmentTypeLabel(attachment)}
-                    <br />
-                    Node: {attachment.nodeSlug}
-                  </p>
-                </article>
-              );
-            }
-
-            return (
-              <Link
-                className="registry-card placement-registry-card"
-                href={href}
-                key={`${attachment.lessonSlug}-${attachment.type}-${attachment.nodeSlug}`}
-              >
-                <span className="status">Lesson Assembly</span>
-                <h2>{attachment.label}</h2>
-                <p>
-                  Lesson: {attachment.lessonSlug}
-                  <br />
-                  Course: {attachment.courseSlug}
-                  <br />
-                  Drawer: {attachment.drawerCode}
-                  <br />
-                  Type: {getAttachmentTypeLabel(attachment)}
-                  <br />
-                  Node: {attachment.nodeSlug}
-                </p>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Queued Lesson Nodes</div>
-        <div className="registry-grid">
-          {queuedLessons.map((lesson) => (
-            <Link
-              className="registry-card placement-registry-card"
-              href={`/lessons/${lesson.slug}?from=/registry`}
-              key={lesson.slug}
-            >
-              <span className="status">Queued Lesson · {lesson.status}</span>
-              <h2>{lesson.title}</h2>
-              <p>{lesson.subtitle}</p>
-              <p>
-                Original: {lesson.originalWord}
-                <br />
-                Transliteration: {lesson.transliteration}
-                <br />
-                Source packet: {lesson.publicNodeMeta.sourcePacket}
-              </p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Published Word Lessons</div>
-        <div className="registry-grid">
-          {lessons.map((lesson) => (
-            <Link
-              className="registry-card"
-              href={`/lessons/${lesson.slug}`}
-              key={lesson.slug}
-            >
-              <span className="status">Word Lesson</span>
-              <h2>{lesson.title}</h2>
-              <p>{lesson.field}</p>
-              <p>Status: {lesson.status}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Pattern Debriefs</div>
-        <div className="registry-grid">
-          {patternDebriefs.map((pattern) => (
-            <Link
-              className="registry-card"
-              href={`/patterns/${pattern.slug}`}
-              key={pattern.slug}
-            >
-              <span className="status">Pattern Debrief</span>
-              <h2>{pattern.title}</h2>
-              <p>{pattern.appearsIn.join(", ")}</p>
-              <p>Status: {pattern.status.replaceAll("_", " ")}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Function Lenses</div>
-        <div className="registry-grid">
-          {functionLenses.map((lens) => (
-            <Link
-              className="registry-card"
-              href={`/lenses/${lens.slug}`}
-              key={lens.slug}
-            >
-              <span className="status">Function Lens</span>
-              <h2>{lens.title}</h2>
-              <p>{lens.subtitle}</p>
-              <p>Status: {lens.status}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Canon Chains</div>
-        <div className="registry-grid">
-          {canonChains.map((chain) => (
-            <Link
-              className="registry-card"
-              href={`/chains/${chain.slug}`}
-              key={chain.slug}
-            >
-              <span className="status">Canon Chain</span>
-              <h2>{chain.title}</h2>
-              <p>{chain.subtitle}</p>
-              <p>Status: {chain.status}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Tradition Cards</div>
-        <div className="registry-grid">
-          {traditionCards.map((card) => (
-            <Link
-              className="registry-card"
-              href={`/traditions/${card.slug}`}
-              key={card.slug}
-            >
-              <span className="status">Tradition Card</span>
-              <h2>{card.title}</h2>
-              <p>{card.subtitle}</p>
-              <p>
-                {card.cardKind.replaceAll("_", " ")} · Status: {card.status}
-              </p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="registry-section">
-        <div className="kicker">Tradition Placements</div>
-        <div className="registry-grid">
-          {traditionPlacements.map((placement) => {
-            const card = traditionCards.find(
-              (traditionCard) => traditionCard.slug === placement.cardSlug
-            );
-
-            return (
-              <Link
-                className="registry-card placement-registry-card"
-                href={`/traditions/${placement.cardSlug}?placement=${placement.slug}&from=/lessons/${placement.lessonSlug}`}
-                key={placement.slug}
-              >
-                <span className="status">Tradition Placement</span>
-                <h2>{placement.placementTitle}</h2>
-                <p>{placement.placementSummary}</p>
-                <p>
-                  Card: {card?.title || placement.cardSlug}
-                  <br />
-                  Attached to: {placement.courseSlug} / {placement.lessonSlug}
-                </p>
-              </Link>
-            );
-          })}
-        </div>
+            <dl className="mt-4 grid grid-cols-2 gap-2 text-sm text-neutral-700">
+              <div>
+                <dt className="text-neutral-500">Stages</dt>
+                <dd className="font-medium">{lesson.stage_count}</dd>
+              </div>
+              <div>
+                <dt className="text-neutral-500">Anchors</dt>
+                <dd className="font-medium">{lesson.song_anchor_count}</dd>
+              </div>
+              <div>
+                <dt className="text-neutral-500">Confirmed</dt>
+                <dd className="font-medium">
+                  {lesson.confirmed_trigger_count}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-neutral-500">Candidates</dt>
+                <dd className="font-medium">
+                  {lesson.candidate_trigger_count}
+                </dd>
+              </div>
+            </dl>
+          </Link>
+        ))}
       </section>
     </main>
   );
