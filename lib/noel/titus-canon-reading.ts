@@ -105,8 +105,8 @@ export async function hydrateCanonReadingFromNoel(
     }
 
     const { data, error } = await noel
-      .from("titus_verse_text_v1")
-      .select("book, chapter, verse, bible_text")
+      .from("titus_public_verse_text_v1")
+      .select("book, chapter, verse, public_text")
       .eq("book", parsedRef.book)
       .eq("chapter", parsedRef.chapter)
       .gte("verse", parsedRef.startVerse)
@@ -118,7 +118,7 @@ export async function hydrateCanonReadingFromNoel(
     }
 
     const noelText = (data ?? [])
-      .map((row) => row.bible_text)
+      .map((row) => row.public_text)
       .filter((text): text is string => Boolean(text))
       .join(" ");
 
