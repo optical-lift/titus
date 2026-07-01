@@ -2006,3 +2006,122 @@ ol {
     font-size: clamp(1.9rem, 9.2vw, 2.55rem);
   }
 }
+
+
+/* Header strip correction and course packet preview */
+
+.titus-site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  width: 100%;
+  min-height: 54px;
+  margin: 0;
+  padding-left: max(20px, calc((100vw - 760px) / 2 + 16px));
+  padding-right: max(20px, calc((100vw - 760px) / 2 + 16px));
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  background: rgba(251, 250, 246, 0.96);
+  backdrop-filter: blur(14px);
+  font-family: var(--ui-font);
+}
+
+.titus-site-header__brand {
+  color: var(--accent-dark);
+  font-family: var(--ui-font);
+  font-size: 0.98rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.course-landing__packet-preview {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.course-landing__language-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.course-landing__language-grid article {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.48);
+  padding: 12px;
+}
+
+.course-landing__language-grid h2 {
+  margin: 0;
+  color: var(--accent-dark);
+  font-family: var(--ui-font);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.course-landing__term-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.course-landing__term {
+  display: inline-grid;
+  gap: 2px;
+  min-width: 88px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(238, 242, 236, 0.48);
+  padding: 8px 9px;
+}
+
+.course-landing__term strong {
+  color: var(--accent-dark);
+  font-family: var(--ui-font);
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.course-landing__term em {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.1;
+}
+
+.course-landing__term small {
+  color: var(--muted);
+  font-family: var(--ui-font);
+  font-size: 0.68rem;
+  line-height: 1.15;
+}
+
+.course-landing__packet-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-family: var(--ui-font);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 720px) {
+  .titus-site-header {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .course-landing__language-grid {
+    grid-template-columns: 1fr;
+  }
+}

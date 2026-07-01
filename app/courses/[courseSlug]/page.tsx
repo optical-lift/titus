@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { courses, getCourse } from "@/data/titus/courses";
+import { getCoursePacketPreview } from "@/data/titus/course-packet-previews";
 
 type CoursePageProps = {
   params: Promise<{
@@ -56,6 +57,8 @@ export default async function CoursePage({ params }: CoursePageProps) {
     notFound();
   }
 
+  const packetPreview = getCoursePacketPreview(course.slug);
+
   const firstLessonSlug = course.firstLessonSlug ?? course.lessons[0];
   const beginHref = firstLessonSlug
     ? `/lessons/${firstLessonSlug}?from=/courses/${course.slug}`
@@ -80,6 +83,47 @@ export default async function CoursePage({ params }: CoursePageProps) {
           <p className="course-landing__pending">Guided path pending</p>
         )}
       </section>
+
+      {packetPreview ? (
+        <section
+          className="course-landing__section course-landing__packet-preview"
+          aria-labelledby="packet-preview"
+        >
+          <p className="course-landing__eyebrow" id="packet-preview">
+            Packet Preview
+          </p>
+
+          <div className="course-landing__language-grid">
+            <article>
+              <h2>Hebrew Field</h2>
+              <div className="course-landing__term-list">
+                {packetPreview.hebrewField.map((term) => (
+                  <span className="course-landing__term" key={term.strongId}>
+                    <strong>{term.strongId}</strong>
+                    <em>{term.transliteration}</em>
+                    <small>{term.gloss}</small>
+                  </span>
+                ))}
+              </div>
+            </article>
+
+            <article>
+              <h2>Greek Witness</h2>
+              <div className="course-landing__term-list">
+                {packetPreview.greekWitness.map((term) => (
+                  <span className="course-landing__term" key={term.strongId}>
+                    <strong>{term.strongId}</strong>
+                    <em>{term.transliteration}</em>
+                    <small>{term.gloss}</small>
+                  </span>
+                ))}
+              </div>
+            </article>
+          </div>
+
+          <p className="course-landing__packet-note">{packetPreview.note}</p>
+        </section>
+      ) : null}
 
       <section className="course-landing__section" aria-labelledby="course-method">
         <p className="course-landing__eyebrow" id="course-method">
