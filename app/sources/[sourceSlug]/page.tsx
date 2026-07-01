@@ -16,6 +16,7 @@ export default async function SourcePacketPage({
   }
 
   const usage = getSourcePacketUsage(packet);
+  const currentSourceHref = `/sources/${packet.slug}`;
 
   return (
     <main className="page-shell">
@@ -60,7 +61,7 @@ export default async function SourcePacketPage({
             {usage.map((node) => (
               <Link
                 className="registry-card placement-registry-card"
-                href={node.href}
+                href={`${node.href}?from=${encodeURIComponent(currentSourceHref)}`}
                 key={`${node.nodeType}-${node.slug}`}
               >
                 <span className="status">

@@ -64,6 +64,10 @@ export function getReturnLabel(from?: string) {
     return "← Return to current lesson";
   }
 
+  if (safeFrom.startsWith("/sources/")) {
+    return "← Return to source packet";
+  }
+
   return "← Return";
 }
 
