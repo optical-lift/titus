@@ -8,10 +8,22 @@ const studySteps = [
   "Guardrails",
 ];
 
-const categoryTiles = [
-  { label: "Words", text: "Strong’s lessons" },
-  { label: "Chains", text: "Canon routes" },
-  { label: "Patterns", text: "Function maps" },
+const methodSteps = [
+  {
+    label: "Read",
+    text: "Start where the word appears.",
+    icon: "▤",
+  },
+  {
+    label: "Trace",
+    text: "Follow what the canon repeats.",
+    icon: "⌁",
+  },
+  {
+    label: "Walk",
+    text: "Study the pattern in order.",
+    icon: "→",
+  },
 ];
 
 export default function Home() {
@@ -39,25 +51,27 @@ export default function Home() {
           <p className="compact-eyebrow">Greek &amp; Hebrew word study</p>
           <p>Whole-canon function pattern discovery.</p>
         </div>
-
-        <form className="compact-search" action="/search">
-          <label className="sr-only" htmlFor="home-search">
-            Search Titus
-          </label>
-          <input id="home-search" name="q" placeholder="Search" />
-          <button type="submit">Go</button>
-        </form>
       </section>
 
-      <section className="compact-categories" aria-label="Study layers">
-        {categoryTiles.map((tile) => (
-          <article className="compact-category" key={tile.label}>
-            <span>{tile.label.slice(0, 1)}</span>
-            <div>
-              <h2>{tile.label}</h2>
-              <p>{tile.text}</p>
-            </div>
-          </article>
+      <section className="method-ribbon" aria-label="Titus study method">
+        {methodSteps.map((step, index) => (
+          <div className="method-ribbon__piece" key={step.label}>
+            <article className="method-ribbon__step">
+              <span className="method-ribbon__icon" aria-hidden="true">
+                {step.icon}
+              </span>
+              <div>
+                <h2>{step.label}</h2>
+                <p>{step.text}</p>
+              </div>
+            </article>
+
+            {index < methodSteps.length - 1 ? (
+              <span className="method-ribbon__arrow" aria-hidden="true">
+                →
+              </span>
+            ) : null}
+          </div>
         ))}
       </section>
 
@@ -67,6 +81,14 @@ export default function Home() {
             Canon Patterns
           </h2>
         </div>
+
+        <form className="compact-search compact-search--courses" action="/search">
+          <label className="sr-only" htmlFor="home-search">
+            Search Titus
+          </label>
+          <input id="home-search" name="q" placeholder="Search" />
+          <button type="submit">Go</button>
+        </form>
 
         <div className="compact-course-list">
           {activePath ? (
