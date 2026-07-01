@@ -117,7 +117,11 @@ export default function RegistryPage() {
         <div className="kicker">Source Packet Records</div>
         <div className="registry-grid">
           {sourcePackets.map((packet) => (
-            <article className="registry-card placement-registry-card" key={packet.slug}>
+            <Link
+              className="registry-card placement-registry-card"
+              href={`/sources/${packet.slug}`}
+              key={packet.slug}
+            >
               <span className="status">Source Packet · {packet.status}</span>
               <h2>{packet.title}</h2>
               <p>{packet.summary}</p>
@@ -128,7 +132,7 @@ export default function RegistryPage() {
                 <br />
                 Last updated: {packet.lastUpdated}
               </p>
-            </article>
+            </Link>
           ))}
         </div>
       </section>

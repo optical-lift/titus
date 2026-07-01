@@ -8,6 +8,7 @@ const allowedReturnPrefixes = [
   "/traditions/",
   "/registry",
   "/search",
+  "/sources/",
 ];
 
 export function getSafeReturnPath(from?: string) {

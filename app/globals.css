@@ -849,3 +849,13 @@ p {
   color: var(--ink);
   overflow-wrap: anywhere;
 }
+
+.source-packet-detail-card {
+  margin-top: 18px;
+}
+
+.source-packet-detail-card p {
+  margin: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}

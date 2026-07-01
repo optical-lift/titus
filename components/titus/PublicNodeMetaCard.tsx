@@ -1,9 +1,16 @@
+import Link from "next/link";
 import type { PublicNodeMeta } from "@/data/titus/public-node-meta";
+import { getSourcePacketByTitle } from "@/data/titus/source-packets";
 
 export default function PublicNodeMetaCard({ meta }: { meta: PublicNodeMeta }) {
+  const sourcePacket = getSourcePacketByTitle(meta.sourcePacket);
+
   return (
-    <section className="meta-card" aria-label="Source review and version metadata">
-      <div className="kicker">Source · Review · Version</div>
+    <section className="public-node-meta-card">
+      <div>
+        <div className="kicker">Source · Review · Version</div>
+        <h2>Public Node Metadata</h2>
+      </div>
 
       <div className="meta-grid">
         <div>
@@ -16,7 +23,7 @@ export default function PublicNodeMetaCard({ meta }: { meta: PublicNodeMeta }) {
         </div>
         <div>
           <span className="meta-label">Status</span>
-          <p>{meta.status.replaceAll("_", " ")}</p>
+          <p>{meta.status}</p>
         </div>
         <div>
           <span className="meta-label">Version</span>
@@ -30,26 +37,40 @@ export default function PublicNodeMetaCard({ meta }: { meta: PublicNodeMeta }) {
         </div>
         <div>
           <span className="meta-label">Source Packet</span>
-          <p>{meta.sourcePacket}</p>
+          {sourcePacket ? (
+            <p>
+              <Link className="small-link" href={`/sources/${sourcePacket.slug}`}>
+                {sourcePacket.title}
+              </Link>
+            </p>
+          ) : (
+            <p>{meta.sourcePacket}</p>
+          )}
         </div>
       </div>
 
       <details className="meta-details">
-        <summary>Known limits</summary>
-        <ul>
-          {meta.knownLimits.map((limit) => (
-            <li key={limit}>{limit}</li>
-          ))}
-        </ul>
-      </details>
+        <summary>Known limits and source list</summary>
 
-      <details className="meta-details">
-        <summary>Source list</summary>
-        <ul>
-          {meta.sourceList.map((source) => (
-            <li key={source}>{source}</li>
-          ))}
-        </ul>
+        <div className="meta-detail-grid">
+          <div>
+            <h3>Known limits</h3>
+            <ul>
+              {meta.knownLimits.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3>Source list</h3>
+            <ul>
+              {meta.sourceList.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </details>
     </section>
   );
