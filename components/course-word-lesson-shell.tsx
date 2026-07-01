@@ -147,13 +147,14 @@ export function CourseWordLessonShellView({
       <nav className="course-word-packet__drawer-tabs" aria-label="Lesson drawer navigation">
         {drawerTabs.map((drawer, index) => (
           <button
+            aria-label={`${index + 1}. ${drawer.title}`}
             className={index === activeDrawerIndex ? "active" : undefined}
             key={drawer.title}
             onClick={() => setActiveDrawerIndex(index)}
+            title={drawer.title}
             type="button"
           >
             <span>{index + 1}</span>
-            {drawer.title}
           </button>
         ))}
       </nav>
