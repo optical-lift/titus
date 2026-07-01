@@ -1,11 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { courses, getCourse } from "@/data/titus/courses";
-import { getCourseAssemblyBySection } from "@/data/titus/course-assemblies";
-import {
-  getCourseAssemblyNodeHref,
-  getCourseAssemblyTypeLabel,
-} from "@/lib/titus/course-node-links";
 
 type CoursePageProps = {
   params: Promise<{
@@ -65,26 +60,6 @@ export default async function CoursePage({ params }: CoursePageProps) {
   const beginHref = firstLessonSlug
     ? `/lessons/${firstLessonSlug}?from=/courses/${course.slug}`
     : undefined;
-
-  const coursePathNodes = [
-    ...getCourseAssemblyBySection(course.slug, "course_path"),
-    ...getCourseAssemblyBySection(course.slug, "queued_lessons"),
-  ];
-
-  const coursePathItems =
-    coursePathNodes.length > 0
-      ? coursePathNodes.map((node) => ({
-          label: node.label,
-          summary: node.summary,
-          eyebrow: getCourseAssemblyTypeLabel(node.type),
-          href: getCourseAssemblyNodeHref(node),
-        }))
-      : preparedMaterials.map((item) => ({
-          ...item,
-          eyebrow: "Prepared Material",
-          href: undefined,
-        }));
-
   return (
     <main className="course-landing">
       <Link className="course-landing__back" href="/">
@@ -141,46 +116,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
           ))}
         </div>
       </section>
-
-      <section className="course-landing__section" aria-labelledby="course-path">
-        <p className="course-landing__eyebrow" id="course-path">
-          Course Path
-        </p>
-
-        <div className="course-landing__path-list">
-          {coursePathItems.map((item, index) => {
-            const pathCard = (
-              <>
-                <span className="course-landing__path-number">{index + 1}</span>
-                <div>
-                  <p className="course-landing__path-type">{item.eyebrow}</p>
-                  <h2>{item.label}</h2>
-                  <p>{item.summary}</p>
-                </div>
-              </>
-            );
-
-            return item.href ? (
-              <Link
-                className="course-landing__path-card"
-                href={item.href}
-                key={`${item.label}-${index}`}
-              >
-                {pathCard}
-              </Link>
-            ) : (
-              <article
-                className="course-landing__path-card"
-                key={`${item.label}-${index}`}
-              >
-                {pathCard}
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      {beginHref ? (
+{beginHref ? (
         <div className="course-landing__final-action">
           <Link className="course-landing__button" href={beginHref}>
             Begin course

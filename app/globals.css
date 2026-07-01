@@ -1885,3 +1885,124 @@ ol {
     width: 100%;
   }
 }
+
+
+/* Course landing compact cleanup */
+
+.titus-site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  width: min(760px, calc(100% - 28px));
+  min-height: 54px;
+  margin: 0 auto;
+  padding: 0 16px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  background: rgba(251, 250, 246, 0.96);
+  backdrop-filter: blur(14px);
+  font-family: var(--ui-font);
+}
+
+.titus-site-header__brand {
+  color: var(--accent-dark);
+  font-family: var(--ui-font);
+  font-size: 0.98rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.course-landing {
+  padding-top: clamp(14px, 3vw, 22px);
+}
+
+.course-landing__back {
+  margin-bottom: 12px;
+}
+
+.course-landing__hero {
+  padding: clamp(18px, 5vw, 26px);
+}
+
+.course-landing__section {
+  margin-top: 12px;
+  padding: clamp(16px, 4vw, 20px);
+}
+
+.course-landing__hero h1 {
+  max-width: 620px;
+  margin-top: 10px;
+  font-size: clamp(1.9rem, 9.5vw, 3.2rem);
+  letter-spacing: -0.052em;
+  line-height: 0.96;
+}
+
+.course-landing__subtitle {
+  margin-top: 12px;
+  font-size: clamp(0.96rem, 3.7vw, 1.03rem);
+}
+
+.course-landing__description {
+  margin-top: 12px;
+  font-size: 0.92rem;
+  line-height: 1.48;
+}
+
+.course-landing__button,
+.course-landing__pending {
+  margin-top: 14px;
+}
+
+.course-landing__method-grid,
+.course-landing__material-grid {
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.course-landing__method-card,
+.course-landing__material-card {
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.course-landing__method-card {
+  gap: 11px;
+}
+
+.course-landing__method-card span {
+  width: 32px;
+  height: 32px;
+  font-size: 0.82rem;
+}
+
+.course-landing__method-card h2,
+.course-landing__material-card h2 {
+  font-size: clamp(1.02rem, 4.4vw, 1.22rem);
+  letter-spacing: -0.025em;
+}
+
+.course-landing__method-card p,
+.course-landing__material-card p {
+  font-size: 0.88rem;
+  line-height: 1.36;
+}
+
+@media (max-width: 720px) {
+  .titus-site-header {
+    width: min(100% - 24px, 760px);
+    padding: 0 16px;
+  }
+
+  .course-landing {
+    padding-top: 14px;
+  }
+
+  .course-landing__hero h1 {
+    font-size: clamp(1.9rem, 9.2vw, 2.55rem);
+  }
+}
