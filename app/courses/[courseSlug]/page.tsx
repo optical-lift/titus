@@ -11,6 +11,7 @@ import {
   getCourseAssemblySectionLabel,
   getCourseAssemblyTypeLabel,
 } from "@/lib/titus/course-node-links";
+import { getReturnHref, getReturnLabel } from "@/lib/titus/return-links";
 
 const sectionOrder: CourseAssemblySection[] = [
   "course_path",
@@ -47,10 +48,16 @@ function CourseAssemblyCard({ node }: { node: CourseAssemblyNode }) {
 
 export default async function CoursePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ courseSlug: string }>;
+  searchParams: Promise<{ from?: string }>;
 }) {
   const { courseSlug } = await params;
+  const { from } = await searchParams;
+  const returnHref = getReturnHref(from, "/");
+  const returnLabel = getReturnLabel(from);
+
   const course = getCourse(courseSlug);
 
   if (!course) {
@@ -61,8 +68,8 @@ export default async function CoursePage({
 
   return (
     <main className="page-shell">
-      <Link className="small-link" href="/">
-        ← Course catalogue
+      <Link className="small-link" href={returnHref}>
+        {returnLabel}
       </Link>
 
       <section className="hero" style={{ marginTop: 18 }}>
@@ -113,8 +120,8 @@ export default async function CoursePage({
       )}
 
       <nav className="footer-nav">
-        <Link className="small-link" href="/">
-          ← Course catalogue
+        <Link className="small-link" href={returnHref}>
+          {returnLabel}
         </Link>
         <Link className="small-link" href="/registry">
           Node Registry
