@@ -9,6 +9,8 @@ import { getLesson } from "@/data/titus/lessons";
 import { getQueuedLesson } from "@/data/titus/queued-lessons";
 import { hydrateCanonReadingFromNoel } from "@/lib/noel/titus-canon-reading";
 import { getReturnHref, getReturnLabel, getSafeReturnPath } from "@/lib/titus/return-links";
+import { CourseWordLessonShellView } from "@/components/course-word-lesson-shell";
+import { getCourseWordLessonShell } from "@/data/titus/course-word-lessons";
 
 export default async function LessonPage({
   params,
@@ -18,7 +20,14 @@ export default async function LessonPage({
   searchParams: Promise<{ from?: string }>;
 }) {
   const { lessonSlug } = await params;
-  const { from } = await searchParams;
+  
+  const courseWordLessonShell = getCourseWordLessonShell(lessonSlug);
+
+  if (courseWordLessonShell) {
+    return <CourseWordLessonShellView shell={courseWordLessonShell} />;
+  }
+
+const { from } = await searchParams;
   const normalizedLessonSlug = lessonSlug.toLowerCase();
   const safeFrom = getSafeReturnPath(from);
   const returnHref = getReturnHref(safeFrom, "/");
