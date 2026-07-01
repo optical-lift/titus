@@ -33,8 +33,10 @@ export default function Home() {
 
       <section className="compact-intro" aria-labelledby="home-title">
         <div>
+          <h1 id="home-title" className="sr-only">
+            Titus Greek and Hebrew word study
+          </h1>
           <p className="compact-eyebrow">Greek &amp; Hebrew word study</p>
-          <h1 id="home-title">On your lips.</h1>
           <p>Whole-canon function pattern discovery.</p>
         </div>
 
@@ -60,9 +62,10 @@ export default function Home() {
       </section>
 
       <section className="compact-active" id="courses" aria-labelledby="active-course-title">
-        <div className="compact-section-heading">
-          <p>Canon Patterns</p>
-          <h2 id="active-course-title">Guided Word Studies</h2>
+        <div className="compact-section-heading compact-section-heading--centered">
+          <h2 id="active-course-title" className="compact-section-label">
+            Canon Patterns
+          </h2>
         </div>
 
         <div className="compact-course-list">

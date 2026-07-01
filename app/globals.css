@@ -1211,3 +1211,61 @@ ol {
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
+
+
+/* Homepage simplification: centered intro and single Canon Patterns label */
+
+.compact-intro {
+  display: block;
+  text-align: center;
+  padding-top: 18px;
+}
+
+.compact-intro > div {
+  display: grid;
+  justify-items: center;
+}
+
+.compact-intro h1:not(.sr-only) {
+  display: none;
+}
+
+.compact-intro p:not(.compact-eyebrow) {
+  margin-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.compact-search {
+  max-width: 680px;
+  margin: 14px auto 0;
+}
+
+.compact-section-heading--centered {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+
+.compact-section-label {
+  margin: 0;
+  color: var(--accent-dark);
+  font-family: var(--ui-font);
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.15em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+@media (max-width: 720px) {
+  .compact-intro {
+    padding-top: 16px;
+  }
+
+  .compact-search {
+    margin-top: 12px;
+  }
+}
