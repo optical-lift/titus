@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { searchTitus } from "@/lib/titus/search";
 
+function withReturnPath(href: string, returnPath: string) {
+  const separator = href.includes("?") ? "&" : "?";
+  return `${href}${separator}from=${encodeURIComponent(returnPath)}`;
+}
+
 export default async function SearchPage({
   searchParams,
 }: {
@@ -9,6 +14,9 @@ export default async function SearchPage({
   const { q } = await searchParams;
   const query = q?.trim() || "";
   const results = searchTitus(query);
+  const currentSearchHref = query
+    ? `/search?q=${encodeURIComponent(query)}`
+    : "/search";
 
   return (
     <main className="page-shell">
@@ -62,14 +70,21 @@ export default async function SearchPage({
           <div className="search-results">
             {results.map((result) =>
               result.href ? (
-                <Link className="search-result-card" href={result.href} key={`${result.type}-${result.title}`}>
+                <Link
+                  className="search-result-card"
+                  href={withReturnPath(result.href, currentSearchHref)}
+                  key={`${result.type}-${result.title}`}
+                >
                   <span className="status">{result.type}</span>
                   <h2>{result.title}</h2>
                   <p>{result.subtitle}</p>
                   <span className="small-link">Open node →</span>
                 </Link>
               ) : (
-                <article className="search-result-card queued-result" key={`${result.type}-${result.title}`}>
+                <article
+                  className="search-result-card queued-result"
+                  key={`${result.type}-${result.title}`}
+                >
                   <span className="status">{result.type}</span>
                   <h2>{result.title}</h2>
                   <p>{result.subtitle}</p>
@@ -80,17 +95,23 @@ export default async function SearchPage({
           </div>
         ) : (
           <div className="search-results">
-            {["H0776", "erets", "land", "bloodguilt", "rest", "fruit", "kingdom"].map(
-              (suggestion) => (
-                <Link
-                  className="pill related-pill"
-                  href={`/search?q=${encodeURIComponent(suggestion)}`}
-                  key={suggestion}
-                >
-                  {suggestion}
-                </Link>
-              )
-            )}
+            {[
+              "H0776",
+              "erets",
+              "land",
+              "bloodguilt",
+              "rest",
+              "fruit",
+              "kingdom",
+            ].map((suggestion) => (
+              <Link
+                className="pill related-pill"
+                href={`/search?q=${encodeURIComponent(suggestion)}`}
+                key={suggestion}
+              >
+                {suggestion}
+              </Link>
+            ))}
           </div>
         )}
       </section>

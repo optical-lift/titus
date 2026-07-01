@@ -68,6 +68,10 @@ export function getReturnLabel(from?: string) {
     return "← Return to source packet";
   }
 
+  if (safeFrom.startsWith("/search")) {
+    return "← Return to search results";
+  }
+
   return "← Return";
 }
 
