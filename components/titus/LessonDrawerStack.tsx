@@ -139,7 +139,11 @@ export default function LessonDrawerStack({
             {openDrawer.passages.map((passage) => (
               <article className="scripture-card" key={passage.ref}>
                 <div className="scripture-ref">{passage.ref}</div>
-                <p>{passage.text}</p>
+                <div className="scripture-text">
+                  {passage.text.split("\n").map((line) => (
+                    <p key={line}>{line}</p>
+                  ))}
+                </div>
                 <p>
                   <strong>Notice:</strong> {passage.notice}
                 </p>

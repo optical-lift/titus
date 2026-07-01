@@ -118,9 +118,17 @@ export async function hydrateCanonReadingFromNoel(
     }
 
     const noelText = (data ?? [])
-      .map((row) => row.public_text)
+      .map((row) => {
+        const publicText = row.public_text;
+
+        if (!publicText) {
+          return null;
+        }
+
+        return `${row.verse}. ${publicText}`;
+      })
       .filter((text): text is string => Boolean(text))
-      .join(" ");
+      .join("\n");
 
     hydratedPassages.push({
       ...passage,
