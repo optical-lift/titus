@@ -1,135 +1,152 @@
 import Link from "next/link";
 import { getHomeStudyPaths } from "@/data/titus/courses";
 
-const methodSteps = [
-  {
-    title: "Read God’s words",
-    text: "Let Scripture identify its own terms and keep the original-language tokens in view.",
-  },
-  {
-    title: "Trace canon patterns",
-    text: "Watch what travels together across the Bible so the pattern, not the genre, governs the reading.",
-  },
-  {
-    title: "Receive the teaching",
-    text: "Guided word studies turn those prepared patterns into a walkable study path.",
-  },
+const studySteps = [
+  "Word Field",
+  "Canon Chain",
+  "Function Pattern",
+  "Guardrails",
+];
+
+const categoryTiles = [
+  { label: "Words", text: "Strong’s lessons" },
+  { label: "Chains", text: "Canon routes" },
+  { label: "Patterns", text: "Function maps" },
 ];
 
 export default function Home() {
   const activePath = getHomeStudyPaths("active_path")[0];
   const packetQueue = getHomeStudyPaths("packet_queue");
-  const studyCards = [activePath, ...packetQueue].filter(Boolean);
 
   return (
-    <main className="titus-home-v2">
-      <header className="titus-home-v2__header" aria-label="Titus site header">
-        <Link className="titus-home-v2__brand" href="/">
+    <main className="compact-course-app">
+      <header className="compact-header" aria-label="Titus site header">
+        <Link className="compact-brand" href="/">
           Titus
         </Link>
 
-        <nav className="titus-home-v2__nav" aria-label="Primary navigation">
+        <nav className="compact-nav" aria-label="Primary navigation">
           <a href="#courses">Courses</a>
           <Link href="/search">Search</Link>
         </nav>
       </header>
 
-      <section className="titus-home-v2__intro" aria-labelledby="home-title">
-        <div className="titus-home-v2__intro-copy">
-          <p className="titus-home-v2__eyebrow">Greek &amp; Hebrew word study</p>
-          <h1 id="home-title">Always on your lips.</h1>
-          <p className="titus-home-v2__lede">
-            Guided studies prepared from whole-canon function patterns.
+      <section className="compact-intro" aria-labelledby="home-title">
+        <div>
+          <p className="compact-eyebrow">Greek &amp; Hebrew word study</p>
+          <h1 id="home-title">Choose a canon study path.</h1>
+          <p>
+            Whole-canon function pattern discovery shaped into guided course paths.
           </p>
         </div>
 
-        <form className="titus-home-v2__search" action="/search">
+        <form className="compact-search" action="/search">
           <label className="sr-only" htmlFor="home-search">
             Search Titus
           </label>
-          <input id="home-search" name="q" placeholder="Search Titus" />
+          <input
+            id="home-search"
+            name="q"
+            placeholder="Search Titus"
+          />
           <button type="submit">Go</button>
         </form>
       </section>
 
-      <section className="titus-home-v2__method" aria-labelledby="method-title">
-        <div className="titus-home-v2__section-head">
-          <p>Song lens premise</p>
-          <h2 id="method-title">Using God’s words to define God’s teachings</h2>
-        </div>
-
-        <div className="titus-home-v2__method-flow">
-          {methodSteps.map((step, index) => (
-            <div className="titus-home-v2__method-piece" key={step.title}>
-              <article className="titus-home-v2__method-card">
-                <span>{index + 1}</span>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </article>
-
-              {index < methodSteps.length - 1 ? (
-                <div className="titus-home-v2__method-arrow" aria-hidden="true">
-                  →
-                </div>
-              ) : null}
+      <section className="compact-categories" aria-label="Study layers">
+        {categoryTiles.map((tile) => (
+          <article className="compact-category" key={tile.label}>
+            <span>{tile.label.slice(0, 1)}</span>
+            <div>
+              <h2>{tile.label}</h2>
+              <p>{tile.text}</p>
             </div>
-          ))}
-        </div>
+          </article>
+        ))}
       </section>
 
-      <section className="titus-home-v2__studies" id="courses" aria-labelledby="courses-title">
-        <div className="titus-home-v2__section-head">
-          <p>Canon patterns</p>
-          <h2 id="courses-title">Guided word studies</h2>
+      <section className="compact-active" id="courses" aria-labelledby="active-course-title">
+        <div className="compact-section-heading">
+          <p>Active path</p>
+          <h2 id="active-course-title">Take this course first</h2>
         </div>
 
-        <div className="titus-home-v2__study-list">
-          {studyCards.length > 0 ? (
-            studyCards.map((course, index) => {
-              const isActive = index === 0 && activePath && course.slug === activePath.slug;
-              return (
-                <article
-                  className={`titus-home-v2__study-card ${isActive ? "is-active" : "is-pending"}`}
-                  key={course.slug}
-                >
-                  <div className="titus-home-v2__study-copy">
-                    <span className="titus-home-v2__study-badge">
-                      {isActive ? "Active study" : course.homeBadge ?? "Guided path pending"}
-                    </span>
-                    <h3>{course.title}</h3>
-                    <p className="titus-home-v2__study-subtitle">{course.subtitle}</p>
-                    <p className="titus-home-v2__study-description">
-                      {course.homeDescription ?? course.description}
-                    </p>
-                  </div>
+        {activePath ? (
+          <article className="compact-active-card">
+            <div className="compact-active-card__top">
+              <div>
+                <span>{activePath.homeBadge ?? "Active Path"}</span>
+                <h3>{activePath.title}</h3>
+                <p>{activePath.subtitle}</p>
+              </div>
 
-                  <div className="titus-home-v2__study-register">
-                    <p>Register</p>
-                    <Link
-                      className="titus-home-v2__study-action"
-                      href={course.homeHref ?? `/courses/${course.slug}`}
-                    >
-                      {isActive ? "Start Proverbs" : course.homeCtaLabel ?? "Open map"}
-                    </Link>
-                  </div>
-                </article>
-              );
-            })
-          ) : (
-            <article className="titus-home-v2__empty">
-              <p>No homepage study paths are marked in the registry yet.</p>
-            </article>
-          )}
-        </div>
+              <Link
+                className="compact-primary-button"
+                href={activePath.homeHref ?? `/courses/${activePath.slug}`}
+              >
+                {activePath.homeCtaLabel ?? "Start"}
+              </Link>
+            </div>
+
+            <p className="compact-active-description">
+              {activePath.homeDescription ?? activePath.description}
+            </p>
+
+            <div className="compact-outline" aria-label="Course outline">
+              {studySteps.map((step, index) => (
+                <div className="compact-outline-row" key={step}>
+                  <span>{index + 1}</span>
+                  <p>{step}</p>
+                </div>
+              ))}
+            </div>
+
+            {activePath.homeMappedObjects?.length ? (
+              <div className="compact-tags" aria-label="Mapped objects">
+                {activePath.homeMappedObjects.map((object) => (
+                  <span key={object}>{object}</span>
+                ))}
+              </div>
+            ) : null}
+          </article>
+        ) : (
+          <article className="compact-empty">
+            <p>No course is marked as the active homepage path yet.</p>
+          </article>
+        )}
       </section>
 
-      <footer className="titus-home-v2__footer">
-        <p>
-          Titus uses prepared study material from patterns found through the Lex Canon
-          Pattern Engine Project, a function-first methodology that uses original-language
-          tokens to map the Bible as one complete unit, regardless of genre or historical setting.
-        </p>
-      </footer>
+      <section className="compact-packets" aria-labelledby="packet-course-title">
+        <div className="compact-section-heading compact-section-heading--row">
+          <div>
+            <p>Discovery packets</p>
+            <h2 id="packet-course-title">Next guided paths</h2>
+          </div>
+          <Link href="/search">View all</Link>
+        </div>
+
+        {packetQueue.length > 0 ? (
+          <div className="compact-packet-list">
+            {packetQueue.map((course) => (
+              <article className="compact-packet-card" key={course.slug}>
+                <div>
+                  <span>{course.homeBadge ?? "Packet Ready"}</span>
+                  <h3>{course.title}</h3>
+                  <p>{course.homeDescription ?? course.description}</p>
+                </div>
+
+                <Link href={course.homeHref ?? `/courses/${course.slug}`}>
+                  {course.homeCtaLabel ?? "Open"}
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <article className="compact-empty">
+            <p>No packet-queue courses are marked for homepage display yet.</p>
+          </article>
+        )}
+      </section>
     </main>
   );
 }
