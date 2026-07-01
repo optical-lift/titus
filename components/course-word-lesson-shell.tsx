@@ -88,7 +88,7 @@ export function CourseWordLessonShellView({
           "You have completed this H8451 word-study pass. Receive תורה / tôwrâh / Torah as the named law-instruction anchor, then continue to the next Proverbs vocabulary word.",
         body: (
           <div className="course-word-packet__field-card">
-            <p className="course-word-packet__field-label">Next movement</p>
+            <p className="course-word-packet__field-label">NEXT WORD STUDY</p>
             <h3>H8085 · Hear / Obey</h3>
             <p>
               Move next to שמע / shāmaʿ / hear-obey, the response word that teaches how Torah instruction is received inside the Proverbs course path.
