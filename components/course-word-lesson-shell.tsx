@@ -7,6 +7,8 @@ import { TitusLexStamp } from "@/components/titus-lex-stamp";
 
 import { TitusCourseProgressMarker } from "@/components/titus-course-progress";
 
+import { TitusNextWordRuntime } from "@/components/titus-next-word-runtime";
+
 type CourseWordLessonShellViewProps = {
   shell: CourseWordLessonShell;
 };
@@ -84,7 +86,7 @@ export function CourseWordLessonShellView({
       {
         title: "Receive Carefully",
         description:
-          "Receive this drawer as course preparation, not as the whole canon chain or final pattern claim.",
+          "You have completed this H8451 word-study pass. Receive תורה / tôwrâh / Torah as the named law-instruction anchor, then continue to the next Proverbs vocabulary word.",
         body: (
           <div className="course-word-packet__field-card">
             <p className="course-word-packet__field-label">Next movement</p>
@@ -261,6 +263,7 @@ return (
       </section>
 
           <TitusCourseProgressMarker />
+  <TitusNextWordRuntime />
 </main>
   );
 }
