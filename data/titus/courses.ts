@@ -116,14 +116,18 @@ export const courses: TitusCourse[] = [
   },
   {
     slug: "ecology",
+  homeDescription: "Creation as witness-field, ecology, land, creature, fruit, and dwellability traced through the canon.",
+  homeCtaLabel: "Preview packet",
+  homeBadge: "Packet Ready · Guided Path Pending",
+  homeOrder: 1,
     title: "Ecology",
     subtitle: "Creation Vocabulary as Witness-Field",
     description:
       "Land, ground, water, seed, fruit, food, rest, yield, and dwelling traced as a guided canon word-study path.",
-    status: "active",
+    status: "coming_later",
     firstLessonSlug: "h0776",
     lessons: ["h0776"],
-    homePlacement: "hidden",
+    homePlacement: "packet_queue",
   },
   {
     slug: "romans",
