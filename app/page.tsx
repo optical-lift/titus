@@ -106,23 +106,16 @@ export default function Home() {
             : null}
         </div>
       </section>
-      <section className="compact-method-note" aria-labelledby="method-note-title">
-        <h2 id="method-note-title">How Titus studies a word</h2>
-        <p>
-          Titus begins by reading the text where a word appears, traces the
-          repetition through Scripture, and walks the pattern in order as a
-          guided study.
-        </p>
-      </section>
 
-      <footer className="compact-footer">
+      <footer className="compact-footer compact-footer--lex">
         <p>
-          Titus uses prepared study material from patterns found through the Lex
-          Canon Pattern Engine Project, a function-first methodology that uses
-          original-language tokens to map the Bible as one complete unit,
-          regardless of genre or historical setting.
+          The Lex Canon Pattern Engine Project traces original-language tokens
+          through the whole canon to identify repeated function patterns. Titus
+          uses those prepared findings to turn discovery packets into guided
+          word-study paths: read the text, trace the repetition, and walk the
+          pattern in order.
         </p>
       </footer>
-    </main>
+</main>
   );
 }

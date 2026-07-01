@@ -1439,3 +1439,33 @@ ol {
     padding-top: 16px;
   }
 }
+
+
+/* Homepage unified Lex/Titus footer */
+
+.compact-footer--lex {
+  margin: 22px auto 0;
+  border-top: 1px solid var(--line);
+  padding: 18px 8px 6px;
+  text-align: center;
+}
+
+.compact-footer--lex p {
+  max-width: 680px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-family: var(--ui-font);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .compact-footer--lex {
+    margin-top: 18px;
+    padding-top: 16px;
+  }
+
+  .compact-footer--lex p {
+    font-size: 0.78rem;
+  }
+}
