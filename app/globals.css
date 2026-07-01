@@ -3742,3 +3742,75 @@ body {
 }
 
 /* End Titus top title and drawer stamp relocation */
+
+/* Titus sticky lesson navigation and drawer progress */
+
+.course-word-packet {
+  padding-bottom: clamp(92px, 14vw, 132px);
+}
+
+.course-word-packet__top-progress > span > span {
+  transition: width 180ms ease;
+}
+
+.course-word-packet__drawer {
+  overflow: visible;
+}
+
+.course-word-packet__drawer-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 28;
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: 10px;
+  align-items: center;
+  margin: 22px -2px 0;
+  border-top: 1px solid rgba(199, 210, 199, 0.9);
+  border-radius: 18px 18px 0 0;
+  background:
+    linear-gradient(180deg, rgba(251, 250, 246, 0.76), rgba(251, 250, 246, 0.98) 42%),
+    rgba(251, 250, 246, 0.96);
+  padding: 12px 0 calc(10px + env(safe-area-inset-bottom));
+  box-shadow: 0 -14px 30px rgba(47, 77, 55, 0.07);
+  backdrop-filter: blur(14px);
+}
+
+.course-word-packet__drawer-actions button {
+  width: 100%;
+  min-height: 46px;
+  margin: 0;
+  border-radius: 999px;
+  font-size: 0.86rem;
+}
+
+.course-word-packet__drawer-actions button:first-child {
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.course-word-packet__drawer-actions button:last-child:not(:disabled) {
+  background: var(--accent-dark);
+  color: #fff;
+}
+
+@media (max-width: 720px) {
+  .course-word-packet {
+    padding-bottom: calc(104px + env(safe-area-inset-bottom));
+  }
+
+  .course-word-packet__drawer-actions {
+    grid-template-columns: minmax(96px, 0.72fr) minmax(0, 1.28fr) !important;
+    gap: 8px;
+    margin-left: -1px;
+    margin-right: -1px;
+    padding: 10px 0 calc(9px + env(safe-area-inset-bottom));
+  }
+
+  .course-word-packet__drawer-actions button {
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 0.84rem;
+  }
+}
+
+/* End Titus sticky lesson navigation and drawer progress */
