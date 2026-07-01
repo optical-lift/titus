@@ -1478,3 +1478,37 @@ ol {
   letter-spacing: 0.08em !important;
   text-transform: uppercase;
 }
+
+
+/* Homepage nav removal and pending packet cleanup */
+
+.compact-back-slot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 120px;
+  min-height: 1px;
+}
+
+.compact-packet-card--pending {
+  padding-bottom: 22px;
+}
+
+.compact-packet-card--pending a {
+  display: none;
+}
+
+.compact-search--courses {
+  max-width: 680px;
+  margin: 0 auto 12px;
+}
+
+@media (max-width: 720px) {
+  .compact-back-slot {
+    min-width: 72px;
+  }
+
+  .compact-search--courses {
+    margin-bottom: 10px;
+  }
+}

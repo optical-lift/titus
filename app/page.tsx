@@ -19,10 +19,7 @@ export default function Home() {
           Titus
         </Link>
 
-        <nav className="compact-nav" aria-label="Primary navigation">
-          <a href="#courses">Courses</a>
-          <Link href="/search">Search</Link>
-        </nav>
+        <div className="compact-back-slot" aria-hidden="true" />
       </header>
 
       <section className="compact-intro" aria-labelledby="home-title">
@@ -42,11 +39,17 @@ export default function Home() {
           </h2>
         </div>
 
-        <form className="compact-search compact-search--courses" action="/search">
+        <form className="compact-search compact-search--courses" action="/search" role="search">
           <label className="sr-only" htmlFor="home-search">
             Search Titus
           </label>
-          <input id="home-search" name="q" placeholder="Search" />
+          <input
+            id="home-search"
+            name="q"
+            placeholder="Search Titus"
+            type="search"
+            autoComplete="off"
+          />
           <button type="submit">Go</button>
         </form>
 
@@ -91,16 +94,12 @@ export default function Home() {
 
           {packetQueue.length > 0
             ? packetQueue.map((course) => (
-                <article className="compact-packet-card" key={course.slug}>
+                <article className="compact-packet-card compact-packet-card--pending" key={course.slug}>
                   <div>
                     <span>{course.homeBadge ?? "Packet Ready"}</span>
                     <h3>{course.title}</h3>
                     <p>{course.homeDescription ?? course.description}</p>
                   </div>
-
-                  <Link href={course.homeHref ?? `/courses/${course.slug}`}>
-                    {course.homeCtaLabel ?? "Open"}
-                  </Link>
                 </article>
               ))
             : null}
