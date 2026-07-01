@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getHomeStudyPaths } from "@/data/titus/courses";
 
+import { TitusCourseProgress } from "@/components/titus-course-progress";
+
 const studySteps = [
   "Word Field",
   "Canon Chain",
@@ -55,14 +57,7 @@ export default function Home() {
                 {activePath.homeDescription ?? activePath.description}
               </p>
 
-              <div className="compact-outline" aria-label="Course outline">
-                {studySteps.map((step, index) => (
-                  <div className="compact-outline-row" key={step}>
-                    <span>{index + 1}</span>
-                    <p>{step}</p>
-                  </div>
-                ))}
-              </div>
+                            <TitusCourseProgress />
 
               <div className="compact-register-row">
                 <Link

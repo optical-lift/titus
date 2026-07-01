@@ -5,6 +5,8 @@ import { useMemo, useState } from "react";
 import type { CourseWordLessonShell } from "@/data/titus/course-word-lessons";
 import { TitusLexStamp } from "@/components/titus-lex-stamp";
 
+import { TitusCourseProgressMarker } from "@/components/titus-course-progress";
+
 type CourseWordLessonShellViewProps = {
   shell: CourseWordLessonShell;
 };
@@ -258,6 +260,7 @@ return (
         </div>
       </section>
 
-    </main>
+          <TitusCourseProgressMarker />
+</main>
   );
 }
