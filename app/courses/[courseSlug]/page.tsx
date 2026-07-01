@@ -1,132 +1,192 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  getCourseAssembly,
-  type CourseAssemblyNode,
-  type CourseAssemblySection,
-} from "@/data/titus/course-assemblies";
-import { getCourse } from "@/data/titus/courses";
+import { courses, getCourse } from "@/data/titus/courses";
+import { getCourseAssemblyBySection } from "@/data/titus/course-assemblies";
 import {
   getCourseAssemblyNodeHref,
-  getCourseAssemblySectionLabel,
   getCourseAssemblyTypeLabel,
 } from "@/lib/titus/course-node-links";
-import { getReturnHref, getReturnLabel } from "@/lib/titus/return-links";
 
-const sectionOrder: CourseAssemblySection[] = [
-  "course_path",
-  "supporting_nodes",
-  "traditions_in_conversation",
-  "queued_lessons",
+type CoursePageProps = {
+  params: Promise<{
+    courseSlug: string;
+  }>;
+};
+
+const courseMethod = [
+  {
+    label: "Read",
+    summary: "Begin with the passage and word.",
+  },
+  {
+    label: "Trace",
+    summary: "Follow the repetition through Scripture.",
+  },
+  {
+    label: "Walk",
+    summary: "Move through the prepared lessons in order.",
+  },
 ];
 
-function CourseAssemblyCard({ node }: { node: CourseAssemblyNode }) {
-  const href = getCourseAssemblyNodeHref(node);
+const preparedMaterials = [
+  {
+    label: "Word Field",
+    summary: "Vocabulary and original-language identity used for the study.",
+  },
+  {
+    label: "Canon Chain",
+    summary: "Passage trail gathered across Scripture.",
+  },
+  {
+    label: "Function Pattern",
+    summary: "Repeated movement observed in the text.",
+  },
+  {
+    label: "Guardrails",
+    summary: "Related canon patterns kept in view.",
+  },
+];
 
-  const inner = (
-    <>
-      <span className="status">{getCourseAssemblyTypeLabel(node.type)}</span>
-      <h3>{node.label}</h3>
-      <p>{node.summary}</p>
-      <p className="assembly-meta">
-        Section: {getCourseAssemblySectionLabel(node.section)}
-        <br />
-        Node: {node.nodeSlug}
-      </p>
-      {href ? <span className="small-link">Open node →</span> : null}
-    </>
-  );
-
-  return href ? (
-    <Link className="course-assembly-card" href={href}>
-      {inner}
-    </Link>
-  ) : (
-    <article className="course-assembly-card disabled-node">{inner}</article>
-  );
+export function generateStaticParams() {
+  return courses.map((course) => ({
+    courseSlug: course.slug,
+  }));
 }
 
-export default async function CoursePage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ courseSlug: string }>;
-  searchParams: Promise<{ from?: string }>;
-}) {
+export default async function CoursePage({ params }: CoursePageProps) {
   const { courseSlug } = await params;
-  const { from } = await searchParams;
-  const returnHref = getReturnHref(from, "/");
-  const returnLabel = getReturnLabel(from);
-
   const course = getCourse(courseSlug);
 
   if (!course) {
     notFound();
   }
 
-  const assembly = getCourseAssembly(course.slug);
+  const firstLessonSlug = course.firstLessonSlug ?? course.lessons[0];
+  const beginHref = firstLessonSlug
+    ? `/lessons/${firstLessonSlug}?from=/courses/${course.slug}`
+    : undefined;
+
+  const coursePathNodes = [
+    ...getCourseAssemblyBySection(course.slug, "course_path"),
+    ...getCourseAssemblyBySection(course.slug, "queued_lessons"),
+  ];
+
+  const coursePathItems =
+    coursePathNodes.length > 0
+      ? coursePathNodes.map((node) => ({
+          label: node.label,
+          summary: node.summary,
+          eyebrow: getCourseAssemblyTypeLabel(node.type),
+          href: getCourseAssemblyNodeHref(node),
+        }))
+      : preparedMaterials.map((item) => ({
+          ...item,
+          eyebrow: "Prepared Material",
+          href: undefined,
+        }));
 
   return (
-    <main className="page-shell">
-      <Link className="small-link" href={returnHref}>
-        {returnLabel}
+    <main className="course-landing">
+      <Link className="course-landing__back" href="/">
+        ← Course catalogue
       </Link>
 
-      <section className="hero" style={{ marginTop: 18 }}>
-        <div className="kicker">Titus Course</div>
-        <h1>{course.title}</h1>
-        <p className="lede">
-          {course.subtitle}
-          <br />
-          Status: {course.status.replaceAll("_", " ")}
+      <section className="course-landing__hero" aria-labelledby="course-title">
+        <p className="course-landing__eyebrow">Titus Course</p>
+        <h1 id="course-title">{course.title}</h1>
+        <p className="course-landing__subtitle">{course.subtitle}</p>
+        <p className="course-landing__description">{course.description}</p>
+
+        {beginHref ? (
+          <Link className="course-landing__button" href={beginHref}>
+            Begin course
+          </Link>
+        ) : (
+          <p className="course-landing__pending">Guided path pending</p>
+        )}
+      </section>
+
+      <section className="course-landing__section" aria-labelledby="course-method">
+        <p className="course-landing__eyebrow" id="course-method">
+          Course Method
         </p>
-      </section>
 
-      <section className="card course-intro-card">
-        <h2>Course Purpose</h2>
-        <p>{course.description}</p>
-      </section>
-
-      {assembly.length === 0 ? (
-        <section className="card course-intro-card">
-          <h2>Course Assembly Pending</h2>
-          <p>
-            This course has a catalogue record, but its reusable node assembly
-            has not been built yet.
-          </p>
-        </section>
-      ) : (
-        sectionOrder.map((section) => {
-          const nodes = assembly.filter((node) => node.section === section);
-
-          if (nodes.length === 0) {
-            return null;
-          }
-
-          return (
-            <section className="course-assembly-section" key={section}>
-              <div className="kicker">{getCourseAssemblySectionLabel(section)}</div>
-              <div className="course-assembly-grid">
-                {nodes.map((node) => (
-                  <CourseAssemblyCard
-                    key={`${node.courseSlug}-${node.section}-${node.type}-${node.nodeSlug}`}
-                    node={node}
-                  />
-                ))}
+        <div className="course-landing__method-grid">
+          {courseMethod.map((item, index) => (
+            <article className="course-landing__method-card" key={item.label}>
+              <span>{index + 1}</span>
+              <div>
+                <h2>{item.label}</h2>
+                <p>{item.summary}</p>
               </div>
-            </section>
-          );
-        })
-      )}
+            </article>
+          ))}
+        </div>
+      </section>
 
-      <nav className="footer-nav">
-        <Link className="small-link" href={returnHref}>
-          {returnLabel}
-        </Link>
-        <Link className="small-link" href="/registry">
-          Node Registry
-        </Link>
-      </nav>
+      <section
+        className="course-landing__section"
+        aria-labelledby="prepared-materials"
+      >
+        <p className="course-landing__eyebrow" id="prepared-materials">
+          Prepared Materials
+        </p>
+
+        <div className="course-landing__material-grid">
+          {preparedMaterials.map((item) => (
+            <article className="course-landing__material-card" key={item.label}>
+              <h2>{item.label}</h2>
+              <p>{item.summary}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="course-landing__section" aria-labelledby="course-path">
+        <p className="course-landing__eyebrow" id="course-path">
+          Course Path
+        </p>
+
+        <div className="course-landing__path-list">
+          {coursePathItems.map((item, index) => {
+            const pathCard = (
+              <>
+                <span className="course-landing__path-number">{index + 1}</span>
+                <div>
+                  <p className="course-landing__path-type">{item.eyebrow}</p>
+                  <h2>{item.label}</h2>
+                  <p>{item.summary}</p>
+                </div>
+              </>
+            );
+
+            return item.href ? (
+              <Link
+                className="course-landing__path-card"
+                href={item.href}
+                key={`${item.label}-${index}`}
+              >
+                {pathCard}
+              </Link>
+            ) : (
+              <article
+                className="course-landing__path-card"
+                key={`${item.label}-${index}`}
+              >
+                {pathCard}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {beginHref ? (
+        <div className="course-landing__final-action">
+          <Link className="course-landing__button" href={beginHref}>
+            Begin course
+          </Link>
+        </div>
+      ) : null}
     </main>
   );
 }
