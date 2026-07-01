@@ -89,10 +89,9 @@ export function CourseWordLessonShellView({
         body: (
           <div className="course-word-packet__field-card">
             <p className="course-word-packet__field-label">Next movement</p>
-            <h3>Canon Chain</h3>
+            <h3>H8085 · Hear / Obey</h3>
             <p>
-              The next movement follows the canon chain after the word field is
-              prepared.
+              Move next to שמע / shāmaʿ / hear-obey, the response word that teaches how Torah instruction is received inside the Proverbs course path.
             </p>
           </div>
         ),
