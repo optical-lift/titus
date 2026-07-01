@@ -3972,14 +3972,6 @@ body {
   text-decoration: none;
 }
 
-.course-word-packet--final-drawer .course-word-packet__drawer-actions button:last-child {
-  display: none;
-}
-
-.course-word-packet--final-drawer .course-word-packet__drawer-actions {
-  grid-template-columns: minmax(96px, 0.72fr) minmax(0, 1.28fr) !important;
-}
-
 @media (max-width: 720px) {
   .course-word-packet__next-word-link {
     min-height: 44px;

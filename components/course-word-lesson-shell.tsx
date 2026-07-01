@@ -7,7 +7,6 @@ import { TitusLexStamp } from "@/components/titus-lex-stamp";
 
 import { TitusCourseProgressMarker } from "@/components/titus-course-progress";
 
-import { TitusNextWordRuntime } from "@/components/titus-next-word-runtime";
 
 type CourseWordLessonShellViewProps = {
   shell: CourseWordLessonShell;
@@ -84,7 +83,7 @@ export function CourseWordLessonShellView({
         ),
       },
       {
-        title: "Receive Carefully",
+        title: "Word Study Complete",
         description:
           "You have completed this H8451 word-study pass. Receive תורה / tôwrâh / Torah as the named law-instruction anchor, then continue to the next Proverbs vocabulary word.",
         body: (
@@ -120,6 +119,10 @@ function goPrevious() {
     100,
     Math.max(0, Math.round((drawerProgressCurrent / drawerProgressTotal) * 100)),
   );
+
+
+  const isFinalDrawer = drawerProgressCurrent >= drawerProgressTotal;
+  const nextWordStudyHref = "/lessons/h8085?from=/courses/proverbs-law-vocabulary";
 
 return (
     <main className="course-word-packet">
@@ -252,6 +255,11 @@ return (
           >
             Previous
           </button>
+          {isFinalDrawer ? (
+            <Link href={nextWordStudyHref} className="course-word-packet__next-word-link">
+              Go to H8085 · Hear / Obey
+            </Link>
+          ) : (
           <button
             disabled={activeDrawerIndex === drawerTabs.length - 1}
             onClick={goNext}
@@ -259,11 +267,11 @@ return (
           >
             Continue
           </button>
+          )}
         </div>
       </section>
 
           <TitusCourseProgressMarker />
-  <TitusNextWordRuntime />
 </main>
   );
 }
