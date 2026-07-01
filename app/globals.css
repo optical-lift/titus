@@ -2811,3 +2811,120 @@ ol {
     height: 27px;
   }
 }
+
+
+/* Global fixed Titus header + segmented lesson drawer bar */
+
+body {
+  padding-top: 54px;
+}
+
+.titus-site-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  width: 100%;
+  min-height: 54px;
+  margin: 0;
+  padding-left: max(20px, calc((100vw - 760px) / 2 + 16px));
+  padding-right: max(20px, calc((100vw - 760px) / 2 + 16px));
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  background: rgba(251, 250, 246, 0.96);
+  backdrop-filter: blur(14px);
+  font-family: var(--ui-font);
+}
+
+.titus-site-header__brand {
+  color: var(--accent-dark);
+  font-family: var(--ui-font);
+  font-size: 0.98rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.course-word-packet__drawer-tabs {
+  position: sticky !important;
+  top: 54px !important;
+  z-index: 90;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+  margin: 14px 0 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.88);
+  padding: 4px;
+  box-shadow: 0 10px 24px rgba(47, 77, 55, 0.055);
+  backdrop-filter: blur(14px);
+}
+
+.course-word-packet__drawer-tabs button {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  height: 38px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--accent-dark);
+  padding: 0;
+  cursor: pointer;
+}
+
+.course-word-packet__drawer-tabs button.active {
+  background: var(--accent-dark);
+  color: #fff;
+}
+
+.course-word-packet__drawer-tabs span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  font-family: var(--ui-font);
+  font-size: 0.78rem;
+  font-weight: 950;
+}
+
+.course-word-packet__drawer-tabs button.active span {
+  background: #fff;
+  color: var(--accent-dark);
+}
+
+@media (max-width: 720px) {
+  body {
+    padding-top: 54px;
+  }
+
+  .titus-site-header {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .course-word-packet__drawer-tabs {
+    top: 54px !important;
+    margin-top: 12px;
+    padding: 4px;
+  }
+
+  .course-word-packet__drawer-tabs button {
+    height: 36px;
+  }
+
+  .course-word-packet__drawer-tabs span {
+    width: 26px;
+    height: 26px;
+  }
+}
