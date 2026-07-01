@@ -84,8 +84,9 @@ export const canonChains: CanonChain[] = [
     publicNodeMeta: {
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
-      sourcePacket:
-        "Titus Canon Chain seed set · Ecology / H0776 domain witness chain",
+      sourcePacket: "Titus Canon Chain seed set · Ecology / H0776 domain witness chain",
+
+      sourcePacketSlug: "titus-canon-chain-seed-set-ecology-h0776-domain-witness-chain",
       status: "beta",
       version: "1.0",
       lastUpdated: "2026-06-30",

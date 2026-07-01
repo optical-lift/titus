@@ -2,6 +2,7 @@ export type PublicNodeMeta = {
   compiler: string;
   reviewer: string;
   sourcePacket: string;
+  sourcePacketSlug: string;
   status:
     | "seed"
     | "queued"

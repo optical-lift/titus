@@ -51,6 +51,8 @@ export const patternDebriefs: PatternDebrief[] = [
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
       sourcePacket: "Titus Pattern Debrief seed set · Ecology / H0776 companion patterns",
+
+      sourcePacketSlug: "titus-pattern-debrief-seed-set-ecology-h0776-companion-patterns",
       status: "debrief_only",
       version: "1.0",
       lastUpdated: "2026-06-30",
@@ -102,6 +104,8 @@ export const patternDebriefs: PatternDebrief[] = [
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
       sourcePacket: "Titus Pattern Debrief seed set · Ecology / H0776 companion patterns",
+
+      sourcePacketSlug: "titus-pattern-debrief-seed-set-ecology-h0776-companion-patterns",
       status: "debrief_only",
       version: "1.0",
       lastUpdated: "2026-06-30",
@@ -152,6 +156,8 @@ export const patternDebriefs: PatternDebrief[] = [
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
       sourcePacket: "Titus Pattern Debrief seed set · Ecology / H0776 companion patterns",
+
+      sourcePacketSlug: "titus-pattern-debrief-seed-set-ecology-h0776-companion-patterns",
       status: "debrief_only",
       version: "1.0",
       lastUpdated: "2026-06-30",
@@ -202,6 +208,8 @@ export const patternDebriefs: PatternDebrief[] = [
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
       sourcePacket: "Titus Pattern Debrief seed set · Ecology / H0776 companion patterns",
+
+      sourcePacketSlug: "titus-pattern-debrief-seed-set-ecology-h0776-companion-patterns",
       status: "debrief_only",
       version: "1.0",
       lastUpdated: "2026-06-30",

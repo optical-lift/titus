@@ -55,6 +55,8 @@ export const lessons: TitusLesson[] = [
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
       sourcePacket: "Titus Canon Word-Study Course Library Build Plan · Appendix A",
+
+      sourcePacketSlug: "titus-canon-word-study-course-library-build-plan-appendix-a",
       status: "published",
       version: "1.0",
       lastUpdated: "2026-06-30",

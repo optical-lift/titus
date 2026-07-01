@@ -16,7 +16,7 @@ export type SourcePacketUsage = {
 export function getSourcePacketUsage(packet: SourcePacket): SourcePacketUsage[] {
   return [
     ...lessons
-      .filter((node) => node.publicNodeMeta.sourcePacket === packet.title)
+      .filter((node) => node.publicNodeMeta.sourcePacketSlug === packet.slug)
       .map((node) => ({
         nodeType: "Published Lesson",
         slug: node.slug,
@@ -25,7 +25,7 @@ export function getSourcePacketUsage(packet: SourcePacket): SourcePacketUsage[] 
         status: node.status,
       })),
     ...patternDebriefs
-      .filter((node) => node.publicNodeMeta.sourcePacket === packet.title)
+      .filter((node) => node.publicNodeMeta.sourcePacketSlug === packet.slug)
       .map((node) => ({
         nodeType: "Pattern Debrief",
         slug: node.slug,
@@ -34,7 +34,7 @@ export function getSourcePacketUsage(packet: SourcePacket): SourcePacketUsage[] 
         status: node.status,
       })),
     ...functionLenses
-      .filter((node) => node.publicNodeMeta.sourcePacket === packet.title)
+      .filter((node) => node.publicNodeMeta.sourcePacketSlug === packet.slug)
       .map((node) => ({
         nodeType: "Function Lens",
         slug: node.slug,
@@ -43,7 +43,7 @@ export function getSourcePacketUsage(packet: SourcePacket): SourcePacketUsage[] 
         status: node.status,
       })),
     ...canonChains
-      .filter((node) => node.publicNodeMeta.sourcePacket === packet.title)
+      .filter((node) => node.publicNodeMeta.sourcePacketSlug === packet.slug)
       .map((node) => ({
         nodeType: "Canon Chain",
         slug: node.slug,
@@ -52,7 +52,7 @@ export function getSourcePacketUsage(packet: SourcePacket): SourcePacketUsage[] 
         status: node.status,
       })),
     ...traditionCards
-      .filter((node) => node.publicNodeMeta.sourcePacket === packet.title)
+      .filter((node) => node.publicNodeMeta.sourcePacketSlug === packet.slug)
       .map((node) => ({
         nodeType: "Tradition Card",
         slug: node.slug,

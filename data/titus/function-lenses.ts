@@ -60,8 +60,9 @@ export const functionLenses: FunctionLens[] = [
     publicNodeMeta: {
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
-      sourcePacket:
-        "Titus Function Lens seed set · Ecology / H0776 created domain lens",
+      sourcePacket: "Titus Function Lens seed set · Ecology / H0776 created domain lens",
+
+      sourcePacketSlug: "titus-function-lens-seed-set-ecology-h0776-created-domain-lens",
       status: "beta",
       version: "1.0",
       lastUpdated: "2026-06-30",

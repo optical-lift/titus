@@ -1,9 +1,9 @@
 import Link from "next/link";
 import type { PublicNodeMeta } from "@/data/titus/public-node-meta";
-import { getSourcePacketByTitle } from "@/data/titus/source-packets";
+import { getSourcePacket } from "@/data/titus/source-packets";
 
 export default function PublicNodeMetaCard({ meta }: { meta: PublicNodeMeta }) {
-  const sourcePacket = getSourcePacketByTitle(meta.sourcePacket);
+  const sourcePacket = getSourcePacket(meta.sourcePacketSlug);
 
   return (
     <section className="public-node-meta-card">

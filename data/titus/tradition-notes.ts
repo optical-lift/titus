@@ -75,8 +75,9 @@ export const traditionCards: TraditionCard[] = [
     publicNodeMeta: {
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
-      sourcePacket:
-        "Titus Tradition Card seed set · reusable theological reading streams",
+      sourcePacket: "Titus Tradition Card seed set · reusable theological reading streams",
+
+      sourcePacketSlug: "titus-tradition-card-seed-set-reusable-theological-reading-streams",
       status: "beta",
       version: "1.0",
       lastUpdated: "2026-06-30",
@@ -135,8 +136,9 @@ export const traditionCards: TraditionCard[] = [
     publicNodeMeta: {
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
-      sourcePacket:
-        "Titus Tradition Card seed set · reusable theological reading streams",
+      sourcePacket: "Titus Tradition Card seed set · reusable theological reading streams",
+
+      sourcePacketSlug: "titus-tradition-card-seed-set-reusable-theological-reading-streams",
       status: "beta",
       version: "1.0",
       lastUpdated: "2026-06-30",
@@ -195,8 +197,9 @@ export const traditionCards: TraditionCard[] = [
     publicNodeMeta: {
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
-      sourcePacket:
-        "Titus Tradition Card seed set · reusable theological reading streams",
+      sourcePacket: "Titus Tradition Card seed set · reusable theological reading streams",
+
+      sourcePacketSlug: "titus-tradition-card-seed-set-reusable-theological-reading-streams",
       status: "seed",
       version: "1.0",
       lastUpdated: "2026-06-30",
@@ -254,8 +257,9 @@ export const traditionCards: TraditionCard[] = [
     publicNodeMeta: {
       compiler: "Lex Bible Project",
       reviewer: "Pending theological and lexical review",
-      sourcePacket:
-        "Titus Tradition Card seed set · reusable theological reading streams",
+      sourcePacket: "Titus Tradition Card seed set · reusable theological reading streams",
+
+      sourcePacketSlug: "titus-tradition-card-seed-set-reusable-theological-reading-streams",
       status: "beta",
       version: "1.0",
       lastUpdated: "2026-06-30",
