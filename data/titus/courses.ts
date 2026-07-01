@@ -36,7 +36,7 @@ export const courses: TitusCourse[] = [
     homePlacement: "active_path",
     homeOrder: 10,
     homeBadge: "Active Path",
-    homeCtaLabel: "Start Proverbs",
+    homeCtaLabel: "Register for Proverbs",
     homeHref: "/courses/proverbs-law-vocabulary",
     homeDescription:
       "Follow law, hearing, commandment, heart, mouth, path, justice, house, king, life, and gate-right through the canon.",

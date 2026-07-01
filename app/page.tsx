@@ -90,12 +90,11 @@ export default function Home() {
               </div>
 
               <div className="compact-register-row">
-                <p>Register for</p>
                 <Link
                   className="compact-primary-button"
                   href={activePath.homeHref ?? `/courses/${activePath.slug}`}
                 >
-                  {activePath.homeCtaLabel ?? activePath.title}
+                  {activePath.homeCtaLabel ?? `Register for ${activePath.title}`}
                 </Link>
               </div>
             </article>
