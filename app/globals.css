@@ -2125,3 +2125,66 @@ ol {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Compact packet preview on course landing pages */
+
+.course-landing__packet-preview {
+  padding: clamp(15px, 4vw, 19px);
+}
+
+.course-landing__language-grid {
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.course-landing__language-grid article {
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.course-landing__language-grid h2 {
+  font-size: 0.66rem;
+  letter-spacing: 0.11em;
+}
+
+.course-landing__term-list {
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.course-landing__term {
+  min-width: 78px;
+  border-radius: 12px;
+  padding: 7px 8px;
+}
+
+.course-landing__term strong {
+  font-size: 0.64rem;
+}
+
+.course-landing__term em {
+  font-size: 0.78rem;
+  line-height: 1.08;
+}
+
+.course-landing__term small {
+  font-size: 0.61rem;
+  line-height: 1.12;
+}
+
+.course-landing__packet-note {
+  margin-top: 8px;
+  font-size: 0.66rem;
+  line-height: 1.32;
+}
+
+@media (max-width: 720px) {
+  .course-landing__packet-preview {
+    padding: 14px;
+  }
+
+  .course-landing__term {
+    min-width: 76px;
+  }
+}

@@ -58,12 +58,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
   }
 
   const packetPreview = getCoursePacketPreview(course.slug);
-
-  const firstLessonSlug = course.firstLessonSlug ?? course.lessons[0];
-  const beginHref = firstLessonSlug
-    ? `/lessons/${firstLessonSlug}?from=/courses/${course.slug}`
-    : undefined;
-  return (
+return (
     <main className="course-landing">
       <Link className="course-landing__back" href="/">
         ← Course catalogue
@@ -74,15 +69,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
         <h1 id="course-title">{course.title}</h1>
         <p className="course-landing__subtitle">{course.subtitle}</p>
         <p className="course-landing__description">{course.description}</p>
-
-        {beginHref ? (
-          <Link className="course-landing__button" href={beginHref}>
-            Begin course
-          </Link>
-        ) : (
-          <p className="course-landing__pending">Guided path pending</p>
-        )}
-      </section>
+</section>
 
       {packetPreview ? (
         <section
@@ -160,13 +147,6 @@ export default async function CoursePage({ params }: CoursePageProps) {
           ))}
         </div>
       </section>
-{beginHref ? (
-        <div className="course-landing__final-action">
-          <Link className="course-landing__button" href={beginHref}>
-            Begin course
-          </Link>
-        </div>
-      ) : null}
-    </main>
+</main>
   );
 }
