@@ -1,14 +1,21 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getSourcePacket } from "@/data/titus/source-packets";
+import { getReturnHref, getReturnLabel } from "@/lib/titus/return-links";
 import { getSourcePacketUsage } from "@/lib/titus/source-packet-usage";
 
 export default async function SourcePacketPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ sourceSlug: string }>;
+  searchParams: Promise<{ from?: string }>;
 }) {
   const { sourceSlug } = await params;
+  const { from } = await searchParams;
+  const returnHref = getReturnHref(from, "/registry");
+  const returnLabel = from ? getReturnLabel(from) : "← Node Registry";
+
   const packet = getSourcePacket(sourceSlug);
 
   if (!packet) {
@@ -20,8 +27,8 @@ export default async function SourcePacketPage({
 
   return (
     <main className="page-shell">
-      <Link className="small-link" href="/registry">
-        ← Node Registry
+      <Link className="small-link" href={returnHref}>
+        {returnLabel}
       </Link>
 
       <section className="hero" style={{ marginTop: 18 }}>
@@ -80,8 +87,8 @@ export default async function SourcePacketPage({
       </section>
 
       <nav className="footer-nav">
-        <Link className="small-link" href="/registry">
-          ← Node Registry
+        <Link className="small-link" href={returnHref}>
+          {returnLabel}
         </Link>
         <Link className="small-link" href="/">
           Course catalogue

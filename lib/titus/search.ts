@@ -5,6 +5,7 @@ import { lessonAssemblies } from "@/data/titus/lesson-assemblies";
 import { lessons } from "@/data/titus/lessons";
 import { patternDebriefs } from "@/data/titus/pattern-debriefs";
 import { queuedLessons } from "@/data/titus/queued-lessons";
+import { sourcePackets } from "@/data/titus/source-packets";
 import {
   traditionCards,
   traditionPlacements,
@@ -18,6 +19,7 @@ export type TitusSearchResult = {
     | "Function Lens"
     | "Canon Chain"
     | "Tradition Card"
+    | "Source Packet"
     | "Queued Lesson"
     | "Planned Course";
   title: string;
@@ -201,12 +203,24 @@ export function getAllSearchResults(): TitusSearchResult[] {
     bodyTerms: [],
   }));
 
+  const sourcePacketResults: TitusSearchResult[] = sourcePackets.map((packet) => ({
+    type: "Source Packet",
+    title: packet.title,
+    subtitle: packet.summary,
+    href: `/sources/${packet.slug}`,
+    status: packet.status,
+    primaryTerms: [packet.slug, packet.title, packet.packetKind],
+    keywords: [packet.owner, packet.status, packet.lastUpdated],
+    bodyTerms: [packet.summary],
+  }));
+
   return [
     ...lessonResults,
     ...patternResults,
     ...lensResults,
     ...chainResults,
     ...traditionResults,
+    ...sourcePacketResults,
     ...courseResults,
     ...queuedLessonResults,
   ];
@@ -234,6 +248,8 @@ function typePriority(type: TitusSearchResult["type"]) {
       return 40;
     case "Tradition Card":
       return 36;
+    case "Source Packet":
+      return 30;
     case "Course":
       return 25;
     case "Queued Lesson":
