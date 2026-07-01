@@ -44,43 +44,52 @@ export function CourseWordLessonShellView({
         </p>
       </section>
 
-      <section className="course-word-lesson__section" aria-labelledby="word-identity">
-        <p className="course-word-lesson__eyebrow" id="word-identity">
-          Word Identity
-        </p>
-
-        <div className="course-word-lesson__identity-grid">
-          {identityRows.map(([label, value]) => (
-            <div className="course-word-lesson__identity-row" key={label}>
-              <span>{label}</span>
-              <p>{value}</p>
+      <section className="course-word-lesson__drawer-stack" aria-label="Lesson drawers">
+        <details className="drawer course-word-drawer" open>
+          <summary>Word Identity</summary>
+          <div className="drawer-body">
+            <div className="course-word-lesson__identity-grid">
+              {identityRows.map(([label, value]) => (
+                <div className="course-word-lesson__identity-row" key={label}>
+                  <span>{label}</span>
+                  <p>{value}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </details>
 
-      <section className="course-word-lesson__section" aria-labelledby="course-position">
-        <p className="course-word-lesson__eyebrow" id="course-position">
-          Course Position
-        </p>
+        <details className="drawer course-word-drawer" open>
+          <summary>Course Position</summary>
+          <div className="drawer-body">
+            <p className="course-word-lesson__note">{shell.positionNote}</p>
+          </div>
+        </details>
 
-        <p className="course-word-lesson__note">{shell.positionNote}</p>
-      </section>
+        <details className="drawer course-word-drawer" open>
+          <summary>Packet Terms in View</summary>
+          <div className="drawer-body">
+            <div className="course-word-lesson__term-list">
+              {shell.termsInView.map((term) => (
+                <span className="course-word-lesson__term" key={term.strongId}>
+                  <strong>{term.strongId}</strong>
+                  <em>{term.transliteration}</em>
+                  <small>{term.gloss}</small>
+                </span>
+              ))}
+            </div>
+          </div>
+        </details>
 
-      <section className="course-word-lesson__section" aria-labelledby="terms-in-view">
-        <p className="course-word-lesson__eyebrow" id="terms-in-view">
-          Packet Terms in View
-        </p>
-
-        <div className="course-word-lesson__term-list">
-          {shell.termsInView.map((term) => (
-            <span className="course-word-lesson__term" key={term.strongId}>
-              <strong>{term.strongId}</strong>
-              <em>{term.transliteration}</em>
-              <small>{term.gloss}</small>
-            </span>
-          ))}
-        </div>
+        <details className="drawer course-word-drawer">
+          <summary>Next Movement</summary>
+          <div className="drawer-body">
+            <p className="course-word-lesson__note">
+              The next movement follows the canon chain after the word field is
+              prepared.
+            </p>
+          </div>
+        </details>
       </section>
     </main>
   );

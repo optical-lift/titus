@@ -2358,3 +2358,47 @@ ol {
     gap: 4px;
   }
 }
+
+
+/* Course word lesson drawers */
+
+.course-word-lesson__drawer-stack {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.course-word-drawer {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 14px 36px rgba(49, 77, 56, 0.055);
+}
+
+.course-word-drawer summary {
+  color: var(--accent-dark);
+  font-family: var(--ui-font);
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.13em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.course-word-drawer .drawer-body {
+  padding-top: 14px;
+}
+
+.course-word-lesson__section {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .course-word-lesson__drawer-stack {
+    gap: 9px;
+  }
+
+  .course-word-drawer {
+    border-radius: 18px;
+  }
+}
