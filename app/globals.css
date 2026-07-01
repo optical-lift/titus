@@ -1187,3 +1187,27 @@ ol {
     padding: 12px;
   }
 }
+
+
+.compact-course-list {
+  display: grid;
+  gap: 10px;
+}
+
+.compact-register-row {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.compact-register-row p {
+  margin: 0;
+  color: var(--accent-dark);
+  font-family: var(--ui-font);
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}

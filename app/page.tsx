@@ -34,21 +34,15 @@ export default function Home() {
       <section className="compact-intro" aria-labelledby="home-title">
         <div>
           <p className="compact-eyebrow">Greek &amp; Hebrew word study</p>
-          <h1 id="home-title">Choose a canon study path.</h1>
-          <p>
-            Whole-canon function pattern discovery shaped into guided course paths.
-          </p>
+          <h1 id="home-title">On your lips.</h1>
+          <p>Whole-canon function pattern discovery.</p>
         </div>
 
         <form className="compact-search" action="/search">
           <label className="sr-only" htmlFor="home-search">
             Search Titus
           </label>
-          <input
-            id="home-search"
-            name="q"
-            placeholder="Search Titus"
-          />
+          <input id="home-search" name="q" placeholder="Search" />
           <button type="submit">Go</button>
         </form>
       </section>
@@ -67,85 +61,66 @@ export default function Home() {
 
       <section className="compact-active" id="courses" aria-labelledby="active-course-title">
         <div className="compact-section-heading">
-          <p>Active path</p>
-          <h2 id="active-course-title">Take this course first</h2>
+          <p>Canon Patterns</p>
+          <h2 id="active-course-title">Guided Word Studies</h2>
         </div>
 
-        {activePath ? (
-          <article className="compact-active-card">
-            <div className="compact-active-card__top">
-              <div>
-                <span>{activePath.homeBadge ?? "Active Path"}</span>
-                <h3>{activePath.title}</h3>
-                <p>{activePath.subtitle}</p>
+        <div className="compact-course-list">
+          {activePath ? (
+            <article className="compact-active-card">
+              <div className="compact-active-card__top">
+                <div>
+                  <span>{activePath.homeBadge ?? "Canon Patterns"}</span>
+                  <h3>{activePath.title}</h3>
+                  <p>{activePath.subtitle}</p>
+                </div>
               </div>
 
-              <Link
-                className="compact-primary-button"
-                href={activePath.homeHref ?? `/courses/${activePath.slug}`}
-              >
-                {activePath.homeCtaLabel ?? "Start"}
-              </Link>
-            </div>
+              <p className="compact-active-description">
+                {activePath.homeDescription ?? activePath.description}
+              </p>
 
-            <p className="compact-active-description">
-              {activePath.homeDescription ?? activePath.description}
-            </p>
-
-            <div className="compact-outline" aria-label="Course outline">
-              {studySteps.map((step, index) => (
-                <div className="compact-outline-row" key={step}>
-                  <span>{index + 1}</span>
-                  <p>{step}</p>
-                </div>
-              ))}
-            </div>
-
-            {activePath.homeMappedObjects?.length ? (
-              <div className="compact-tags" aria-label="Mapped objects">
-                {activePath.homeMappedObjects.map((object) => (
-                  <span key={object}>{object}</span>
+              <div className="compact-outline" aria-label="Course outline">
+                {studySteps.map((step, index) => (
+                  <div className="compact-outline-row" key={step}>
+                    <span>{index + 1}</span>
+                    <p>{step}</p>
+                  </div>
                 ))}
               </div>
-            ) : null}
-          </article>
-        ) : (
-          <article className="compact-empty">
-            <p>No course is marked as the active homepage path yet.</p>
-          </article>
-        )}
-      </section>
 
-      <section className="compact-packets" aria-labelledby="packet-course-title">
-        <div className="compact-section-heading compact-section-heading--row">
-          <div>
-            <p>Discovery packets</p>
-            <h2 id="packet-course-title">Next guided paths</h2>
-          </div>
-          <Link href="/search">View all</Link>
-        </div>
-
-        {packetQueue.length > 0 ? (
-          <div className="compact-packet-list">
-            {packetQueue.map((course) => (
-              <article className="compact-packet-card" key={course.slug}>
-                <div>
-                  <span>{course.homeBadge ?? "Packet Ready"}</span>
-                  <h3>{course.title}</h3>
-                  <p>{course.homeDescription ?? course.description}</p>
-                </div>
-
-                <Link href={course.homeHref ?? `/courses/${course.slug}`}>
-                  {course.homeCtaLabel ?? "Open"}
+              <div className="compact-register-row">
+                <p>Register for</p>
+                <Link
+                  className="compact-primary-button"
+                  href={activePath.homeHref ?? `/courses/${activePath.slug}`}
+                >
+                  {activePath.homeCtaLabel ?? activePath.title}
                 </Link>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <article className="compact-empty">
-            <p>No packet-queue courses are marked for homepage display yet.</p>
-          </article>
-        )}
+              </div>
+            </article>
+          ) : (
+            <article className="compact-empty">
+              <p>No course is marked as the active homepage path yet.</p>
+            </article>
+          )}
+
+          {packetQueue.length > 0
+            ? packetQueue.map((course) => (
+                <article className="compact-packet-card" key={course.slug}>
+                  <div>
+                    <span>{course.homeBadge ?? "Packet Ready"}</span>
+                    <h3>{course.title}</h3>
+                    <p>{course.homeDescription ?? course.description}</p>
+                  </div>
+
+                  <Link href={course.homeHref ?? `/courses/${course.slug}`}>
+                    {course.homeCtaLabel ?? "Open"}
+                  </Link>
+                </article>
+              ))
+            : null}
+        </div>
       </section>
     </main>
   );
