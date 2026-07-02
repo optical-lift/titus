@@ -8,6 +8,8 @@ import { noel } from "@/lib/noel/client";
 
 type AnyRecord = Record<string, any>;
 
+type NextLesson = { href: string; label: string } | undefined;
+
 const PROVERBS_NEXT_LESSONS: Record<string, { href: string; label: string }> = {
   h8451: { href: "/lessons/h8085?from=/courses/proverbs-law-vocabulary", label: "Start Hear / Obey →" },
   h8085: { href: "/lessons/h4687?from=/courses/proverbs-law-vocabulary", label: "Start Commandment →" },
@@ -94,41 +96,26 @@ function buildLexStamp(row: AnyRecord, word: AnyRecord | undefined): LexStamp {
   };
 }
 
-export async function getLiveCourseWordLessonShell(
-  lessonSlug: string,
-): Promise<LiveCourseWordLessonShell | undefined> {
-  const normalizedLessonSlug = lessonSlug.toLowerCase();
-
-  const { data, error } = await noel
-    .from("titus_course_word_lesson_live_v1")
-    .select("*")
-    .eq("lesson_slug", normalizedLessonSlug)
-    .maybeSingle();
-
-  if (error) {
-    throw new Error(`Noel live course word lookup failed for ${lessonSlug}: ${error.message}`);
-  }
-
-  if (!data) {
-    return undefined;
-  }
-
-  const row = data as AnyRecord;
+function buildShellFromRow(
+  row: AnyRecord,
+  fallbackSlug: string,
+  nextLesson: NextLesson,
+  courseLessonTotal: number,
+): LiveCourseWordLessonShell {
   const words = list<AnyRecord>(row.words);
   const word = words[0];
   const primaryStrongId = text(row.primary_strong_id, text(word?.strong_id, ""));
   const primaryField = text(row.primary_field, text(word?.function_note, "Word Field"));
-  const nextLesson = PROVERBS_NEXT_LESSONS[normalizedLessonSlug];
 
   return {
-    lessonSlug: text(row.lesson_slug, normalizedLessonSlug),
+    lessonSlug: text(row.lesson_slug, fallbackSlug),
     course: {
       slug: text(row.course_slug, "proverbs-law-vocabulary"),
       title: text(row.source_packet_label, "Proverbs as Law Vocabulary"),
       subtitle: "Cross-Canon Pattern",
     },
     lessonNumber: typeof row.lesson_number === "number" ? row.lesson_number : 1,
-    courseLessonTotal: 11,
+    courseLessonTotal,
     lessonKind: "Word Field",
     methodLabel: "Read",
     languageLabel: text(word?.language, "Hebrew Field"),
@@ -199,4 +186,101 @@ export async function getLiveCourseWordLessonShell(
     nextWordStudyHref: nextLesson?.href,
     nextWordStudyLabel: nextLesson?.label,
   };
+}
+
+async function getCourseSlotCount(courseSlug: string) {
+  const { count, error } = await noel
+    .from("titus_course_slots_v1")
+    .select("lesson_slug", { count: "exact", head: true })
+    .eq("course_slug", courseSlug);
+
+  if (error || !count) {
+    return 1;
+  }
+
+  return count;
+}
+
+async function getNextCourseWord(courseSlug: string, slotNumber: number | null | undefined): Promise<NextLesson> {
+  if (!slotNumber) {
+    return undefined;
+  }
+
+  const { data, error } = await noel
+    .from("titus_course_slots_v1")
+    .select("lesson_slug, planned_word_label, planned_primary_strong_ids, slot_number")
+    .eq("course_slug", courseSlug)
+    .gt("slot_number", slotNumber)
+    .order("slot_number", { ascending: true })
+    .limit(1)
+    .maybeSingle();
+
+  if (error || !data) {
+    return undefined;
+  }
+
+  const row = data as AnyRecord;
+  const strongIds = list<string>(row.planned_primary_strong_ids);
+  const wordSlug = text(strongIds[0], text(row.lesson_slug)).toLowerCase();
+
+  if (!wordSlug) {
+    return undefined;
+  }
+
+  return {
+    href: `/courses/${courseSlug}/words/${wordSlug}`,
+    label: `Start ${text(row.planned_word_label, wordSlug.toUpperCase())} →`,
+  };
+}
+
+export async function getLiveCourseWordLessonShell(
+  lessonSlug: string,
+): Promise<LiveCourseWordLessonShell | undefined> {
+  const normalizedLessonSlug = lessonSlug.toLowerCase();
+
+  const { data, error } = await noel
+    .from("titus_course_word_lesson_live_v1")
+    .select("*")
+    .eq("lesson_slug", normalizedLessonSlug)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Noel live course word lookup failed for ${lessonSlug}: ${error.message}`);
+  }
+
+  if (!data) {
+    return undefined;
+  }
+
+  return buildShellFromRow(data as AnyRecord, normalizedLessonSlug, PROVERBS_NEXT_LESSONS[normalizedLessonSlug], 11);
+}
+
+export async function getLiveCourseWordPlacementShell(
+  courseSlug: string,
+  wordSlug: string,
+): Promise<LiveCourseWordLessonShell | undefined> {
+  const normalizedCourseSlug = courseSlug.toLowerCase();
+  const normalizedWordSlug = wordSlug.toLowerCase();
+  const primaryStrongId = normalizedWordSlug.toUpperCase();
+
+  const { data, error } = await noel
+    .from("titus_course_word_lesson_live_v1")
+    .select("*")
+    .eq("course_slug", normalizedCourseSlug)
+    .eq("primary_strong_id", primaryStrongId)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Noel course word placement lookup failed for ${courseSlug}/${wordSlug}: ${error.message}`);
+  }
+
+  if (!data) {
+    return undefined;
+  }
+
+  const row = data as AnyRecord;
+  const total = await getCourseSlotCount(normalizedCourseSlug);
+  const nextLesson = await getNextCourseWord(normalizedCourseSlug, row.lesson_number);
+
+  return buildShellFromRow(row, `${normalizedCourseSlug}-${normalizedWordSlug}`, nextLesson, total);
 }
