@@ -128,11 +128,13 @@ const controlsByLesson: Record<string, ControlCard[]> = {
 export function LiveReadingControls({
   lessonSlug,
   noelIntro,
+  fallbackCards = [],
 }: {
   lessonSlug: string;
   noelIntro?: string | null;
+  fallbackCards?: ControlCard[];
 }) {
-  const controls = controlsByLesson[lessonSlug] ?? [];
+  const controls = controlsByLesson[lessonSlug] ?? fallbackCards;
 
   return (
     <section className="course-word-packet__reading-controls-summary" aria-label="Reading controls for this Function Reading">
