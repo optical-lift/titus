@@ -157,6 +157,82 @@ function normalizePacket(rawValue: unknown): NoelCoursePreviewPacket | null {
   };
 }
 
+function normalizeLiveLessonRow(rawValue: unknown): NoelCoursePreviewLesson {
+  const raw = record(rawValue);
+  const words = arr<Record<string, unknown>>(raw.words);
+  const wordRow = record(words[0]);
+  const strongId = s(raw.primary_strong_id, s(wordRow.strong_id));
+
+  return {
+    lessonNumber: n(raw.lesson_number),
+    lessonSlug: s(raw.lesson_slug),
+    lessonHref: `/courses/${s(raw.course_slug)}/words/${strongId.toLowerCase()}`,
+    slotKey: s(raw.slot_key, s(raw.lesson_slug)),
+    slotTitle: s(raw.slot_title, s(raw.title, strongId)),
+    slotRole: "lesson",
+    researchStatus: "packet_ready",
+    slotStatus: s(raw.status, "draft"),
+    whyThisSlotExists: s(raw.why_this_slot_exists),
+    prerequisitesNote: s(raw.prerequisites_note),
+    lessonTitle: s(raw.title, s(raw.primary_field, strongId)),
+    lessonSubtitle: s(raw.subtitle, s(raw.primary_field)),
+    lessonStatus: s(raw.status),
+    lessonConfidence: s(raw.confidence),
+    functionReading: s(raw.function_reading),
+    publicSummary: s(raw.public_summary),
+    knownLimits: arr<string>(raw.known_limits),
+    word: {
+      strongId,
+      entityType: "strong_id",
+      entityId: strongId,
+      entityLabel: s(raw.primary_field, strongId),
+      originalWord: s(raw.baseline_lemma, s(wordRow.original_word)),
+      transliteration: s(raw.baseline_transliteration, s(wordRow.transliteration)),
+      language: s(wordRow.language, "Hebrew"),
+      gloss: s(raw.primary_field, s(wordRow.function_note)),
+      definition: maybeString(raw.baseline_gloss),
+      roleLabel: s(wordRow.role_label, "primary_word"),
+      functionNote: s(wordRow.function_note, s(raw.function_reading)),
+    },
+  };
+}
+
+async function getLiveCoursePreviewPacketBySlug(courseSlug: string): Promise<NoelCoursePreviewPacket | null> {
+  const { data, error } = await noel
+    .from("titus_course_word_lesson_live_v1")
+    .select("*")
+    .eq("course_slug", courseSlug.toLowerCase())
+    .order("lesson_number", { ascending: true });
+
+  if (error) {
+    console.error(`Noel live course preview fallback failed: ${error.message}`);
+    return null;
+  }
+
+  const rows = arr<Record<string, unknown>>(data);
+  if (rows.length === 0) return null;
+
+  const first = rows[0];
+  const lessons = rows.map(normalizeLiveLessonRow).filter((lesson) => lesson.lessonSlug);
+
+  return {
+    courseSlug: s(first.course_slug, courseSlug),
+    title: s(first.source_packet_label, "Titus Course"),
+    subtitle: s(first.subtitle, "Live Noel Course"),
+    description: s(first.public_summary, "A live Noel-backed Titus course."),
+    intendedReader: "Readers following a live Noel-backed Titus path.",
+    courseStatus: s(first.status, "draft"),
+    previewStatus: "live_lesson_fallback",
+    publicCaveat: "Rendered from public.titus_course_word_lesson_live_v1 because the preview packet RPC has not been promoted for this course yet.",
+    source: {
+      schema: "public",
+      view: "titus_course_word_lesson_live_v1",
+      mode: "live_lesson_fallback",
+    },
+    lessons,
+  };
+}
+
 export async function getNoelCoursePreviewPacketBySlug(
   courseSlug: string
 ): Promise<NoelCoursePreviewPacket | null> {
@@ -171,10 +247,10 @@ export async function getNoelCoursePreviewPacketBySlug(
 
   if (error) {
     console.error(`Noel course preview RPC failed: ${error.message}`);
-    return null;
+    return getLiveCoursePreviewPacketBySlug(courseSlug);
   }
 
-  return normalizePacket(data);
+  return normalizePacket(data) ?? getLiveCoursePreviewPacketBySlug(courseSlug);
 }
 
 export type NoelCoursePreviewLessonPacket = {
