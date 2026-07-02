@@ -19,6 +19,44 @@ type HermeneuticalStatement = LiveCourseWordLessonStatement & {
   mayFlatten?: string[];
 };
 
+const defaultHermeneuticalStatements: HermeneuticalStatement[] = [
+  {
+    label: "Common devotional reading",
+    title: "Personal guidance and encouragement",
+    lines: [],
+    keeps: ["Daily guidance.", "Personal wisdom and moral formation."],
+    mayFlatten: ["Covenant instruction with public consequence.", "Justice, mouth, gate, and judgment pressure."],
+  },
+  {
+    label: "Covenant theology reading",
+    title: "Law, promise, fulfillment, and wisdom continuity",
+    lines: [],
+    keeps: ["Continuity between Torah, wisdom, commandment, fulfillment, and life in Christ.", "God's instruction internalized as covenant formation."],
+    mayFlatten: ["The concrete Proverbs mechanisms: ear, heart, mouth, path, market, and gate.", "Instruction before breach becomes judgment."],
+  },
+  {
+    label: "Dispensational reading",
+    title: "Law, Israel, kingdom, and future fulfillment",
+    lines: [],
+    keeps: ["Torah as given law and Israel's covenant history.", "Law administration and later fulfillment questions."],
+    mayFlatten: ["Proverbs carrying Torah into public human discernment.", "Hear-and-do continuity across Jesus, Epistles, and Revelation."],
+  },
+  {
+    label: "Historical-critical reading",
+    title: "Ancient instruction setting and social formation",
+    lines: [],
+    keeps: ["Household, court, school, wisdom, and social-world setting.", "Instruction inside family and public order."],
+    mayFlatten: ["Whole-canon recurrence of law, hearing, doing, justice, and life.", "Canonical resolution beyond ancient setting alone."],
+  },
+  {
+    label: "Allegorical or spiritualized reading",
+    title: "Inner wisdom and soul formation",
+    lines: [],
+    keeps: ["Inward formation by wisdom, correction, and desire.", "Spiritual meaning of path, heart, mouth, and life-language."],
+    mayFlatten: ["Torah as actual law-instruction with embodied public consequence.", "Market, neighbor, poor, witness, and justice field."],
+  },
+];
+
 export function LiveCourseWordLessonShellView({ shell }: LiveCourseWordLessonShellViewProps) {
   const [activeDrawerIndex, setActiveDrawerIndex] = useState(0);
   const [isLessonComplete, setIsLessonComplete] = useState(false);
@@ -142,6 +180,12 @@ function LiveDrawerBody({
     activeDrawer.drawerCode === "traditions" ||
     activeDrawer.drawerCode === "hermeneutical_readings" ||
     activeDrawer.drawerCode === "hermeneutic_readings";
+  const bodyStatements = activeDrawer.body.statements ?? [];
+  const hasTwoColumnData = bodyStatements.some((statement) => {
+    const card = statement as HermeneuticalStatement;
+    return Array.isArray(card.keeps) || Array.isArray(card.mayFlatten);
+  });
+  const statements = isHermeneuticalDrawer && !hasTwoColumnData ? defaultHermeneuticalStatements : bodyStatements;
 
   return (
     <section
@@ -156,7 +200,7 @@ function LiveDrawerBody({
         </article>
       ) : null}
 
-      {(activeDrawer.body.statements ?? []).map((statement) => (
+      {statements.map((statement) => (
         <LiveStatementCard
           key={`${activeDrawer.drawerCode}-${statement.title}`}
           statement={statement as HermeneuticalStatement}
