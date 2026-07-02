@@ -3,14 +3,19 @@ import { notFound, redirect } from "next/navigation";
 import LessonDrawerStack from "@/components/titus/LessonDrawerStack";
 import PublicNodeMetaCard from "@/components/titus/PublicNodeMetaCard";
 import QueuedLessonPage from "@/components/titus/QueuedLessonPage";
+import { CourseWordLessonShellView } from "@/components/course-word-lesson-shell";
+import { LiveCourseWordLessonShellView } from "@/components/live-course-word-lesson-shell";
 import { getCourse } from "@/data/titus/courses";
+import { getCourseWordLessonShell } from "@/data/titus/course-word-lessons";
 import { getLessonAssembly } from "@/data/titus/lesson-assemblies";
 import { getLesson } from "@/data/titus/lessons";
 import { getQueuedLesson } from "@/data/titus/queued-lessons";
+import { getLiveCourseWordLessonShell } from "@/lib/noel/live-course-word-lesson";
 import { hydrateCanonReadingFromNoel } from "@/lib/noel/titus-canon-reading";
 import { getReturnHref, getReturnLabel, getSafeReturnPath } from "@/lib/titus/return-links";
-import { CourseWordLessonShellView } from "@/components/course-word-lesson-shell";
-import { getCourseWordLessonShell } from "@/data/titus/course-word-lessons";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function LessonPage({
   params,
@@ -20,14 +25,20 @@ export default async function LessonPage({
   searchParams: Promise<{ from?: string }>;
 }) {
   const { lessonSlug } = await params;
-  
+
+  const liveCourseWordLessonShell = await getLiveCourseWordLessonShell(lessonSlug);
+
+  if (liveCourseWordLessonShell) {
+    return <LiveCourseWordLessonShellView shell={liveCourseWordLessonShell} />;
+  }
+
   const courseWordLessonShell = getCourseWordLessonShell(lessonSlug);
 
   if (courseWordLessonShell) {
     return <CourseWordLessonShellView shell={courseWordLessonShell} />;
   }
 
-const { from } = await searchParams;
+  const { from } = await searchParams;
   const normalizedLessonSlug = lessonSlug.toLowerCase();
   const safeFrom = getSafeReturnPath(from);
   const returnHref = getReturnHref(safeFrom, "/");
