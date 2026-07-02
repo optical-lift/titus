@@ -1,11 +1,15 @@
 import Link from "next/link";
+import { TitusHeaderBackLink } from "@/components/titus-header-back-link";
 
 export function TitusSiteHeader() {
   return (
     <header className="titus-site-header" aria-label="Titus site header">
-      <Link className="titus-site-header__brand" href="/">
-        Titus
-      </Link>
+      <div className="titus-site-header__brand-group">
+        <TitusHeaderBackLink />
+        <Link className="titus-site-header__brand" href="/">
+          Titus
+        </Link>
+      </div>
 
       <div className="titus-site-header__slot" aria-hidden="true" />
     </header>

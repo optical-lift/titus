@@ -3981,3 +3981,2149 @@ body {
 }
 
 /* End Titus final drawer next word CTA */
+
+/* Scroll-gated Titus lesson drawer viewport */
+.course-word-packet {
+  padding-bottom: 5.5rem;
+}
+
+.course-word-packet__drawer {
+  position: relative;
+}
+
+.course-word-packet__drawer-body--viewport {
+  max-height: clamp(260px, 44dvh, 560px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.35rem;
+  scroll-behavior: smooth;
+}
+
+.course-word-packet__drawer-body--viewport::-webkit-scrollbar {
+  width: 7px;
+}
+
+.course-word-packet__drawer-body--viewport::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(48, 82, 58, 0.22);
+}
+
+.course-word-packet__drawer-gate {
+  position: fixed;
+  left: 50%;
+  bottom: calc(max(0.55rem, env(safe-area-inset-bottom)) + 3.35rem);
+  z-index: 80;
+  width: min(680px, calc(100vw - 1.5rem));
+  transform: translateX(-50%);
+  margin: 0;
+  color: rgba(27, 41, 32, 0.62);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.course-word-packet__drawer-actions {
+  position: fixed;
+  left: 50%;
+  bottom: max(0.55rem, env(safe-area-inset-bottom));
+  z-index: 75;
+  width: min(680px, calc(100vw - 1.5rem));
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.48rem;
+  border: 1px solid rgba(48, 82, 58, 0.16);
+  border-radius: 999px;
+  background: rgba(250, 251, 246, 0.88);
+  box-shadow: 0 16px 38px rgba(27, 41, 32, 0.12);
+  backdrop-filter: blur(14px);
+}
+
+.course-word-packet__drawer-actions .button,
+.course-word-packet__drawer-actions .secondary-button,
+.course-word-packet__drawer-actions .compact-button {
+  min-height: 2.55rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  line-height: 1;
+}
+
+.course-word-packet__drawer-actions .secondary-button {
+  background: rgba(255, 255, 252, 0.72);
+}
+
+.course-word-packet__drawer-actions .button.is-disabled,
+.course-word-packet__drawer-actions .compact-button.is-disabled {
+  opacity: 0.38;
+  pointer-events: none;
+  filter: grayscale(0.2);
+}
+
+@media (max-width: 540px) {
+  .course-word-packet {
+    padding-bottom: 5.25rem;
+  }
+
+  .course-word-packet__drawer-body--viewport {
+    max-height: 42dvh;
+  }
+
+  .course-word-packet__drawer-actions {
+    width: min(92vw, 680px);
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr);
+  }
+
+  .course-word-packet__drawer-actions .button,
+  .course-word-packet__drawer-actions .secondary-button,
+  .course-word-packet__drawer-actions .compact-button {
+    min-height: 2.45rem;
+    font-size: 0.82rem;
+  }
+
+  .course-word-packet__drawer-gate {
+    width: min(92vw, 680px);
+    font-size: 0.72rem;
+  }
+}
+
+/* Fixed rectangular Titus lesson footer override */
+.course-word-packet {
+  padding-bottom: 4.75rem;
+}
+
+.course-word-packet__drawer-actions {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  width: auto;
+  transform: none;
+  display: grid;
+  grid-template-columns: minmax(5.75rem, 8.25rem) minmax(9.5rem, 16rem);
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 0;
+  padding:
+    0.55rem
+    max(0.9rem, calc((100vw - 680px) / 2))
+    calc(0.55rem + env(safe-area-inset-bottom));
+  border: 0;
+  border-top: 1px solid rgba(48, 82, 58, 0.16);
+  border-radius: 0;
+  background: rgba(250, 251, 246, 0.98);
+  box-shadow: 0 -12px 32px rgba(27, 41, 32, 0.1);
+  backdrop-filter: none;
+}
+
+.course-word-packet__drawer-actions .button,
+.course-word-packet__drawer-actions .secondary-button,
+.course-word-packet__drawer-actions .compact-button {
+  min-height: 2.2rem;
+  padding: 0.46rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 850;
+  letter-spacing: 0.055em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.course-word-packet__drawer-actions .secondary-button {
+  background: rgba(255, 255, 252, 0.78);
+  border: 1px solid rgba(48, 82, 58, 0.18);
+  color: rgba(48, 82, 58, 0.82);
+}
+
+.course-word-packet__drawer-actions .button,
+.course-word-packet__drawer-actions .compact-button {
+  border: 1px solid rgba(48, 82, 58, 0.22);
+}
+
+.course-word-packet__drawer-actions .button.is-disabled,
+.course-word-packet__drawer-actions .compact-button.is-disabled {
+  opacity: 0.32;
+  pointer-events: none;
+  filter: grayscale(0.15);
+}
+
+.course-word-packet__drawer-gate {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(3.25rem + env(safe-area-inset-bottom));
+  z-index: 89;
+  width: auto;
+  transform: none;
+  margin: 0;
+  padding: 0.32rem 1rem;
+  border-top: 1px solid rgba(48, 82, 58, 0.08);
+  background: rgba(250, 251, 246, 0.94);
+  color: rgba(27, 41, 32, 0.52);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 540px) {
+  .course-word-packet {
+    padding-bottom: 4.5rem;
+  }
+
+  .course-word-packet__drawer-actions {
+    grid-template-columns: minmax(5.25rem, 7.4rem) minmax(9.25rem, 13.75rem);
+    gap: 0.42rem;
+    padding:
+      0.5rem
+      0.72rem
+      calc(0.5rem + env(safe-area-inset-bottom));
+  }
+
+  .course-word-packet__drawer-actions .button,
+  .course-word-packet__drawer-actions .secondary-button,
+  .course-word-packet__drawer-actions .compact-button {
+    min-height: 2.05rem;
+    padding: 0.42rem 0.58rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.045em;
+  }
+
+  .course-word-packet__drawer-gate {
+    bottom: calc(3rem + env(safe-area-inset-bottom));
+    font-size: 0.58rem;
+  }
+}
+
+/* Demure Titus lesson footer + arrow-only course return */
+.course-word-packet__back {
+  position: fixed;
+  top: calc(1.05rem + env(safe-area-inset-top));
+  right: max(0.95rem, calc((100vw - 760px) / 2 + 0.95rem));
+  z-index: 140;
+  display: inline-grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  margin: 0;
+  border: 1px solid rgba(48, 82, 58, 0.18);
+  border-radius: 999px;
+  background: rgba(250, 251, 246, 0.88);
+  color: rgba(48, 82, 58, 0.86);
+  box-shadow: 0 8px 22px rgba(27, 41, 32, 0.08);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+}
+
+.course-word-packet__back:hover {
+  background: rgba(250, 251, 246, 0.98);
+  color: rgba(48, 82, 58, 0.98);
+  transform: translateY(-1px);
+}
+
+.course-word-packet__drawer-actions {
+  grid-template-columns: minmax(4.9rem, 7.1rem) minmax(7.25rem, 11.2rem);
+  gap: 0.38rem;
+  padding:
+    0.42rem
+    max(0.78rem, calc((100vw - 680px) / 2))
+    calc(0.42rem + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(48, 82, 58, 0.13);
+  background: rgba(250, 251, 246, 0.985);
+  box-shadow: 0 -8px 22px rgba(27, 41, 32, 0.07);
+}
+
+.course-word-packet__drawer-actions .button,
+.course-word-packet__drawer-actions .secondary-button,
+.course-word-packet__drawer-actions .compact-button {
+  min-height: 1.9rem;
+  padding: 0.36rem 0.62rem;
+  border-radius: 999px;
+  box-shadow: none;
+  font-size: 0.7rem;
+  font-weight: 760;
+  letter-spacing: 0.025em;
+  line-height: 1;
+  text-transform: none;
+}
+
+.course-word-packet__drawer-actions .secondary-button {
+  background: rgba(255, 255, 252, 0.62);
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  color: rgba(48, 82, 58, 0.58);
+}
+
+.course-word-packet__drawer-actions .button,
+.course-word-packet__drawer-actions .compact-button {
+  background: rgba(48, 82, 58, 0.1);
+  border: 1px solid rgba(48, 82, 58, 0.18);
+  color: rgba(48, 82, 58, 0.9);
+}
+
+.course-word-packet__drawer-actions .button:hover,
+.course-word-packet__drawer-actions .compact-button:hover {
+  background: rgba(48, 82, 58, 0.14);
+  border-color: rgba(48, 82, 58, 0.24);
+}
+
+.course-word-packet__drawer-actions .button.is-disabled,
+.course-word-packet__drawer-actions .compact-button.is-disabled {
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.course-word-packet__drawer-gate {
+  bottom: calc(2.58rem + env(safe-area-inset-bottom));
+  padding: 0.24rem 1rem;
+  background: rgba(250, 251, 246, 0.96);
+  color: rgba(27, 41, 32, 0.42);
+  font-size: 0.55rem;
+  font-weight: 760;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 540px) {
+  .course-word-packet__back {
+    top: calc(0.9rem + env(safe-area-inset-top));
+    right: 0.78rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.92rem;
+  }
+
+  .course-word-packet__drawer-actions {
+    grid-template-columns: minmax(4.8rem, 6.7rem) minmax(6.9rem, 10.7rem);
+    gap: 0.34rem;
+    padding:
+      0.38rem
+      0.58rem
+      calc(0.38rem + env(safe-area-inset-bottom));
+  }
+
+  .course-word-packet__drawer-actions .button,
+  .course-word-packet__drawer-actions .secondary-button,
+  .course-word-packet__drawer-actions .compact-button {
+    min-height: 1.82rem;
+    padding: 0.34rem 0.5rem;
+    font-size: 0.66rem;
+  }
+
+  .course-word-packet__drawer-gate {
+    bottom: calc(2.42rem + env(safe-area-inset-bottom));
+    font-size: 0.52rem;
+  }
+}
+
+/* Minimal course movement rail */
+.course-movement-rail,
+.drawer-actions.course-movement-rail,
+.course-word-packet__drawer-actions.course-movement-rail {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 95;
+  width: auto;
+  transform: none;
+  display: grid;
+  grid-template-columns: 2.25rem minmax(10rem, 1fr) 2.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding:
+    0.42rem
+    max(0.82rem, calc((100vw - 680px) / 2))
+    calc(0.42rem + env(safe-area-inset-bottom));
+  border: 0;
+  border-top: 1px solid rgba(48, 82, 58, 0.13);
+  border-radius: 0;
+  background: rgba(250, 251, 246, 0.985);
+  box-shadow: 0 -8px 22px rgba(27, 41, 32, 0.06);
+  backdrop-filter: none;
+}
+
+.course-movement-rail__label {
+  color: rgba(48, 82, 58, 0.68);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.course-movement-rail .button,
+.course-movement-rail .secondary-button,
+.course-movement-rail .compact-button {
+  display: inline-grid;
+  place-items: center;
+  width: 2.15rem;
+  min-width: 2.15rem;
+  max-width: 2.15rem;
+  height: 2.15rem;
+  min-height: 2.15rem;
+  padding: 0 !important;
+  border: 1px solid rgba(48, 82, 58, 0.14) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 252, 0.54) !important;
+  box-shadow: none !important;
+  color: rgba(48, 82, 58, 0.72) !important;
+  font-size: 1.05rem !important;
+  font-weight: 650 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+}
+
+.course-movement-rail .button:hover,
+.course-movement-rail .secondary-button:hover,
+.course-movement-rail .compact-button:hover {
+  background: rgba(48, 82, 58, 0.07) !important;
+  color: rgba(48, 82, 58, 0.9) !important;
+}
+
+.course-movement-rail .button:disabled,
+.course-movement-rail .secondary-button:disabled,
+.course-movement-rail .compact-button:disabled,
+.course-movement-rail .button.is-disabled,
+.course-movement-rail .compact-button.is-disabled {
+  opacity: 0.24 !important;
+  pointer-events: none;
+}
+
+.course-movement-rail .compact-button[href] {
+  width: auto;
+  min-width: 4.45rem;
+  max-width: none;
+  padding: 0 0.72rem !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+}
+
+.course-word-packet,
+.guided-lesson {
+  padding-bottom: 4rem;
+}
+
+.course-word-packet__drawer-gate {
+  bottom: calc(2.9rem + env(safe-area-inset-bottom));
+  padding: 0.22rem 1rem;
+  background: rgba(250, 251, 246, 0.96);
+  color: rgba(27, 41, 32, 0.38);
+  font-size: 0.52rem;
+  font-weight: 780;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 540px) {
+  .course-movement-rail,
+  .drawer-actions.course-movement-rail,
+  .course-word-packet__drawer-actions.course-movement-rail {
+    grid-template-columns: 2rem minmax(8rem, 1fr) 2rem;
+    gap: 0.42rem;
+    padding:
+      0.36rem
+      0.62rem
+      calc(0.36rem + env(safe-area-inset-bottom));
+  }
+
+  .course-movement-rail__label {
+    font-size: 0.6rem;
+    letter-spacing: 0.095em;
+  }
+
+  .course-movement-rail .button,
+  .course-movement-rail .secondary-button,
+  .course-movement-rail .compact-button {
+    width: 1.95rem;
+    min-width: 1.95rem;
+    max-width: 1.95rem;
+    height: 1.95rem;
+    min-height: 1.95rem;
+    font-size: 0.98rem !important;
+  }
+
+  .course-movement-rail .compact-button[href] {
+    min-width: 4rem;
+    padding: 0 0.56rem !important;
+    font-size: 0.66rem !important;
+  }
+}
+
+/* Corrected minimal Titus movement rail */
+.course-word-packet__drawer-actions.course-movement-rail {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 120 !important;
+  width: auto !important;
+  transform: none !important;
+  display: grid !important;
+  grid-template-columns: 2.05rem minmax(0, 1fr) 2.05rem !important;
+  grid-template-areas: "prev label next" !important;
+  align-items: center !important;
+  gap: 0.55rem !important;
+  margin: 0 !important;
+  padding:
+    0.4rem
+    max(0.85rem, calc((100vw - 680px) / 2))
+    calc(0.4rem + env(safe-area-inset-bottom)) !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(48, 82, 58, 0.12) !important;
+  border-radius: 0 !important;
+  background: rgba(250, 251, 246, 0.99) !important;
+  box-shadow: 0 -8px 22px rgba(27, 41, 32, 0.055) !important;
+  backdrop-filter: none !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail > button:first-child {
+  grid-area: prev !important;
+  justify-self: start !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail > .course-movement-rail__label {
+  grid-area: label !important;
+  justify-self: center !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail > button:last-child,
+.course-word-packet__drawer-actions.course-movement-rail > a:last-child {
+  grid-area: next !important;
+  justify-self: end !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail .course-movement-rail__label {
+  color: rgba(48, 82, 58, 0.58) !important;
+  font-size: 0.62rem !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.115em !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail > button,
+.course-word-packet__drawer-actions.course-movement-rail > a {
+  display: inline-grid !important;
+  place-items: center !important;
+  width: 2.05rem !important;
+  min-width: 2.05rem !important;
+  max-width: 2.05rem !important;
+  height: 2.05rem !important;
+  min-height: 2.05rem !important;
+  padding: 0 !important;
+  border: 1px solid rgba(48, 82, 58, 0.12) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 252, 0.5) !important;
+  box-shadow: none !important;
+  color: rgba(48, 82, 58, 0.62) !important;
+  font-size: 1rem !important;
+  font-weight: 550 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail > button:hover,
+.course-word-packet__drawer-actions.course-movement-rail > a:hover {
+  background: rgba(48, 82, 58, 0.055) !important;
+  color: rgba(48, 82, 58, 0.82) !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail > button:disabled,
+.course-word-packet__drawer-actions.course-movement-rail > a.is-disabled {
+  opacity: 0.22 !important;
+  pointer-events: none !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail > a[href] {
+  width: auto !important;
+  min-width: 2.05rem !important;
+  max-width: none !important;
+  padding: 0 0.62rem !important;
+  font-size: 0.68rem !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.035em !important;
+}
+
+.course-word-packet__drawer-gate {
+  bottom: calc(2.78rem + env(safe-area-inset-bottom)) !important;
+  font-size: 0.5rem !important;
+  opacity: 0.72 !important;
+}
+
+@media (max-width: 540px) {
+  .course-word-packet__drawer-actions.course-movement-rail {
+    grid-template-columns: 1.9rem minmax(0, 1fr) 1.9rem !important;
+    gap: 0.45rem !important;
+    padding:
+      0.36rem
+      0.62rem
+      calc(0.36rem + env(safe-area-inset-bottom)) !important;
+  }
+
+  .course-word-packet__drawer-actions.course-movement-rail .course-movement-rail__label {
+    font-size: 0.56rem !important;
+    letter-spacing: 0.09em !important;
+  }
+
+  .course-word-packet__drawer-actions.course-movement-rail > button,
+  .course-word-packet__drawer-actions.course-movement-rail > a {
+    width: 1.9rem !important;
+    min-width: 1.9rem !important;
+    max-width: 1.9rem !important;
+    height: 1.9rem !important;
+    min-height: 1.9rem !important;
+    font-size: 0.94rem !important;
+  }
+
+  .course-word-packet__drawer-actions.course-movement-rail > a[href] {
+    min-width: 3.85rem !important;
+    padding: 0 0.5rem !important;
+    font-size: 0.62rem !important;
+  }
+}
+
+/* Lesson pages use their own fixed movement rail, not the global site footer */
+body:has(.lesson-shell) .titus-site-footer,
+body:has(.course-word-packet) .titus-site-footer {
+  display: none !important;
+}
+
+body:has(.lesson-shell) {
+  background: #edf3fb;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail {
+  z-index: 500 !important;
+  background: #fbfcf7 !important;
+  border-top: 1px solid rgba(48, 82, 58, 0.16) !important;
+  box-shadow: 0 -10px 24px rgba(27, 41, 32, 0.08) !important;
+}
+
+.course-word-packet {
+  padding-bottom: 4.25rem !important;
+}
+
+/* Green available next control in minimal Titus movement rail */
+.course-word-packet__drawer-actions.course-movement-rail > button:last-child:not(:disabled),
+.course-word-packet__drawer-actions.course-movement-rail > a:last-child:not(.is-disabled) {
+  background: rgba(48, 82, 58, 0.96) !important;
+  border-color: rgba(48, 82, 58, 0.96) !important;
+  color: rgba(255, 255, 248, 0.96) !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail > button:last-child:not(:disabled):hover,
+.course-word-packet__drawer-actions.course-movement-rail > a:last-child:not(.is-disabled):hover {
+  background: rgba(39, 72, 50, 1) !important;
+  border-color: rgba(39, 72, 50, 1) !important;
+  color: rgba(255, 255, 248, 1) !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail > button:last-child:disabled,
+.course-word-packet__drawer-actions.course-movement-rail > a:last-child.is-disabled {
+  background: rgba(255, 255, 252, 0.5) !important;
+  border-color: rgba(48, 82, 58, 0.12) !important;
+  color: rgba(48, 82, 58, 0.42) !important;
+}
+
+/* Titus lesson module language and title scale */
+.course-word-packet__drawer-count,
+.guided-drawer-count {
+  font-size: 0.78rem !important;
+  letter-spacing: 0.18em !important;
+  color: rgba(48, 82, 58, 0.9) !important;
+}
+
+.course-word-packet__drawer h2,
+.guided-drawer-card h2 {
+  font-size: clamp(2.55rem, 8.4vw, 4.15rem) !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.045em !important;
+  margin-bottom: 0.82rem !important;
+}
+
+@media (max-width: 540px) {
+  .course-word-packet__drawer h2,
+  .guided-drawer-card h2 {
+    font-size: clamp(2.35rem, 12vw, 3.2rem) !important;
+    line-height: 0.96 !important;
+  }
+}
+
+/* Smaller Titus module title scale */
+.course-word-packet__drawer h2,
+.guided-drawer-card h2 {
+  font-size: clamp(1.85rem, 7.2vw, 2.85rem) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.035em !important;
+  margin: 0 0 0.72rem !important;
+  max-width: 100% !important;
+}
+
+.course-word-packet__drawer h2::first-letter,
+.guided-drawer-card h2::first-letter {
+  letter-spacing: -0.04em !important;
+}
+
+.course-word-packet__drawer-description,
+.guided-drawer-card .drawer-body > p:first-child {
+  font-size: clamp(1.25rem, 5.1vw, 1.75rem) !important;
+  line-height: 1.34 !important;
+}
+
+@media (max-width: 540px) {
+  .course-word-packet__drawer h2,
+  .guided-drawer-card h2 {
+    font-size: clamp(1.78rem, 9.4vw, 2.55rem) !important;
+    line-height: 1.03 !important;
+  }
+
+  .course-word-packet__drawer-description,
+  .guided-drawer-card .drawer-body > p:first-child {
+    font-size: clamp(1.15rem, 5vw, 1.45rem) !important;
+  }
+}
+
+/* Extra-demure Titus module title */
+.course-word-packet__drawer h2,
+.guided-drawer-card h2 {
+  font-size: clamp(1.55rem, 5.9vw, 2.18rem) !important;
+  line-height: 1.06 !important;
+  letter-spacing: -0.025em !important;
+  margin: 0 0 0.62rem !important;
+}
+
+.course-word-packet__drawer-description,
+.guided-drawer-card .drawer-body > p:first-child {
+  font-size: clamp(1.06rem, 4.5vw, 1.36rem) !important;
+  line-height: 1.42 !important;
+}
+
+@media (max-width: 540px) {
+  .course-word-packet__drawer h2,
+  .guided-drawer-card h2 {
+    font-size: clamp(1.48rem, 7.6vw, 2rem) !important;
+    line-height: 1.08 !important;
+  }
+
+  .course-word-packet__drawer-description,
+  .guided-drawer-card .drawer-body > p:first-child {
+    font-size: clamp(1.02rem, 4.65vw, 1.24rem) !important;
+  }
+}
+
+
+/* Titus Lexicon module data statements */
+.course-word-packet__lexicon-summary {
+  display: grid;
+  gap: 0.68rem;
+  margin-top: 0.85rem;
+}
+
+.course-word-packet__lexicon-statement {
+  padding: 0.82rem 0.9rem;
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  border-radius: 1rem;
+  background: rgba(255, 255, 252, 0.62);
+}
+
+.course-word-packet__lexicon-statement h3 {
+  margin: 0.16rem 0 0.5rem;
+  color: #1b2920;
+  font-size: clamp(1rem, 4.2vw, 1.24rem);
+  line-height: 1.12;
+}
+
+.course-word-packet__lexicon-statement ul {
+  display: grid;
+  gap: 0.28rem;
+  margin: 0;
+  padding-left: 1rem;
+  color: rgba(27, 41, 32, 0.82);
+  font-size: clamp(0.9rem, 3.85vw, 1rem);
+  line-height: 1.32;
+}
+
+.course-word-packet__lexicon-statement li::marker {
+  color: rgba(48, 82, 58, 0.52);
+}
+
+/* Lexicon data shown directly under the visible stamp */
+.course-word-packet__lexicon-under-stamp {
+  margin-top: 0.85rem;
+}
+
+.course-word-packet__lexicon-summary {
+  display: grid !important;
+  gap: 0.68rem;
+}
+
+.course-word-packet__lexicon-statement {
+  display: block !important;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  border-radius: 1rem;
+  background: rgba(255, 255, 252, 0.66);
+}
+
+.course-word-packet__lexicon-statement h3 {
+  margin: 0.16rem 0 0.5rem;
+  color: #1b2920;
+  font-size: clamp(1rem, 4.2vw, 1.24rem);
+  line-height: 1.12;
+}
+
+.course-word-packet__lexicon-statement ul {
+  display: grid;
+  gap: 0.28rem;
+  margin: 0;
+  padding-left: 1rem;
+  color: rgba(27, 41, 32, 0.82);
+  font-size: clamp(0.9rem, 3.85vw, 1rem);
+  line-height: 1.32;
+}
+
+.course-word-packet__lexicon-statement li::marker {
+  color: rgba(48, 82, 58, 0.52);
+}
+
+/* Titus Book Context module data statements */
+.course-word-packet__book-context-summary {
+  display: grid !important;
+  gap: 0.68rem;
+}
+
+.course-word-packet__book-context-statement {
+  display: block !important;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  border-radius: 1rem;
+  background: rgba(255, 255, 252, 0.66);
+}
+
+.course-word-packet__book-context-statement h3 {
+  margin: 0.16rem 0 0.5rem;
+  color: #1b2920;
+  font-size: clamp(1rem, 4.2vw, 1.24rem);
+  line-height: 1.12;
+}
+
+.course-word-packet__book-context-statement ul {
+  display: grid;
+  gap: 0.28rem;
+  margin: 0;
+  padding-left: 1rem;
+  color: rgba(27, 41, 32, 0.82);
+  font-size: clamp(0.9rem, 3.85vw, 1rem);
+  line-height: 1.32;
+}
+
+.course-word-packet__book-context-statement li::marker {
+  color: rgba(48, 82, 58, 0.52);
+}
+
+/* Titus Travels With module data statements */
+.course-word-packet__travels-summary {
+  display: grid !important;
+  gap: 0.68rem;
+}
+
+.course-word-packet__travels-statement {
+  display: block !important;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  border-radius: 1rem;
+  background: rgba(255, 255, 252, 0.66);
+}
+
+.course-word-packet__travels-statement h3 {
+  margin: 0.16rem 0 0.5rem;
+  color: #1b2920;
+  font-size: clamp(1rem, 4.2vw, 1.24rem);
+  line-height: 1.12;
+}
+
+.course-word-packet__travels-statement ul {
+  display: grid;
+  gap: 0.28rem;
+  margin: 0;
+  padding-left: 1rem;
+  color: rgba(27, 41, 32, 0.82);
+  font-size: clamp(0.9rem, 3.85vw, 1rem);
+  line-height: 1.32;
+}
+
+.course-word-packet__travels-statement li::marker {
+  color: rgba(48, 82, 58, 0.52);
+}
+
+/* Titus Canon Chains module data statements */
+.course-word-packet__canon-chain-summary {
+  display: grid !important;
+  gap: 0.68rem;
+}
+
+.course-word-packet__canon-chain-statement {
+  display: block !important;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  border-radius: 1rem;
+  background: rgba(255, 255, 252, 0.66);
+}
+
+.course-word-packet__canon-chain-statement h3 {
+  margin: 0.16rem 0 0.36rem;
+  color: #1b2920;
+  font-size: clamp(1rem, 4.2vw, 1.24rem);
+  line-height: 1.12;
+}
+
+.course-word-packet__canon-chain-refs {
+  margin: 0 0 0.52rem;
+  color: rgba(48, 82, 58, 0.72);
+  font-size: clamp(0.82rem, 3.35vw, 0.94rem);
+  font-weight: 760;
+  line-height: 1.26;
+}
+
+.course-word-packet__canon-chain-statement ul {
+  display: grid;
+  gap: 0.28rem;
+  margin: 0;
+  padding-left: 1rem;
+  color: rgba(27, 41, 32, 0.82);
+  font-size: clamp(0.9rem, 3.85vw, 1rem);
+  line-height: 1.32;
+}
+
+.course-word-packet__canon-chain-statement li::marker {
+  color: rgba(48, 82, 58, 0.52);
+}
+
+/* Titus method modules: Function Reading, Hermeneutics, What Stays, Review */
+.course-word-packet__function-reading-summary,
+.course-word-packet__hermeneutical-summary,
+.course-word-packet__what-stays-summary,
+.course-word-packet__review-summary {
+  display: grid !important;
+  gap: 0.68rem;
+}
+
+.course-word-packet__method-statement {
+  display: block !important;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  border-radius: 1rem;
+  background: rgba(255, 255, 252, 0.66);
+}
+
+.course-word-packet__method-statement h3 {
+  margin: 0.16rem 0 0.5rem;
+  color: #1b2920;
+  font-size: clamp(1rem, 4.2vw, 1.24rem);
+  line-height: 1.12;
+}
+
+.course-word-packet__method-statement ul {
+  display: grid;
+  gap: 0.28rem;
+  margin: 0;
+  padding-left: 1rem;
+  color: rgba(27, 41, 32, 0.82);
+  font-size: clamp(0.9rem, 3.85vw, 1rem);
+  line-height: 1.32;
+}
+
+.course-word-packet__method-statement li::marker {
+  color: rgba(48, 82, 58, 0.52);
+}
+
+.course-word-packet__two-column-note {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.course-word-packet__two-column-note h4 {
+  margin: 0 0 0.34rem;
+  color: rgba(48, 82, 58, 0.9);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 720px) {
+  .course-word-packet__two-column-note {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Titus Traditions placement module */
+.course-word-packet__tradition-placement-summary {
+  display: grid !important;
+  gap: 0.68rem;
+}
+
+.course-word-packet__tradition-placement-card {
+  display: block !important;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  border-radius: 1rem;
+  background: rgba(255, 255, 252, 0.66);
+}
+
+.course-word-packet__tradition-placement-card h3 {
+  margin: 0.16rem 0 0.36rem;
+  color: #1b2920;
+  font-size: clamp(1rem, 4.2vw, 1.24rem);
+  line-height: 1.12;
+}
+
+.course-word-packet__tradition-placement-card p {
+  color: rgba(27, 41, 32, 0.82);
+  font-size: clamp(0.9rem, 3.85vw, 1rem);
+  line-height: 1.34;
+}
+
+.course-word-packet__tradition-placed-beside {
+  margin: 0 0 0.52rem;
+  color: rgba(48, 82, 58, 0.72) !important;
+  font-weight: 760;
+}
+
+.course-word-packet__tradition-placement-card ul {
+  display: grid;
+  gap: 0.28rem;
+  margin: 0;
+  padding-left: 1rem;
+  color: rgba(27, 41, 32, 0.82);
+  font-size: clamp(0.9rem, 3.85vw, 1rem);
+  line-height: 1.32;
+}
+
+.course-word-packet__tradition-placement-card li::marker {
+  color: rgba(48, 82, 58, 0.52);
+}
+
+.course-word-packet__tradition-link {
+  display: inline-flex;
+  margin-top: 0.76rem;
+  color: rgba(48, 82, 58, 0.92);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.course-word-packet__tradition-link:hover {
+  text-decoration: underline;
+}
+
+/* Titus Reading Controls module */
+.course-word-packet__reading-controls-summary {
+  display: grid !important;
+  gap: 0.68rem;
+}
+
+/* Titus: next movement is available without scroll gate */
+.course-word-packet__drawer-gate {
+  display: none !important;
+}
+
+/* Final lesson handoff button should read as an available next lesson */
+.course-word-packet__drawer-actions.course-movement-rail > a[href]:last-child {
+  min-width: 8.9rem !important;
+  height: 2.15rem !important;
+  padding: 0 0.78rem !important;
+  font-size: 0.72rem !important;
+  font-weight: 820 !important;
+  letter-spacing: 0.035em !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 540px) {
+  .course-word-packet__drawer-actions.course-movement-rail > a[href]:last-child {
+    min-width: 8.35rem !important;
+    height: 2.05rem !important;
+    padding: 0 0.66rem !important;
+    font-size: 0.66rem !important;
+  }
+}
+
+/* Titus two-stage lesson ending */
+.course-word-packet__complete-card {
+  padding: 0.95rem;
+  border: 1px solid rgba(48, 82, 58, 0.18);
+  border-radius: 1rem;
+  background: rgba(48, 82, 58, 0.07);
+}
+
+.course-word-packet__complete-card h3 {
+  margin: 0.16rem 0 0.48rem;
+  color: #1b2920;
+  font-size: clamp(1.05rem, 4.3vw, 1.32rem);
+  line-height: 1.14;
+}
+
+.course-word-packet__complete-card p {
+  color: rgba(27, 41, 32, 0.82);
+  font-size: clamp(0.92rem, 3.85vw, 1.02rem);
+  line-height: 1.34;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail > .course-movement-finish {
+  width: auto !important;
+  min-width: 5.3rem !important;
+  max-width: none !important;
+  height: 2.15rem !important;
+  padding: 0 0.86rem !important;
+  background: rgba(48, 82, 58, 0.96) !important;
+  border-color: rgba(48, 82, 58, 0.96) !important;
+  color: rgba(255, 255, 248, 0.96) !important;
+  font-size: 0.72rem !important;
+  font-weight: 820 !important;
+  letter-spacing: 0.035em !important;
+  white-space: nowrap !important;
+}
+
+.course-movement-rail__complete-actions {
+  grid-area: next !important;
+  justify-self: end !important;
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+}
+
+.course-movement-rail__course-link,
+.course-movement-rail__next-study-link {
+  display: inline-grid;
+  place-items: center;
+  height: 2.15rem;
+  border-radius: 999px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.course-movement-rail__course-link {
+  padding: 0 0.68rem;
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  background: rgba(255, 255, 252, 0.55);
+  color: rgba(48, 82, 58, 0.7);
+  font-size: 0.66rem;
+  font-weight: 760;
+  letter-spacing: 0.03em;
+}
+
+.course-movement-rail__next-study-link {
+  padding: 0 0.78rem;
+  border: 1px solid rgba(48, 82, 58, 0.96);
+  background: rgba(48, 82, 58, 0.96);
+  color: rgba(255, 255, 248, 0.96);
+  font-size: 0.68rem;
+  font-weight: 820;
+  letter-spacing: 0.02em;
+}
+
+.course-movement-rail__next-study-link:hover {
+  background: rgba(39, 72, 50, 1);
+  color: rgba(255, 255, 248, 1);
+}
+
+@media (max-width: 540px) {
+  .course-movement-rail__complete-actions {
+    gap: 0.32rem;
+  }
+
+  .course-movement-rail__course-link {
+    padding: 0 0.54rem;
+    font-size: 0.6rem;
+  }
+
+  .course-movement-rail__next-study-link {
+    padding: 0 0.62rem;
+    font-size: 0.61rem;
+  }
+
+  .course-word-packet__drawer-actions.course-movement-rail > .course-movement-finish {
+    min-width: 4.85rem !important;
+    height: 2.05rem !important;
+    font-size: 0.66rem !important;
+  }
+}
+
+/* Titus completed lesson footer layout repair */
+.course-word-packet__complete-card {
+  padding: 0.95rem;
+}
+
+.course-word-packet__complete-card h3 {
+  margin-bottom: 0.28rem !important;
+}
+
+.course-word-packet__complete-subtitle {
+  margin: 0 !important;
+  color: rgba(48, 82, 58, 0.76) !important;
+  font-size: 0.82rem !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1.2 !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail:has(.course-movement-rail__complete-actions) {
+  grid-template-columns: 2.05rem minmax(0, 1fr) !important;
+  grid-template-areas: "prev actions" !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail:has(.course-movement-rail__complete-actions)
+  .course-movement-rail__label {
+  display: none !important;
+}
+
+.course-word-packet__drawer-actions.course-movement-rail:has(.course-movement-rail__complete-actions)
+  > button:first-child {
+  grid-area: prev !important;
+}
+
+.course-movement-rail__complete-actions {
+  grid-area: actions !important;
+  justify-self: stretch !important;
+  display: grid !important;
+  grid-template-columns: minmax(4.4rem, 0.55fr) minmax(9.8rem, 1.45fr) !important;
+  gap: 0.42rem !important;
+  width: 100% !important;
+}
+
+.course-movement-rail__course-link,
+.course-movement-rail__next-study-link {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 2.1rem !important;
+  padding: 0 0.54rem !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+
+.course-movement-rail__course-link {
+  font-size: 0.62rem !important;
+}
+
+.course-movement-rail__next-study-link {
+  font-size: 0.66rem !important;
+}
+
+@media (max-width: 540px) {
+  .course-word-packet__drawer-actions.course-movement-rail:has(.course-movement-rail__complete-actions) {
+    grid-template-columns: 1.9rem minmax(0, 1fr) !important;
+    gap: 0.42rem !important;
+  }
+
+  .course-movement-rail__complete-actions {
+    grid-template-columns: minmax(3.9rem, 0.48fr) minmax(8.9rem, 1.52fr) !important;
+    gap: 0.34rem !important;
+  }
+
+  .course-movement-rail__course-link,
+  .course-movement-rail__next-study-link {
+    height: 2rem !important;
+    padding: 0 0.44rem !important;
+  }
+
+  .course-movement-rail__course-link {
+    font-size: 0.56rem !important;
+  }
+
+  .course-movement-rail__next-study-link {
+    font-size: 0.59rem !important;
+  }
+}
+
+/* Titus Proverbs course sales landing */
+.course-sales-page__hero {
+  text-align: center;
+}
+
+.course-sales-page__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 1.25rem auto 1.4rem;
+  max-width: 35rem;
+}
+
+.course-sales-page__stats span {
+  display: grid;
+  place-items: center;
+  min-height: 2.45rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 252, 0.7);
+  color: rgba(48, 82, 58, 0.9);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.course-sales-page__hero-actions {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+}
+
+.course-sales-page__secondary-link {
+  color: rgba(48, 82, 58, 0.86);
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.course-sales-page__secondary-link:hover {
+  text-decoration: underline;
+}
+
+.course-sales-page__section h2 {
+  margin: 0.25rem 0 0.85rem;
+  color: #1b2920;
+  font-size: clamp(1.45rem, 6vw, 2.15rem);
+  line-height: 1.08;
+}
+
+.course-sales-page__section p {
+  color: rgba(27, 41, 32, 0.72);
+  font-size: clamp(1rem, 4.2vw, 1.14rem);
+  line-height: 1.42;
+}
+
+.course-sales-page__check-list,
+.course-sales-page__week-card ul,
+.course-sales-page__method-row p,
+.course-sales-page__included-card p {
+  margin: 0;
+}
+
+.course-sales-page__check-list {
+  display: grid;
+  gap: 0.68rem;
+  padding-left: 1.2rem;
+  color: rgba(27, 41, 32, 0.78);
+  font-size: clamp(0.98rem, 4vw, 1.08rem);
+  line-height: 1.38;
+}
+
+.course-sales-page__check-list li::marker,
+.course-sales-page__week-card li::marker {
+  color: rgba(48, 82, 58, 0.58);
+}
+
+.course-sales-page__week-grid,
+.course-sales-page__lesson-grid,
+.course-sales-page__included-grid {
+  display: grid;
+  gap: 0.72rem;
+}
+
+.course-sales-page__week-card,
+.course-sales-page__included-card,
+.course-sales-page__lesson-card,
+.course-sales-page__method-row {
+  border: 1px solid rgba(48, 82, 58, 0.14);
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 252, 0.68);
+}
+
+.course-sales-page__week-card,
+.course-sales-page__included-card,
+.course-sales-page__lesson-card {
+  padding: 0.92rem 0.98rem;
+}
+
+.course-sales-page__week-card span,
+.course-sales-page__lesson-card span,
+.course-sales-page__method-row > span {
+  color: rgba(48, 82, 58, 0.88);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.course-sales-page__week-card h2,
+.course-sales-page__included-card h2,
+.course-sales-page__lesson-card h3,
+.course-sales-page__method-row h2 {
+  margin: 0.2rem 0 0.38rem;
+  color: #1b2920;
+  font-size: clamp(1.1rem, 4.6vw, 1.42rem);
+  line-height: 1.08;
+}
+
+.course-sales-page__week-card ul {
+  display: grid;
+  gap: 0.24rem;
+  padding-left: 1rem;
+  color: rgba(27, 41, 32, 0.74);
+  font-size: 0.96rem;
+  line-height: 1.32;
+}
+
+.course-sales-page__lesson-card {
+  color: inherit;
+  text-decoration: none;
+}
+
+.course-sales-page__lesson-card:hover {
+  border-color: rgba(48, 82, 58, 0.32);
+  background: rgba(255, 255, 252, 0.86);
+}
+
+.course-sales-page__lesson-card p {
+  margin: 0;
+  color: rgba(48, 82, 58, 0.72);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.98rem;
+  font-style: italic;
+  line-height: 1.25;
+}
+
+.course-sales-page__method-list {
+  display: grid;
+  gap: 0.62rem;
+}
+
+.course-sales-page__method-row {
+  display: grid;
+  grid-template-columns: 2.15rem 1fr;
+  gap: 0.72rem;
+  align-items: start;
+  padding: 0.82rem 0.9rem;
+}
+
+.course-sales-page__method-row > span {
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 999px;
+  background: rgba(48, 82, 58, 0.96);
+  color: rgba(255, 255, 248, 0.96);
+  letter-spacing: 0;
+}
+
+.course-sales-page__method-row p,
+.course-sales-page__included-card p {
+  color: rgba(27, 41, 32, 0.7);
+  font-size: 0.98rem;
+  line-height: 1.34;
+}
+
+.course-sales-page__final-cta {
+  text-align: center;
+}
+
+.course-sales-page__final-cta .course-landing__button {
+  margin-top: 0.8rem;
+}
+
+@media (min-width: 720px) {
+  .course-sales-page__stats,
+  .course-sales-page__week-grid,
+  .course-sales-page__included-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .course-sales-page__lesson-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 540px) {
+  .course-sales-page__stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .course-sales-page__stats span {
+    min-height: 2.2rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+  }
+
+  .course-sales-page__method-row {
+    grid-template-columns: 1.95rem 1fr;
+  }
+
+  .course-sales-page__method-row > span {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+}
+
+/* Titus course landing: final typography + module normalization */
+.course-sales-page {
+  font-family: var(--text-font);
+}
+
+.course-sales-page .course-landing__eyebrow,
+.course-sales-page__stats span,
+.course-sales-page__secondary-link,
+.course-sales-page__week-card span,
+.course-sales-page__lesson-card span,
+.course-sales-page__method-row > span {
+  font-family: var(--ui-font);
+}
+
+.course-sales-page .course-landing__hero h1 {
+  font-size: clamp(2rem, 10vw, 3.35rem);
+  line-height: 0.96;
+}
+
+.course-sales-page .course-landing__description,
+.course-sales-page__section p,
+.course-sales-page__check-list,
+.course-sales-page__week-card ul,
+.course-sales-page__method-row p,
+.course-sales-page__included-card p {
+  color: var(--muted);
+  font-size: clamp(0.94rem, 3.6vw, 1rem);
+  line-height: 1.38;
+}
+
+.course-sales-page__section h2 {
+  margin: 0.22rem 0 0.72rem;
+  font-size: clamp(1.28rem, 5.2vw, 1.72rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.course-sales-page__week-card h2,
+.course-sales-page__included-card h2,
+.course-sales-page__lesson-card h3,
+.course-sales-page__method-row h2 {
+  margin: 0.18rem 0 0.32rem;
+  font-size: clamp(1.02rem, 4.35vw, 1.24rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.course-sales-page__week-card,
+.course-sales-page__included-card,
+.course-sales-page__lesson-card,
+.course-sales-page__method-row {
+  border-color: var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.course-sales-page__week-card,
+.course-sales-page__included-card,
+.course-sales-page__lesson-card {
+  padding: 0.82rem 0.88rem;
+}
+
+.course-sales-page__method-row {
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.66rem;
+  padding: 0.74rem 0.82rem;
+}
+
+.course-sales-page__method-row > span {
+  width: 2rem;
+  height: 2rem;
+  background: var(--accent-dark);
+  color: #fff;
+  font-size: 0.76rem;
+}
+
+.course-sales-page__check-list {
+  gap: 0.54rem;
+  padding-left: 1.08rem;
+}
+
+.course-sales-page__included-grid,
+.course-sales-page__method-list,
+.course-sales-page__week-grid,
+.course-sales-page__lesson-grid {
+  gap: 0.62rem;
+}
+
+@media (max-width: 540px) {
+  .course-sales-page .course-landing__hero h1 {
+    font-size: clamp(1.9rem, 9.2vw, 2.65rem);
+  }
+
+  .course-sales-page__section h2 {
+    font-size: clamp(1.22rem, 6vw, 1.52rem);
+  }
+
+  .course-sales-page__method-row {
+    grid-template-columns: 1.85rem minmax(0, 1fr);
+  }
+
+  .course-sales-page__method-row > span {
+    width: 1.85rem;
+    height: 1.85rem;
+  }
+}
+
+/* Titus global header back link */
+.titus-site-header__brand-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.62rem;
+  min-width: 0;
+}
+
+.titus-site-header__back {
+  display: inline-grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1px solid rgba(48, 82, 58, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 252, 0.56);
+  color: rgba(48, 82, 58, 0.82);
+  font-family: var(--ui-font);
+  font-size: 1rem;
+  font-weight: 760;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.titus-site-header__back:hover {
+  background: rgba(48, 82, 58, 0.08);
+  color: var(--accent-dark);
+}
+
+.course-landing__back,
+.course-word-packet__back {
+  display: none !important;
+}
+
+@media (max-width: 720px) {
+  .titus-site-header__brand-group {
+    gap: 0.55rem;
+  }
+
+  .titus-site-header__back {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.94rem;
+  }
+}
+
+/* Titus course landing: demure modern typography override */
+.course-sales-page {
+  max-width: 760px;
+}
+
+.course-sales-page .course-landing__hero {
+  padding: clamp(1.15rem, 4.5vw, 1.65rem) !important;
+}
+
+.course-sales-page .course-landing__eyebrow {
+  font-family: var(--ui-font) !important;
+  font-size: 0.66rem !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.16em !important;
+  line-height: 1.05 !important;
+}
+
+.course-sales-page .course-landing__hero h1 {
+  max-width: 31rem !important;
+  margin-top: 0.65rem !important;
+  font-size: clamp(2.05rem, 10.2vw, 3.1rem) !important;
+  line-height: 0.94 !important;
+  letter-spacing: -0.052em !important;
+}
+
+.course-sales-page .course-landing__subtitle {
+  margin-top: 0.75rem !important;
+  font-size: clamp(0.98rem, 4.1vw, 1.12rem) !important;
+  line-height: 1.24 !important;
+}
+
+.course-sales-page .course-landing__description {
+  max-width: 31rem !important;
+  margin-top: 0.9rem !important;
+  color: var(--muted) !important;
+  font-family: var(--ui-font) !important;
+  font-size: 0.88rem !important;
+  line-height: 1.44 !important;
+}
+
+.course-sales-page__stats {
+  gap: 0.46rem !important;
+  margin: 1rem auto 1.1rem !important;
+  max-width: 31rem !important;
+}
+
+.course-sales-page__stats span {
+  min-height: 2.15rem !important;
+  padding: 0.45rem 0.55rem !important;
+  font-family: var(--ui-font) !important;
+  font-size: 0.66rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.11em !important;
+  line-height: 1.05 !important;
+}
+
+.course-sales-page .course-landing__button {
+  min-width: min(100%, 20rem) !important;
+  min-height: 2.85rem !important;
+  margin-top: 0.9rem !important;
+  padding: 0.72rem 1rem !important;
+  font-family: var(--ui-font) !important;
+  font-size: 0.9rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.course-sales-page .course-landing__section {
+  margin-top: 0.78rem !important;
+  padding: clamp(1rem, 4vw, 1.25rem) !important;
+}
+
+.course-sales-page__section h2 {
+  margin: 0.24rem 0 0.7rem !important;
+  font-size: clamp(1.22rem, 5.2vw, 1.62rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.035em !important;
+}
+
+.course-sales-page__section p,
+.course-sales-page__section li,
+.course-sales-page__week-card li,
+.course-sales-page__method-row p,
+.course-sales-page__included-card p {
+  color: var(--muted) !important;
+  font-family: var(--ui-font) !important;
+  font-size: 0.86rem !important;
+  line-height: 1.36 !important;
+}
+
+.course-sales-page__check-list {
+  gap: 0.48rem !important;
+  padding-left: 1rem !important;
+}
+
+.course-sales-page__week-grid,
+.course-sales-page__lesson-grid,
+.course-sales-page__included-grid,
+.course-sales-page__method-list {
+  gap: 0.55rem !important;
+  margin-top: 0.65rem !important;
+}
+
+.course-sales-page__week-card,
+.course-sales-page__included-card,
+.course-sales-page__lesson-card,
+.course-sales-page__method-row {
+  border-radius: 0.95rem !important;
+  background: rgba(255, 255, 252, 0.58) !important;
+}
+
+.course-sales-page__week-card,
+.course-sales-page__included-card,
+.course-sales-page__lesson-card {
+  padding: 0.72rem 0.78rem !important;
+}
+
+.course-sales-page__week-card span,
+.course-sales-page__lesson-card span {
+  font-family: var(--ui-font) !important;
+  font-size: 0.62rem !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.12em !important;
+}
+
+.course-sales-page__week-card h2,
+.course-sales-page__included-card h2,
+.course-sales-page__lesson-card h3,
+.course-sales-page__method-row h2 {
+  margin: 0.16rem 0 0.25rem !important;
+  font-size: clamp(0.98rem, 4.3vw, 1.16rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.course-sales-page__lesson-card p {
+  color: var(--muted) !important;
+  font-family: var(--ui-font) !important;
+  font-size: 0.78rem !important;
+  font-style: normal !important;
+  line-height: 1.22 !important;
+}
+
+.course-sales-page__method-row {
+  grid-template-columns: 1.72rem minmax(0, 1fr) !important;
+  gap: 0.58rem !important;
+  padding: 0.66rem 0.72rem !important;
+}
+
+.course-sales-page__method-row > span {
+  width: 1.72rem !important;
+  height: 1.72rem !important;
+  font-family: var(--ui-font) !important;
+  font-size: 0.68rem !important;
+  font-weight: 900 !important;
+}
+
+.course-sales-page__included-card p {
+  margin-top: 0.18rem !important;
+}
+
+.course-sales-page__final-cta {
+  padding-bottom: 1.35rem !important;
+}
+
+@media (max-width: 540px) {
+  .course-sales-page .course-landing__hero h1 {
+    font-size: clamp(1.9rem, 9.8vw, 2.45rem) !important;
+  }
+
+  .course-sales-page .course-landing__description {
+    font-size: 0.84rem !important;
+  }
+
+  .course-sales-page__stats span {
+    min-height: 2rem !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 0.095em !important;
+  }
+
+  .course-sales-page__section h2 {
+    font-size: clamp(1.12rem, 5.8vw, 1.38rem) !important;
+  }
+
+  .course-sales-page__section p,
+  .course-sales-page__section li,
+  .course-sales-page__week-card li,
+  .course-sales-page__method-row p,
+  .course-sales-page__included-card p {
+    font-size: 0.82rem !important;
+    line-height: 1.34 !important;
+  }
+
+  .course-sales-page__week-card h2,
+  .course-sales-page__included-card h2,
+  .course-sales-page__lesson-card h3,
+  .course-sales-page__method-row h2 {
+    font-size: 1rem !important;
+  }
+
+  .course-sales-page__method-row {
+    grid-template-columns: 1.62rem minmax(0, 1fr) !important;
+  }
+
+  .course-sales-page__method-row > span {
+    width: 1.62rem !important;
+    height: 1.62rem !important;
+    font-size: 0.64rem !important;
+  }
+}
+
+/* Titus course landing: combined course-fit panel */
+.course-sales-page__fit-panel {
+  margin-top: 0.78rem;
+  padding: clamp(1.05rem, 4vw, 1.35rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgba(48, 82, 58, 0.055), rgba(255, 255, 252, 0.74) 42%, rgba(255, 255, 252, 0.92));
+}
+
+.course-sales-page__fit-head {
+  max-width: 34rem;
+}
+
+.course-sales-page__fit-head h2 {
+  margin: 0.26rem 0 0.58rem;
+  color: #1b2920;
+  font-size: clamp(1.24rem, 5.2vw, 1.62rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.course-sales-page__fit-head p {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--ui-font);
+  font-size: 0.84rem;
+  line-height: 1.42;
+}
+
+.course-sales-page__fit-columns {
+  display: grid;
+  gap: 0.95rem;
+  margin-top: 1.05rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(48, 82, 58, 0.12);
+}
+
+.course-sales-page__fit-columns > div {
+  padding-left: 0.85rem;
+  border-left: 3px solid rgba(48, 82, 58, 0.18);
+}
+
+.course-sales-page__fit-label {
+  margin: 0 0 0.45rem;
+  color: rgba(48, 82, 58, 0.9);
+  font-family: var(--ui-font);
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.course-sales-page__fit-columns ul {
+  display: grid;
+  gap: 0.38rem;
+  margin: 0;
+  padding-left: 1rem;
+  color: var(--muted);
+  font-family: var(--ui-font);
+  font-size: 0.81rem;
+  line-height: 1.34;
+}
+
+.course-sales-page__fit-columns li::marker {
+  color: rgba(48, 82, 58, 0.52);
+}
+
+.course-sales-page__fit-method {
+  margin-top: 1rem;
+  padding: 0.76rem 0.82rem;
+  border-radius: 0.92rem;
+  background: rgba(48, 82, 58, 0.08);
+}
+
+.course-sales-page__fit-method span {
+  display: block;
+  margin-bottom: 0.28rem;
+  color: rgba(48, 82, 58, 0.9);
+  font-family: var(--ui-font);
+  font-size: 0.64rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.course-sales-page__fit-method p {
+  margin: 0;
+  color: rgba(27, 41, 32, 0.74);
+  font-family: var(--ui-font);
+  font-size: 0.8rem;
+  line-height: 1.36;
+}
+
+@media (min-width: 720px) {
+  .course-sales-page__fit-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .course-sales-page__fit-panel {
+    padding: 1rem;
+  }
+
+  .course-sales-page__fit-head h2 {
+    font-size: clamp(1.14rem, 5.8vw, 1.38rem);
+  }
+
+  .course-sales-page__fit-head p,
+  .course-sales-page__fit-columns ul,
+  .course-sales-page__fit-method p {
+    font-size: 0.78rem;
+  }
+}
+
+/* Titus home course progress rail */
+.titus-course-progress-rail {
+  margin-top: 1rem;
+  padding: 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 1.05rem;
+  background: rgba(255, 255, 252, 0.68);
+}
+
+.titus-course-progress-rail__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+
+.titus-course-progress-rail__top p,
+.titus-course-progress-rail__current span {
+  margin: 0;
+  color: rgba(48, 82, 58, 0.82);
+  font-family: var(--ui-font);
+  font-size: 0.64rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.titus-course-progress-rail__top h3 {
+  margin: 0.18rem 0 0;
+  color: #1b2920;
+  font-family: var(--ui-font);
+  font-size: 0.95rem;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+}
+
+.titus-course-progress-rail__top strong {
+  color: rgba(48, 82, 58, 0.82);
+  font-family: var(--ui-font);
+  font-size: 0.78rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.titus-course-progress-rail__bar {
+  overflow: hidden;
+  height: 0.42rem;
+  margin: 0.78rem 0 0.82rem;
+  border-radius: 999px;
+  background: rgba(48, 82, 58, 0.12);
+}
+
+.titus-course-progress-rail__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(48, 82, 58, 0.9);
+}
+
+.titus-course-progress-rail__current {
+  padding: 0.72rem 0.78rem;
+  border-radius: 0.9rem;
+  background: rgba(48, 82, 58, 0.065);
+}
+
+.titus-course-progress-rail__current h4 {
+  margin: 0.2rem 0 0.16rem;
+  color: #1b2920;
+  font-family: var(--ui-font);
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+.titus-course-progress-rail__current p {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--ui-font);
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+
+.titus-course-progress-rail__milestones {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.42rem;
+  margin-top: 0.7rem;
+}
+
+.titus-course-progress-rail__milestone {
+  min-width: 0;
+  padding: 0.52rem 0.46rem;
+  border: 1px solid rgba(48, 82, 58, 0.12);
+  border-radius: 0.82rem;
+  background: rgba(255, 255, 252, 0.7);
+}
+
+.titus-course-progress-rail__milestone b {
+  display: inline-grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-bottom: 0.32rem;
+  border-radius: 999px;
+  background: rgba(48, 82, 58, 0.1);
+  color: rgba(48, 82, 58, 0.78);
+  font-family: var(--ui-font);
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.titus-course-progress-rail__milestone em {
+  display: block;
+  overflow: hidden;
+  color: var(--muted);
+  font-family: var(--ui-font);
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 760;
+  line-height: 1.16;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.titus-course-progress-rail__milestone.is-current {
+  border-color: rgba(48, 82, 58, 0.28);
+  background: rgba(48, 82, 58, 0.08);
+}
+
+.titus-course-progress-rail__milestone.is-current b,
+.titus-course-progress-rail__milestone.is-complete b {
+  background: rgba(48, 82, 58, 0.92);
+  color: #fff;
+}
+
+.titus-course-progress-rail__milestone.is-current em {
+  color: rgba(48, 82, 58, 0.9);
+}
+
+@media (max-width: 540px) {
+  .titus-course-progress-rail {
+    padding: 0.78rem;
+  }
+
+  .titus-course-progress-rail__top h3 {
+    font-size: 0.88rem;
+  }
+
+  .titus-course-progress-rail__top strong {
+    font-size: 0.72rem;
+  }
+
+  .titus-course-progress-rail__current h4 {
+    font-size: 0.92rem;
+  }
+
+  .titus-course-progress-rail__current p {
+    font-size: 0.74rem;
+  }
+
+  .titus-course-progress-rail__milestone em {
+    font-size: 0.62rem;
+  }
+}
+

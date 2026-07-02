@@ -64,7 +64,7 @@ export default function Home() {
                   className="compact-primary-button"
                   href={activePath.homeHref ?? `/courses/${activePath.slug}`}
                 >
-                  {activePath.homeCtaLabel ?? `Register for ${activePath.title}`}
+                  Start Study
                 </Link>
               </div>
             </article>
