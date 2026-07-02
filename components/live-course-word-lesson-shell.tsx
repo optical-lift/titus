@@ -152,6 +152,24 @@ function getNoelIntro(activeDrawer: LiveCourseWordLessonDrawer) {
   return typeof intro === "string" && intro.trim() ? intro : null;
 }
 
+function getNoelSummary(activeDrawer: LiveCourseWordLessonDrawer) {
+  const summary = activeDrawer.body.summary;
+
+  return typeof summary === "string" && summary.trim() ? summary : null;
+}
+
+function toFallbackCards(activeDrawer: LiveCourseWordLessonDrawer) {
+  return (activeDrawer.body.statements ?? []).map((statement) => ({
+    label: statement.label ?? "Noel note",
+    title: statement.title,
+    lines: statement.lines,
+  }));
+}
+
+function shouldUseStaticTraditionCards(lessonSlug: string) {
+  return lessonSlug === "h8451" || lessonSlug === "h8085";
+}
+
 function LiveDrawerBody({
   activeDrawer,
   shell,
@@ -164,12 +182,18 @@ function LiveDrawerBody({
     activeDrawer.drawerCode === "hermeneutical_readings" ||
     activeDrawer.drawerCode === "hermeneutic_readings";
 
-  if (isTraditionDrawer) {
+  if (isTraditionDrawer && shouldUseStaticTraditionCards(shell.lessonSlug)) {
     return <LiveTraditionRouteCards lessonSlug={shell.lessonSlug} courseSlug={shell.course.slug} />;
   }
 
   if (activeDrawer.drawerCode === "reading_controls") {
-    return <LiveReadingControls lessonSlug={shell.lessonSlug} noelIntro={getNoelIntro(activeDrawer)} />;
+    return (
+      <LiveReadingControls
+        lessonSlug={shell.lessonSlug}
+        noelIntro={getNoelIntro(activeDrawer)}
+        fallbackCards={toFallbackCards(activeDrawer)}
+      />
+    );
   }
 
   if (activeDrawer.drawerCode === "word_study_complete") {
@@ -180,6 +204,8 @@ function LiveDrawerBody({
         nextHref={shell.nextWordStudyHref}
         nextLabel={shell.nextWordStudyLabel}
         courseHref={`/courses/${shell.course.slug}`}
+        noelSummary={getNoelSummary(activeDrawer)}
+        fallbackCards={toFallbackCards(activeDrawer)}
       />
     );
   }
@@ -229,7 +255,7 @@ function LiveLexiconFacts({ shell }: { shell: LiveCourseWordLessonShell }) {
       <h3>Source packet fields</h3>
       <ul>
         <li>Primary live term: {shell.term.strongId} · {shell.term.surface} / {shell.term.transliteration} / {shell.term.gloss}</li>
-        <li>Occurrence count in Proverbs: {shell.occurrenceCount ?? "—"}</li>
+        <li>Occurrence count in current course book-field: {shell.occurrenceCount ?? "—"}</li>
         <li>Baseline source: {shell.baseline.source}</li>
         {mirror ? <li>Greek mirror: {mirror.greekId} / {mirror.transliteration ?? "Greek witness"} / weight {mirror.weight ?? "—"}</li> : null}
         <li>Status: {shell.status}; confidence: {shell.confidence}</li>
