@@ -9,10 +9,27 @@ type ConcordancePageProps = {
   params: Promise<{ strongId: string }>;
 };
 
-function displayWord(word: Awaited<ReturnType<typeof getConcordanceWord>>) {
+type ConcordanceWord = Awaited<ReturnType<typeof getConcordanceWord>>;
+
+function displayWord(word: ConcordanceWord) {
   if (!word) return "";
   const parts = [word.strongId, word.baselineLemma, word.baselineTransliteration].filter(Boolean);
   return parts.join(" · ");
+}
+
+function referenceLabel(book: string, chapter: number, verse: number) {
+  return `${book} ${chapter}:${verse}`;
+}
+
+function compact(value?: string | null, max = 180) {
+  if (!value) return "—";
+  const collapsed = value.replace(/\s+/g, " ").trim();
+  return collapsed.length > max ? `${collapsed.slice(0, max - 1)}…` : collapsed;
+}
+
+function surfaceLabel(surfaceForms: NonNullable<ConcordanceWord>["occurrences"][number]["surfaceForms"]) {
+  const first = surfaceForms[0];
+  return first?.kjvSurface ?? first?.bibleRender ?? first?.readableRender ?? first?.conceptualRender ?? "—";
 }
 
 export default async function ConcordanceWordPage({ params }: ConcordancePageProps) {
@@ -24,6 +41,8 @@ export default async function ConcordanceWordPage({ params }: ConcordancePagePro
   }
 
   const topBooks = word.bookCounts.slice(0, 12);
+  const topRenderings = word.renderings.slice(0, 20);
+  const visibleOccurrences = word.occurrences.slice(0, 80);
 
   return (
     <main className="course-landing course-sales-page">
@@ -111,6 +130,82 @@ export default async function ConcordanceWordPage({ params }: ConcordancePagePro
               <p>Book-field pressure for {word.strongId}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="course-landing__section course-sales-page__section" aria-labelledby="rendering-pressure">
+        <p className="course-landing__eyebrow" id="rendering-pressure">Rendering pressure</p>
+        <h2>How this word appears on the English surface.</h2>
+        <p className="course-landing__description">
+          This panel carries the Lex rendering workflow into Titus: Bible/KJV surface, readable render, conceptual render, and course rendering stay visible beside the same Strong&apos;s ID.
+        </p>
+
+        {topRenderings.length > 0 ? (
+          <div className="course-sales-page__lesson-grid">
+            {topRenderings.map((rendering) => (
+              <article className="course-sales-page__lesson-card" key={`${rendering.rendering}-${rendering.tokenCount}`}>
+                <span>{rendering.tokenCount} token{rendering.tokenCount === 1 ? "" : "s"} · {rendering.verseCount} verse{rendering.verseCount === 1 ? "" : "s"}</span>
+                <h3>{rendering.rendering}</h3>
+                {rendering.examples.length > 0 ? (
+                  <p>
+                    Examples: {rendering.examples.slice(0, 3).map((example) => referenceLabel(example.book, example.chapter, example.verse)).join(" · ")}
+                  </p>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        ) : (
+          <article className="course-sales-page__included-card">
+            <h3>No rendering rows surfaced yet</h3>
+            <p>The rendering panel will fill when Lex token rendering rows exist for this Strong&apos;s ID.</p>
+          </article>
+        )}
+
+        <div className="course-sales-page__included-grid" aria-label="Titus course renderings">
+          {word.placements.map((placement) => (
+            <article className="course-sales-page__included-card" key={`render-${placement.courseSlug}-${placement.lessonSlug}`}>
+              <h3>{placement.courseTitle}</h3>
+              <p>{placement.primaryField}</p>
+              <p>{compact(placement.functionReading, 220)}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="course-landing__section course-sales-page__section" aria-labelledby="occurrence-table">
+        <p className="course-landing__eyebrow" id="occurrence-table">Occurrence table</p>
+        <h2>Canon-order occurrence rows.</h2>
+        <p className="course-landing__description">
+          Showing {visibleOccurrences.length} of {word.occurrenceCount} known occurrence rows. Rows surface the verse, the token rendering, and any live Titus course placement that has claimed that passage.
+        </p>
+
+        <div className="course-sales-page__lesson-grid">
+          {visibleOccurrences.map((occurrence) => {
+            const ref = referenceLabel(occurrence.book, occurrence.chapter, occurrence.verse);
+            const matches = occurrence.placementMatches;
+
+            return (
+              <article className="course-sales-page__lesson-card" key={`${ref}-${occurrence.firstPosition ?? 0}`}>
+                <span>{ref} · position {occurrence.firstPosition ?? "—"}</span>
+                <h3>{surfaceLabel(occurrence.surfaceForms)}</h3>
+                <p>{compact(occurrence.verseText ?? occurrence.bibleText, 240)}</p>
+                <p>{occurrence.tokenCount} token{occurrence.tokenCount === 1 ? "" : "s"} in this verse</p>
+                {matches.length > 0 ? (
+                  <div>
+                    {matches.map((match) => (
+                      <p key={`${ref}-${match.courseSlug}-${match.passageRef ?? match.lessonSlug}`}>
+                        <Link href={`/courses/${match.courseSlug}/words/${word.strongId.toLowerCase()}`}>
+                          {match.courseTitle} · {match.passageRef ?? match.title}
+                        </Link>
+                      </p>
+                    ))}
+                  </div>
+                ) : (
+                  <p>No live Titus placement has selected this verse yet.</p>
+                )}
+              </article>
+            );
+          })}
         </div>
       </section>
 
