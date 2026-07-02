@@ -89,22 +89,29 @@ export function LiveWordStudyComplete({
   nextHref,
   nextLabel,
   courseHref,
+  noelSummary,
+  fallbackCards = [],
 }: {
   lessonSlug: string;
   wordDisplayTitle: string;
   nextHref?: string;
   nextLabel?: string;
   courseHref: string;
+  noelSummary?: string | null;
+  fallbackCards?: CompleteCard[];
 }) {
   const content = completeByLesson[lessonSlug] ?? {
-    subtitle: "Proverbs as Law Vocabulary",
-    cards: [
-      {
-        label: "Lesson summary",
-        title: `${wordDisplayTitle} word study complete`,
-        lines: ["This live word-study pass is complete."],
-      },
-    ],
+    subtitle: noelSummary ?? "Proverbs as Law Vocabulary",
+    cards:
+      fallbackCards.length > 0
+        ? fallbackCards
+        : [
+            {
+              label: "Lesson summary",
+              title: `${wordDisplayTitle} word study complete`,
+              lines: ["This live word-study pass is complete."],
+            },
+          ],
   };
 
   return (
