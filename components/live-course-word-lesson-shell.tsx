@@ -10,7 +10,9 @@ import type {
 import { TitusLexStamp } from "@/components/titus-lex-stamp";
 import { TitusCourseProgressMarker } from "@/components/titus-course-progress";
 import { LiveLexiconUnderStamp } from "@/components/titus/LiveLexiconUnderStamp";
+import { LiveReadingControls } from "@/components/titus/LiveReadingControls";
 import { LiveTraditionRouteCards } from "@/components/titus/LiveTraditionRouteCards";
+import { LiveWordStudyComplete } from "@/components/titus/LiveWordStudyComplete";
 
 type LiveCourseWordLessonShellViewProps = {
   shell: LiveCourseWordLessonShell;
@@ -22,8 +24,8 @@ export function LiveCourseWordLessonShellView({ shell }: LiveCourseWordLessonShe
   const [activeDrawerIndex, setActiveDrawerIndex] = useState(0);
   const [isLessonComplete, setIsLessonComplete] = useState(false);
 
-  const drawerTabs = useMemo(
-    () =>
+  const drawerTabs = useMemo(() => {
+    const baseDrawers =
       shell.drawers.length > 0
         ? shell.drawers
         : [
@@ -41,9 +43,21 @@ export function LiveCourseWordLessonShellView({ shell }: LiveCourseWordLessonShe
                 ],
               },
             },
-          ],
-    [shell],
-  );
+          ];
+
+    const hasCompleteDrawer = baseDrawers.some((drawer) => drawer.drawerCode === "word_study_complete");
+
+    return hasCompleteDrawer
+      ? baseDrawers
+      : [
+          ...baseDrawers,
+          {
+            drawerCode: "word_study_complete",
+            heading: "Word Study Complete",
+            body: {},
+          },
+        ];
+  }, [shell]);
 
   const activeDrawer = drawerTabs[activeDrawerIndex];
   const drawerProgressCurrent = activeDrawerIndex + 1;
@@ -152,6 +166,22 @@ function LiveDrawerBody({
 
   if (isTraditionDrawer) {
     return <LiveTraditionRouteCards lessonSlug={shell.lessonSlug} courseSlug={shell.course.slug} />;
+  }
+
+  if (activeDrawer.drawerCode === "reading_controls") {
+    return <LiveReadingControls lessonSlug={shell.lessonSlug} noelIntro={getNoelIntro(activeDrawer)} />;
+  }
+
+  if (activeDrawer.drawerCode === "word_study_complete") {
+    return (
+      <LiveWordStudyComplete
+        lessonSlug={shell.lessonSlug}
+        wordDisplayTitle={shell.wordDisplayTitle}
+        nextHref={shell.nextWordStudyHref}
+        nextLabel={shell.nextWordStudyLabel}
+        courseHref={`/courses/${shell.course.slug}`}
+      />
+    );
   }
 
   return (
