@@ -9,6 +9,7 @@ import type {
 } from "@/data/titus/live-course-word-lesson-types";
 import { TitusLexStamp } from "@/components/titus-lex-stamp";
 import { TitusCourseProgressMarker } from "@/components/titus-course-progress";
+import { LiveLexiconUnderStamp } from "@/components/titus/LiveLexiconUnderStamp";
 import { LiveTraditionRouteCards } from "@/components/titus/LiveTraditionRouteCards";
 
 type LiveCourseWordLessonShellViewProps = {
@@ -85,6 +86,7 @@ export function LiveCourseWordLessonShellView({ shell }: LiveCourseWordLessonShe
         {activeDrawerIndex === 0 ? (
           <div className="course-word-packet__drawer-stamp course-word-packet__drawer-stamp-only-first" aria-label="Lesson vocabulary stamp">
             <TitusLexStamp stamp={shell.lexStamp} />
+            <LiveLexiconUnderStamp lessonSlug={shell.lessonSlug} noelIntro={getNoelIntro(activeDrawer)} />
           </div>
         ) : null}
 
@@ -127,6 +129,13 @@ export function LiveCourseWordLessonShellView({ shell }: LiveCourseWordLessonShe
       <TitusCourseProgressMarker />
     </main>
   );
+}
+
+function getNoelIntro(activeDrawer: LiveCourseWordLessonDrawer) {
+  const body = activeDrawer.body as Record<string, unknown>;
+  const intro = body.intro;
+
+  return typeof intro === "string" && intro.trim() ? intro : null;
 }
 
 function LiveDrawerBody({
