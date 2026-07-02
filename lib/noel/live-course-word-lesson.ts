@@ -8,6 +8,19 @@ import { noel } from "@/lib/noel/client";
 
 type AnyRecord = Record<string, any>;
 
+const PROVERBS_NEXT_LESSONS: Record<string, { href: string; label: string }> = {
+  h8451: { href: "/lessons/h8085?from=/courses/proverbs-law-vocabulary", label: "Start Hear / Obey →" },
+  h8085: { href: "/lessons/h4687?from=/courses/proverbs-law-vocabulary", label: "Start Commandment →" },
+  h4687: { href: "/lessons/h3820?from=/courses/proverbs-law-vocabulary", label: "Start Heart →" },
+  h3820: { href: "/lessons/h6310?from=/courses/proverbs-law-vocabulary", label: "Start Mouth →" },
+  h6310: { href: "/lessons/h1870?from=/courses/proverbs-law-vocabulary", label: "Start Way / Path →" },
+  h1870: { href: "/lessons/h4941?from=/courses/proverbs-law-vocabulary", label: "Start Judgment / Justice →" },
+  h4941: { href: "/lessons/h6666?from=/courses/proverbs-law-vocabulary", label: "Start Righteousness →" },
+  h6666: { href: "/lessons/h2416?from=/courses/proverbs-law-vocabulary", label: "Start Life-State →" },
+  h2416: { href: "/lessons/h2421?from=/courses/proverbs-law-vocabulary", label: "Start Live / Revive →" },
+  h2421: { href: "/lessons/g3551?from=/courses/proverbs-law-vocabulary", label: "Start Nomos / Law Witness →" },
+};
+
 function text(value: unknown, fallback = "") {
   return typeof value === "string" && value.trim() ? value : fallback;
 }
@@ -45,7 +58,7 @@ function buildLexStamp(row: AnyRecord, word: AnyRecord | undefined): LexStamp {
   const mirror = mirrors[0];
   const passages = list<AnyRecord>(row.canon_passages);
   const anchor = passages.find((passage) => passage.book === "Pro") ?? passages[0];
-  const identity = identityParts(text(row.primary_field, text(word?.function_note, "Hear / Obey")));
+  const identity = identityParts(text(row.primary_field, text(word?.function_note, "Word Field")));
   const lineage = list<AnyRecord>(row.lineage)
     .map((item) => ({
       strongId: text(item.related_object_id),
@@ -54,28 +67,28 @@ function buildLexStamp(row: AnyRecord, word: AnyRecord | undefined): LexStamp {
     .filter((item) => item.strongId);
 
   return {
-    strongId: text(row.primary_strong_id, text(word?.strong_id, "H8085")),
+    strongId: text(row.primary_strong_id, text(word?.strong_id, "")),
     identitySource: "public.titus_course_word_lesson_live_v1",
     kjvLexicalSource: "intelligence.v_object_baseline_lexicon",
     currentObject: {
-      strongId: text(row.primary_strong_id, text(word?.strong_id, "H8085")),
-      transliteration: text(row.baseline_transliteration, text(word?.transliteration, "shâmaʻ")),
+      strongId: text(row.primary_strong_id, text(word?.strong_id, "")),
+      transliteration: text(row.baseline_transliteration, text(word?.transliteration, "")),
     },
     objectIdentityEnglishPrimary: identity.primary,
     objectIdentityEnglishSecondary: identity.secondary,
-    inheritedKjvLexical: compact(row.baseline_gloss, "to hear, listen to, obey"),
+    inheritedKjvLexical: compact(row.baseline_gloss, "Noel baseline pending"),
     lxxMoment: mirror?.greek_id
       ? {
           resolved: true,
           greekStrongId: text(mirror.greek_id),
-          transliteration: text(mirror.transliteration, "akoúō"),
-          english: mirror.greek_id === "G0191" ? "hear" : compact(mirror.baseline_gloss, "Greek witness", 60),
+          transliteration: text(mirror.transliteration, "Greek witness"),
+          english: compact(mirror.baseline_gloss, "Greek witness", 60),
         }
       : { resolved: false },
     anchor: {
       book: text(anchor?.book, "Pro"),
       chapter: typeof anchor?.chapter === "number" ? anchor.chapter : 1,
-      verse: typeof anchor?.start_verse === "number" ? anchor.start_verse : 5,
+      verse: typeof anchor?.start_verse === "number" ? anchor.start_verse : 1,
     },
     lineage,
   };
@@ -85,10 +98,6 @@ export async function getLiveCourseWordLessonShell(
   lessonSlug: string,
 ): Promise<LiveCourseWordLessonShell | undefined> {
   const normalizedLessonSlug = lessonSlug.toLowerCase();
-
-  if (normalizedLessonSlug !== "h8085") {
-    return undefined;
-  }
 
   const { data, error } = await noel
     .from("titus_course_word_lesson_live_v1")
@@ -107,8 +116,9 @@ export async function getLiveCourseWordLessonShell(
   const row = data as AnyRecord;
   const words = list<AnyRecord>(row.words);
   const word = words[0];
-  const primaryStrongId = text(row.primary_strong_id, text(word?.strong_id, "H8085"));
-  const primaryField = text(row.primary_field, text(word?.function_note, "Hear / Obey"));
+  const primaryStrongId = text(row.primary_strong_id, text(word?.strong_id, ""));
+  const primaryField = text(row.primary_field, text(word?.function_note, "Word Field"));
+  const nextLesson = PROVERBS_NEXT_LESSONS[normalizedLessonSlug];
 
   return {
     lessonSlug: text(row.lesson_slug, normalizedLessonSlug),
@@ -117,7 +127,7 @@ export async function getLiveCourseWordLessonShell(
       title: text(row.source_packet_label, "Proverbs as Law Vocabulary"),
       subtitle: "Cross-Canon Pattern",
     },
-    lessonNumber: typeof row.lesson_number === "number" ? row.lesson_number : 2,
+    lessonNumber: typeof row.lesson_number === "number" ? row.lesson_number : 1,
     courseLessonTotal: 11,
     lessonKind: "Word Field",
     methodLabel: "Read",
@@ -125,8 +135,8 @@ export async function getLiveCourseWordLessonShell(
     wordDisplayTitle: primaryField,
     term: {
       strongId: primaryStrongId,
-      transliteration: text(row.baseline_transliteration, text(word?.transliteration, "shâmaʻ")),
-      surface: text(row.baseline_lemma, text(word?.original_word, "שמע")),
+      transliteration: text(row.baseline_transliteration, text(word?.transliteration, "")),
+      surface: text(row.baseline_lemma, text(word?.original_word, "")),
       gloss: primaryField,
     },
     termsInView: words.map((candidate) => ({
@@ -186,7 +196,7 @@ export async function getLiveCourseWordLessonShell(
       definitionText: text(row.baseline_definition_text),
       kjvUsage: text(row.kjv_usage),
     },
-    nextWordStudyHref: "/lessons/h4687?from=/courses/proverbs-law-vocabulary",
-    nextWordStudyLabel: "Start Commandment →",
+    nextWordStudyHref: nextLesson?.href,
+    nextWordStudyLabel: nextLesson?.label,
   };
 }
