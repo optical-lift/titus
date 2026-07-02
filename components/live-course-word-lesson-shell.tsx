@@ -9,53 +9,13 @@ import type {
 } from "@/data/titus/live-course-word-lesson-types";
 import { TitusLexStamp } from "@/components/titus-lex-stamp";
 import { TitusCourseProgressMarker } from "@/components/titus-course-progress";
+import { LiveTraditionRouteCards } from "@/components/titus/LiveTraditionRouteCards";
 
 type LiveCourseWordLessonShellViewProps = {
   shell: LiveCourseWordLessonShell;
 };
 
-type HermeneuticalStatement = LiveCourseWordLessonStatement & {
-  keeps?: string[];
-  mayFlatten?: string[];
-};
-
-const defaultHermeneuticalStatements: HermeneuticalStatement[] = [
-  {
-    label: "Common devotional reading",
-    title: "Personal guidance and encouragement",
-    lines: [],
-    keeps: ["Daily guidance.", "Personal wisdom and moral formation."],
-    mayFlatten: ["Covenant instruction with public consequence.", "Justice, mouth, gate, and judgment pressure."],
-  },
-  {
-    label: "Covenant theology reading",
-    title: "Law, promise, fulfillment, and wisdom continuity",
-    lines: [],
-    keeps: ["Continuity between Torah, wisdom, commandment, fulfillment, and life in Christ.", "God's instruction internalized as covenant formation."],
-    mayFlatten: ["The concrete Proverbs mechanisms: ear, heart, mouth, path, market, and gate.", "Instruction before breach becomes judgment."],
-  },
-  {
-    label: "Dispensational reading",
-    title: "Law, Israel, kingdom, and future fulfillment",
-    lines: [],
-    keeps: ["Torah as given law and Israel's covenant history.", "Law administration and later fulfillment questions."],
-    mayFlatten: ["Proverbs carrying Torah into public human discernment.", "Hear-and-do continuity across Jesus, Epistles, and Revelation."],
-  },
-  {
-    label: "Historical-critical reading",
-    title: "Ancient instruction setting and social formation",
-    lines: [],
-    keeps: ["Household, court, school, wisdom, and social-world setting.", "Instruction inside family and public order."],
-    mayFlatten: ["Whole-canon recurrence of law, hearing, doing, justice, and life.", "Canonical resolution beyond ancient setting alone."],
-  },
-  {
-    label: "Allegorical or spiritualized reading",
-    title: "Inner wisdom and soul formation",
-    lines: [],
-    keeps: ["Inward formation by wisdom, correction, and desire.", "Spiritual meaning of path, heart, mouth, and life-language."],
-    mayFlatten: ["Torah as actual law-instruction with embodied public consequence.", "Market, neighbor, poor, witness, and justice field."],
-  },
-];
+type LiveStatement = LiveCourseWordLessonStatement;
 
 export function LiveCourseWordLessonShellView({ shell }: LiveCourseWordLessonShellViewProps) {
   const [activeDrawerIndex, setActiveDrawerIndex] = useState(0);
@@ -176,22 +136,17 @@ function LiveDrawerBody({
   activeDrawer: LiveCourseWordLessonDrawer;
   shell: LiveCourseWordLessonShell;
 }) {
-  const isHermeneuticalDrawer =
+  const isTraditionDrawer =
     activeDrawer.drawerCode === "traditions" ||
     activeDrawer.drawerCode === "hermeneutical_readings" ||
     activeDrawer.drawerCode === "hermeneutic_readings";
-  const bodyStatements = activeDrawer.body.statements ?? [];
-  const hasTwoColumnData = bodyStatements.some((statement) => {
-    const card = statement as HermeneuticalStatement;
-    return Array.isArray(card.keeps) || Array.isArray(card.mayFlatten);
-  });
-  const statements = isHermeneuticalDrawer && !hasTwoColumnData ? defaultHermeneuticalStatements : bodyStatements;
+
+  if (isTraditionDrawer) {
+    return <LiveTraditionRouteCards lessonSlug={shell.lessonSlug} courseSlug={shell.course.slug} />;
+  }
 
   return (
-    <section
-      className={isHermeneuticalDrawer ? "course-word-packet__hermeneutical-summary" : "course-word-packet__lexicon-summary"}
-      aria-label={`${activeDrawer.heading} from Noel`}
-    >
+    <section className="course-word-packet__lexicon-summary" aria-label={`${activeDrawer.heading} from Noel`}>
       {activeDrawer.body.summary ? (
         <article className="course-word-packet__lexicon-statement">
           <p className="course-word-packet__field-label">Noel summary</p>
@@ -200,12 +155,8 @@ function LiveDrawerBody({
         </article>
       ) : null}
 
-      {statements.map((statement) => (
-        <LiveStatementCard
-          key={`${activeDrawer.drawerCode}-${statement.title}`}
-          statement={statement as HermeneuticalStatement}
-          isHermeneuticalDrawer={isHermeneuticalDrawer}
-        />
+      {(activeDrawer.body.statements ?? []).map((statement) => (
+        <LiveStatementCard key={`${activeDrawer.drawerCode}-${statement.title}`} statement={statement as LiveStatement} />
       ))}
 
       {activeDrawer.drawerCode === "lexicon" ? <LiveLexiconFacts shell={shell} /> : null}
@@ -215,49 +166,17 @@ function LiveDrawerBody({
   );
 }
 
-function LiveStatementCard({
-  statement,
-  isHermeneuticalDrawer,
-}: {
-  statement: HermeneuticalStatement;
-  isHermeneuticalDrawer: boolean;
-}) {
-  const keeps = Array.isArray(statement.keeps) ? statement.keeps : [];
-  const mayFlatten = Array.isArray(statement.mayFlatten) ? statement.mayFlatten : [];
-  const hasTwoColumnReading = keeps.length > 0 || mayFlatten.length > 0;
-
+function LiveStatementCard({ statement }: { statement: LiveStatement }) {
   return (
-    <article className={isHermeneuticalDrawer ? "course-word-packet__method-statement" : "course-word-packet__lexicon-statement"}>
+    <article className="course-word-packet__lexicon-statement">
       {statement.label ? <p className="course-word-packet__field-label">{statement.label}</p> : null}
       <h3>{statement.title}</h3>
       {statement.references ? <p className="course-word-packet__canon-chain-refs">{statement.references}</p> : null}
-
-      {hasTwoColumnReading ? (
-        <div className="course-word-packet__two-column-note">
-          <div>
-            <h4>Keeps in view</h4>
-            <ul>
-              {keeps.map((line) => (
-                <li key={`${statement.title}-keeps-${line}`}>{line}</li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4>May flatten</h4>
-            <ul>
-              {mayFlatten.map((line) => (
-                <li key={`${statement.title}-flattens-${line}`}>{line}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      ) : (
-        <ul>
-          {statement.lines.map((line) => (
-            <li key={`${statement.title}-${line}`}>{line}</li>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {statement.lines.map((line) => (
+          <li key={`${statement.title}-${line}`}>{line}</li>
+        ))}
+      </ul>
     </article>
   );
 }
