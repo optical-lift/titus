@@ -2,12 +2,21 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { LiveCourseWordLessonShell } from "@/data/titus/live-course-word-lesson-types";
+import type {
+  LiveCourseWordLessonDrawer,
+  LiveCourseWordLessonStatement,
+  LiveCourseWordLessonShell,
+} from "@/data/titus/live-course-word-lesson-types";
 import { TitusLexStamp } from "@/components/titus-lex-stamp";
 import { TitusCourseProgressMarker } from "@/components/titus-course-progress";
 
 type LiveCourseWordLessonShellViewProps = {
   shell: LiveCourseWordLessonShell;
+};
+
+type HermeneuticalStatement = LiveCourseWordLessonStatement & {
+  keeps?: string[];
+  mayFlatten?: string[];
 };
 
 export function LiveCourseWordLessonShellView({ shell }: LiveCourseWordLessonShellViewProps) {
@@ -82,32 +91,7 @@ export function LiveCourseWordLessonShellView({ shell }: LiveCourseWordLessonShe
         ) : null}
 
         <div className="course-word-packet__drawer-body course-word-packet__drawer-body--viewport">
-          <section className="course-word-packet__lexicon-summary" aria-label={`${activeDrawer.heading} from Noel`}>
-            {activeDrawer.body.summary ? (
-              <article className="course-word-packet__lexicon-statement">
-                <p className="course-word-packet__field-label">Noel summary</p>
-                <h3>{activeDrawer.heading}</h3>
-                <p>{activeDrawer.body.summary}</p>
-              </article>
-            ) : null}
-
-            {(activeDrawer.body.statements ?? []).map((statement) => (
-              <article className="course-word-packet__lexicon-statement" key={`${activeDrawer.drawerCode}-${statement.title}`}>
-                {statement.label ? <p className="course-word-packet__field-label">{statement.label}</p> : null}
-                <h3>{statement.title}</h3>
-                {statement.references ? <p className="course-word-packet__canon-chain-refs">{statement.references}</p> : null}
-                <ul>
-                  {statement.lines.map((line) => (
-                    <li key={`${statement.title}-${line}`}>{line}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-
-            {activeDrawer.drawerCode === "lexicon" ? <LiveLexiconFacts shell={shell} /> : null}
-            {activeDrawer.drawerCode === "travels_with" ? <LiveRelationshipFacts shell={shell} /> : null}
-            {activeDrawer.drawerCode === "canon_chains" ? <LiveCanonPassages shell={shell} /> : null}
-          </section>
+          <LiveDrawerBody activeDrawer={activeDrawer} shell={shell} />
         </div>
 
         <div className="course-word-packet__drawer-actions course-movement-rail">
@@ -144,6 +128,93 @@ export function LiveCourseWordLessonShellView({ shell }: LiveCourseWordLessonShe
 
       <TitusCourseProgressMarker />
     </main>
+  );
+}
+
+function LiveDrawerBody({
+  activeDrawer,
+  shell,
+}: {
+  activeDrawer: LiveCourseWordLessonDrawer;
+  shell: LiveCourseWordLessonShell;
+}) {
+  const isHermeneuticalDrawer =
+    activeDrawer.drawerCode === "traditions" ||
+    activeDrawer.drawerCode === "hermeneutical_readings" ||
+    activeDrawer.drawerCode === "hermeneutic_readings";
+
+  return (
+    <section
+      className={isHermeneuticalDrawer ? "course-word-packet__hermeneutical-summary" : "course-word-packet__lexicon-summary"}
+      aria-label={`${activeDrawer.heading} from Noel`}
+    >
+      {activeDrawer.body.summary ? (
+        <article className="course-word-packet__lexicon-statement">
+          <p className="course-word-packet__field-label">Noel summary</p>
+          <h3>{activeDrawer.heading}</h3>
+          <p>{activeDrawer.body.summary}</p>
+        </article>
+      ) : null}
+
+      {(activeDrawer.body.statements ?? []).map((statement) => (
+        <LiveStatementCard
+          key={`${activeDrawer.drawerCode}-${statement.title}`}
+          statement={statement as HermeneuticalStatement}
+          isHermeneuticalDrawer={isHermeneuticalDrawer}
+        />
+      ))}
+
+      {activeDrawer.drawerCode === "lexicon" ? <LiveLexiconFacts shell={shell} /> : null}
+      {activeDrawer.drawerCode === "travels_with" ? <LiveRelationshipFacts shell={shell} /> : null}
+      {activeDrawer.drawerCode === "canon_chains" ? <LiveCanonPassages shell={shell} /> : null}
+    </section>
+  );
+}
+
+function LiveStatementCard({
+  statement,
+  isHermeneuticalDrawer,
+}: {
+  statement: HermeneuticalStatement;
+  isHermeneuticalDrawer: boolean;
+}) {
+  const keeps = Array.isArray(statement.keeps) ? statement.keeps : [];
+  const mayFlatten = Array.isArray(statement.mayFlatten) ? statement.mayFlatten : [];
+  const hasTwoColumnReading = keeps.length > 0 || mayFlatten.length > 0;
+
+  return (
+    <article className={isHermeneuticalDrawer ? "course-word-packet__method-statement" : "course-word-packet__lexicon-statement"}>
+      {statement.label ? <p className="course-word-packet__field-label">{statement.label}</p> : null}
+      <h3>{statement.title}</h3>
+      {statement.references ? <p className="course-word-packet__canon-chain-refs">{statement.references}</p> : null}
+
+      {hasTwoColumnReading ? (
+        <div className="course-word-packet__two-column-note">
+          <div>
+            <h4>Keeps in view</h4>
+            <ul>
+              {keeps.map((line) => (
+                <li key={`${statement.title}-keeps-${line}`}>{line}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4>May flatten</h4>
+            <ul>
+              {mayFlatten.map((line) => (
+                <li key={`${statement.title}-flattens-${line}`}>{line}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : (
+        <ul>
+          {statement.lines.map((line) => (
+            <li key={`${statement.title}-${line}`}>{line}</li>
+          ))}
+        </ul>
+      )}
+    </article>
   );
 }
 
