@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ConcordanceOccurrenceBrowser } from "@/components/titus/ConcordanceOccurrenceBrowser";
 import { getConcordanceWord } from "@/lib/noel/concordance-word";
 
 export const dynamic = "force-dynamic";
@@ -25,11 +26,6 @@ function compact(value?: string | null, max = 180) {
   if (!value) return "—";
   const collapsed = value.replace(/\s+/g, " ").trim();
   return collapsed.length > max ? `${collapsed.slice(0, max - 1)}…` : collapsed;
-}
-
-function surfaceLabel(surfaceForms: NonNullable<ConcordanceWord>["occurrences"][number]["surfaceForms"]) {
-  const first = surfaceForms[0];
-  return first?.kjvSurface ?? first?.bibleRender ?? first?.readableRender ?? first?.conceptualRender ?? "—";
 }
 
 export default async function ConcordanceWordPage({ params }: ConcordancePageProps) {
@@ -137,7 +133,7 @@ export default async function ConcordanceWordPage({ params }: ConcordancePagePro
         <p className="course-landing__eyebrow" id="rendering-pressure">Rendering pressure</p>
         <h2>How this word appears on the English surface.</h2>
         <p className="course-landing__description">
-          This panel carries the Lex rendering workflow into Titus: Bible/KJV surface, readable render, conceptual render, and course rendering stay visible beside the same Strong&apos;s ID.
+          This panel carries the Lex rendering workflow into Titus: Bible/KJV surface and course rendering stay visible beside the same Strong&apos;s ID.
         </p>
 
         {topRenderings.length > 0 ? (
@@ -172,41 +168,13 @@ export default async function ConcordanceWordPage({ params }: ConcordancePagePro
         </div>
       </section>
 
-      <section className="course-landing__section course-sales-page__section" aria-labelledby="occurrence-table">
-        <p className="course-landing__eyebrow" id="occurrence-table">Occurrence table</p>
-        <h2>Canon-order occurrence rows.</h2>
+      <section className="course-landing__section course-sales-page__section" aria-labelledby="occurrence-browser">
+        <p className="course-landing__eyebrow" id="occurrence-browser">Occurrence browser</p>
+        <h2>Read the canon like a Bible search.</h2>
         <p className="course-landing__description">
-          Showing {visibleOccurrences.length} of {word.occurrenceCount} known occurrence rows. Rows surface the verse, the token rendering, and any live Titus course placement that has claimed that passage.
+          Showing {visibleOccurrences.length} of {word.occurrenceCount} known occurrence rows in canon order. References and verses stay scannable; open a row only when you need token details or a course-placement link.
         </p>
-
-        <div className="course-sales-page__lesson-grid">
-          {visibleOccurrences.map((occurrence) => {
-            const ref = referenceLabel(occurrence.book, occurrence.chapter, occurrence.verse);
-            const matches = occurrence.placementMatches;
-
-            return (
-              <article className="course-sales-page__lesson-card" key={`${ref}-${occurrence.firstPosition ?? 0}`}>
-                <span>{ref} · position {occurrence.firstPosition ?? "—"}</span>
-                <h3>{surfaceLabel(occurrence.surfaceForms)}</h3>
-                <p>{compact(occurrence.verseText ?? occurrence.bibleText, 240)}</p>
-                <p>{occurrence.tokenCount} token{occurrence.tokenCount === 1 ? "" : "s"} in this verse</p>
-                {matches.length > 0 ? (
-                  <div>
-                    {matches.map((match) => (
-                      <p key={`${ref}-${match.courseSlug}-${match.passageRef ?? match.lessonSlug}`}>
-                        <Link href={`/courses/${match.courseSlug}/words/${word.strongId.toLowerCase()}`}>
-                          {match.courseTitle} · {match.passageRef ?? match.title}
-                        </Link>
-                      </p>
-                    ))}
-                  </div>
-                ) : (
-                  <p>No live Titus placement has selected this verse yet.</p>
-                )}
-              </article>
-            );
-          })}
-        </div>
+        <ConcordanceOccurrenceBrowser strongId={word.strongId} occurrences={visibleOccurrences} />
       </section>
 
       <section className="course-landing__section course-sales-page__section" aria-labelledby="course-placements">
